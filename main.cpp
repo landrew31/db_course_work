@@ -1,5 +1,6 @@
 #include "dialogentry.h"
 #include <QApplication>
+/* фів*/
 
 int main(int argc, char *argv[])
 {
