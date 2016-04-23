@@ -77,7 +77,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="passworf_field">
+         <widget class="QLineEdit" name="password_field">
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
           </property>

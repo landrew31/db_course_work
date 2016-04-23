@@ -26,9 +26,9 @@ public:
     ~DialogEntry();
 
 private slots:
-    void on_username_field_textChanged(const QString &arg1);
+    void on_username_field_textChanged();
 
-    void on_password_field_textChanged(const QString &arg1);
+    void on_password_field_textChanged();
 
     void on_cancel_entry_button_clicked();
 

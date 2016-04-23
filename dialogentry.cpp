@@ -15,15 +15,15 @@ DialogEntry::~DialogEntry()
 }
 
 // enter user
-void DialogEntry::on_username_field_textChanged(const QString &arg1)
+void DialogEntry::on_username_field_textChanged()
 {
     user = ui->username_field->text();
 }
 
 // enter password
-void DialogEntry::on_password_field_textChanged(const QString &arg1)
+void DialogEntry::on_password_field_textChanged()
 {
-    password = ui->passworf_field->text();
+    password = ui->password_field->text();
 }
 
 //cancel button
@@ -54,6 +54,7 @@ bool DialogEntry::connect_to_db(){
     db.setUserName(user);
     db.setPassword(password);
 
+    qDebug() << "username: " << user << ", pass: " << password << endl;
     bool connectioncheck = db.open();
     connected = connectioncheck;
     if (connectioncheck == true){
