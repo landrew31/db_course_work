@@ -19,11 +19,12 @@ public:
     bool getConnected();
     QString getUser();
     QString getPassword();
-    QSqlDatabase getBase();
+    //QSqlDatabase getBase();
     void setUser(QString);
     void setPassword(QString);
 
     QSqlQueryModel* getQueryModel(QString);
+    bool executeQuery(QString, QString, QWidget*);
 
 private:
     QSqlDatabase base;

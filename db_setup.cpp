@@ -44,10 +44,10 @@ QString DB_setup::getPassword()
     return password;
 }
 
-QSqlDatabase DB_setup::getBase()
-{
-    return base;
-}
+//QSqlDatabase DB_setup::getBase()
+//{
+//    return base;
+//}
 
 void DB_setup::setUser(QString user)
 {
@@ -60,14 +60,30 @@ void DB_setup::setPassword(QString password)
 }
 
 QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
-{
-    QSqlQueryModel* model = new QSqlQueryModel();
-    base.open();
+{   
+    QSqlQueryModel *model = new QSqlQueryModel();
+    //base.open();
     QSqlQuery query = base.exec(queryText);
     query.first();
-    QString result = query.record().value(0).toString();
-    query.exec();
+    //QString result = query.record().value(0).toString();
+    //query->exec();
     model->setQuery(query);
-    qDebug() << result;
+    //qDebug() << result;
     return model;
 }
+
+ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget)
+ {
+     QSqlQuery query;
+     query.prepare(queryText);
+     bool executed = query.exec();
+     qDebug() << executed << (user == executer )<< endl;
+     if (!executed && user != executer) {
+         QMessageBox::about(qwidget, "Помилка", "Вибачте, у Вас немає прав для даної операції.");
+     } else if (!executed){
+         QMessageBox::about(qwidget, "Помилка", "Введіть, будь ласка, коректні дані.");
+     } else {
+         QMessageBox::about(qwidget, "Сповіщення", "Дані додано. Ви можете оновити відображення.");
+     };
+     return executed;
+ }
