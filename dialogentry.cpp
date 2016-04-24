@@ -23,7 +23,7 @@ void DialogEntry::on_username_field_textChanged(const QString &arg1)
 // enter password
 void DialogEntry::on_password_field_textChanged(const QString &arg1)
 {
-    password = ui->passworf_field->text();
+    password = ui->password_field->text();
 }
 
 //cancel button
