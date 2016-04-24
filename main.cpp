@@ -1,12 +1,13 @@
 #include "dialogentry.h"
 #include <QApplication>
+#include "db_setup.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    DialogEntry* entry = new DialogEntry();
-
-    entry->show();
+    DB_setup* db = new DB_setup();
+    DialogEntry* entryWindow = new DialogEntry(db);
+    entryWindow->show();
 
     return a.exec();
 }
