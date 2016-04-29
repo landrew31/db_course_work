@@ -13,6 +13,8 @@
 #include <QSqlQuery>
 #include <QDateEdit>
 
+#include "db_setup.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -23,9 +25,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    bool enterDB();
-    void setDB(QString user, QString password);
+    explicit MainWindow(DB_setup *db = 0, QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
@@ -33,11 +33,17 @@ private slots:
 
     void on_add_action_button_clicked();
 
+    void on_is_individual_clicked(bool checked);
+
+    void on_is_entity_clicked(bool checked);
+
+    void on_add_contractor_button_clicked();
+
+    void on_renew_contr_button_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QSqlDatabase db;
-    QString user;
-    QString password;
+    DB_setup *db;
 };
 
 #endif // MAINWINDOW_H

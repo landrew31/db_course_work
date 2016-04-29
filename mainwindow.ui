@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>506</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="palette">
@@ -435,7 +435,7 @@
       <x>0</x>
       <y>0</y>
       <width>831</width>
-      <height>461</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -445,13 +445,13 @@
      <attribute name="title">
       <string>Акції</string>
      </attribute>
-     <widget class="QTableView" name="tableView">
+     <widget class="QTableView" name="tableView_actions">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>20</y>
         <width>541</width>
-        <height>391</height>
+        <height>411</height>
        </rect>
       </property>
      </widget>
@@ -459,7 +459,7 @@
       <property name="geometry">
        <rect>
         <x>610</x>
-        <y>380</y>
+        <y>400</y>
         <width>171</width>
         <height>27</height>
        </rect>
@@ -472,7 +472,7 @@
       <property name="geometry">
        <rect>
         <x>610</x>
-        <y>340</y>
+        <y>360</y>
         <width>171</width>
         <height>27</height>
        </rect>
@@ -506,6 +506,16 @@
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Назва акції</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
@@ -560,8 +570,150 @@
           </property>
          </widget>
         </item>
+        <item row="7" column="0">
+         <widget class="QLineEdit" name="action_name_field"/>
+        </item>
        </layout>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Контрагенти</string>
+     </attribute>
+     <widget class="QTableView" name="tableView_contractors">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>541</width>
+        <height>411</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>20</y>
+        <width>231</width>
+        <height>321</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>211</width>
+         <height>301</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="phone_field"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Адреса</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLineEdit" name="state_number_field">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="dragEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QCheckBox" name="is_individual">
+          <property name="text">
+           <string>Фізична особа</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QDateEdit" name="birthday_field">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Номер телефону</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="contractor_name_field"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Ім'я контрагента</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLineEdit" name="address_field"/>
+        </item>
+        <item row="8" column="0">
+         <widget class="QCheckBox" name="is_entity">
+          <property name="text">
+           <string>Юридична особа</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="add_contractor_button">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>360</y>
+        <width>171</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Додати контрагента</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="renew_contr_button">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>400</y>
+        <width>171</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Оновити дані</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
