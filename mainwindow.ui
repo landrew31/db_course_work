@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
-    <height>542</height>
+    <width>1360</width>
+    <height>820</height>
    </rect>
   </property>
   <property name="palette">
@@ -434,12 +434,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>831</width>
-      <height>481</height>
+      <width>1351</width>
+      <height>631</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -453,19 +453,6 @@
         <width>541</width>
         <height>411</height>
        </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="renew_actions_button">
-      <property name="geometry">
-       <rect>
-        <x>610</x>
-        <y>400</y>
-        <width>171</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Оновити дані</string>
       </property>
      </widget>
      <widget class="QPushButton" name="add_action_button">
@@ -541,6 +528,12 @@
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="2" column="0">
@@ -557,6 +550,12 @@
          <widget class="QDateEdit" name="start_action_date">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -586,17 +585,17 @@
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>541</width>
-        <height>411</height>
+        <width>991</width>
+        <height>561</height>
        </rect>
       </property>
      </widget>
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
-        <x>580</x>
+        <x>1020</x>
         <y>20</y>
-        <width>231</width>
+        <width>301</width>
         <height>321</height>
        </rect>
       </property>
@@ -611,7 +610,7 @@
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>211</width>
+         <width>281</width>
          <height>301</height>
         </rect>
        </property>
@@ -642,7 +641,7 @@
         <item row="6" column="0">
          <widget class="QCheckBox" name="is_individual">
           <property name="text">
-           <string>Фізична особа</string>
+           <string>Фіз. особа (дата народження)</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -656,6 +655,19 @@
           </property>
           <property name="readOnly">
            <bool>false</bool>
+          </property>
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+          <property name="date">
+           <date>
+            <year>2000</year>
+            <month>1</month>
+            <day>1</day>
+           </date>
           </property>
          </widget>
         </item>
@@ -677,12 +689,12 @@
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QLineEdit" name="address_field"/>
+         <widget class="QLineEdit" name="adress_field"/>
         </item>
         <item row="8" column="0">
          <widget class="QCheckBox" name="is_entity">
           <property name="text">
-           <string>Юридична особа</string>
+           <string>Юридична особа (номер в реєстрі)</string>
           </property>
          </widget>
         </item>
@@ -692,27 +704,53 @@
      <widget class="QPushButton" name="add_contractor_button">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>360</y>
-        <width>171</width>
+        <x>1040</x>
+        <y>350</y>
+        <width>261</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Додати контрагента</string>
+       <string>Додати/редагувати контрагента</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="renew_contr_button">
+     <widget class="QPushButton" name="clear_contr_form">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>400</y>
-        <width>171</width>
+        <x>1040</x>
+        <y>390</y>
+        <width>261</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Оновити дані</string>
+       <string>Очистити форму</string>
+      </property>
+     </widget>
+     <widget class="QScrollBar" name="verticalScrollBar">
+      <property name="geometry">
+       <rect>
+        <x>1330</x>
+        <y>0</y>
+        <width>21</width>
+        <height>601</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="delete_contr">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>430</y>
+        <width>261</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Видалити контрагента</string>
       </property>
      </widget>
     </widget>
@@ -738,7 +776,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>830</width>
+     <width>1360</width>
      <height>25</height>
     </rect>
    </property>

@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include "messagebox.h"
 
 class DB_setup
 {
@@ -22,6 +23,7 @@ public:
     //QSqlDatabase getBase();
     void setUser(QString);
     void setPassword(QString);
+    void showMessage(QString, QString);
 
     QSqlQueryModel* getQueryModel(QString);
     bool executeQuery(QString, QString, QWidget*);
