@@ -18,44 +18,49 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+ /* refresh actions view */
 void MainWindow::renew_actions()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions;");
 
     model->setHeaderData(0, Qt::Horizontal, tr("Назва акції"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Початок акції"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Кінець акції"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Відсоток по акції"));
-    ui->tableView_actions->setModel(model);
+    model->setHeaderData(1, Qt::Horizontal, tr("Відсоток по акції"));
+    model->setHeaderData(2, Qt::Horizontal, tr("Початок акції"));
+    model->setHeaderData(3, Qt::Horizontal, tr("Кінець акції"));
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    ui->tableView_actions->setModel(proxyModel);
+    ui->tableView_actions->setSortingEnabled(true);
     ui->tableView_actions->resizeColumnToContents(0);
     ui->tableView_actions->resizeColumnToContents(1);
     ui->tableView_actions->resizeColumnToContents(2);
     ui->tableView_actions->resizeColumnToContents(3);
-
-//    qDebug() << result;
 }
 
+/* refresh contractors view */
 void MainWindow::renew_contractors()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_contractors;");
-
 
     model->setHeaderData(0, Qt::Horizontal, tr("Ім'я контрагента"));
     model->setHeaderData(1, Qt::Horizontal, tr("Телефон"));
     model->setHeaderData(2, Qt::Horizontal, tr("Адреса"));
     model->setHeaderData(3, Qt::Horizontal, tr("Дата народження (фіз.особа)"));
     model->setHeaderData(4, Qt::Horizontal, tr("Номер в реєстрі (юр.особа)"));
-    ui->tableView_contractors->setModel(model);
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+//    model->sort(2, Qt::AscendingOrder);
+    ui->tableView_contractors->setModel(proxyModel);
+    ui->tableView_contractors->setSortingEnabled(true);
+//    ui->tableView_contractors->sortByColumn(2, Qt::AscendingOrder);
     ui->tableView_contractors->resizeColumnToContents(0);
     ui->tableView_contractors->resizeColumnToContents(1);
     ui->tableView_contractors->resizeColumnToContents(2);
     ui->tableView_contractors->resizeColumnToContents(3);
     ui->tableView_contractors->resizeColumnToContents(4);
-
-//    qDebug() << result;
 }
 
+/* adding action */
 void MainWindow::on_add_action_button_clicked()
 {
     QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
@@ -66,13 +71,71 @@ void MainWindow::on_add_action_button_clicked()
     qDebug() << start << stop << percent;
 
     db->executeQuery(
-                "insert into \"Lupa_A\".actions (day_start, day_stop, action_name, percent) values('"+ start + "','" + stop + "','" + name + "', :percent);",
+                "insert into \"Lupa_A\".actions (day_start, day_stop, action_name, percent) values('"+ start + "','" + stop + "','" + name + "','" + QString::number(percent) + "');",
                 "operator",
                 this
     );
     renew_actions();
 
 }
+/* check one action by pressing on table */
+void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
+{
+    ui->add_action_button->setEnabled(false);
+    ui->update_action->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    old_action_name = name;
+    qDebug() << old_action_name << endl;
+    QDate start = index.sibling(row, 2).data().toDate();
+    QString str_start = start.toString();
+    QDate stop = index.sibling(row, 3).data().toDate();
+    QString str_stop = stop.toString();
+    int percent = index.sibling(row, 1).data().toInt();
+    QString str_percent = QString::number(percent);
+    ui->action_name_field->setText(name);
+    ui->action_percent_field->setText(str_percent);
+    ui->start_action_date->setDate(start);
+    ui->stop_action_date->setDate(stop);
+}
+
+void MainWindow::on_update_action_clicked()
+{
+    QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
+    QString stop = ui->stop_action_date->date().toString("yyyy-MM-dd");
+    QString name = ui->action_name_field->text();
+    int percent = ui->action_percent_field->text().toInt();
+    qDebug() << "select update_action('" + old_action_name + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');" << endl;
+    db->executeQuery(
+                "select update_action('" + old_action_name + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');",
+                "operator",
+                this
+    );
+    renew_actions();
+}
+
+void MainWindow::on_clear_action_form_clicked()
+{
+    ui->action_name_field->clear();
+    ui->action_percent_field->clear();
+    ui->start_action_date->date();
+    ui->stop_action_date->date();
+    ui->add_action_button->setEnabled(true);
+    ui->update_action->setEnabled(false);
+}
+
+
+void MainWindow::on_delete_action_clicked()
+{
+    QString name = ui->action_name_field->text();
+    db->executeQuery(
+                "delete from \"Lupa_A\".actions where action_name = '" + name +"';",
+                "operator",
+                this
+    );
+    renew_actions();
+}
+
 
 void MainWindow::on_is_individual_clicked(bool checked)
 {
@@ -108,8 +171,11 @@ void MainWindow::on_add_contractor_button_clicked()
 
 void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
 {
+    ui->add_contractor_button->setEnabled(false);
+    ui->update_contractor->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
+    old_contr_name = name;
     QString phone = index.sibling(row, 1).data().toString();
     QString adress = index.sibling(row, 2).data().toString();
     QDate birth = index.sibling(row, 3).data().toDate();
@@ -139,6 +205,29 @@ void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
     qDebug() << name << phone << adress << birth << numb << endl;
 }
 
+
+void MainWindow::on_update_contractor_clicked()
+{
+    QString name = ui->contractor_name_field->text();
+    QString phone = ui->phone_field->text();
+    QString adress = ui->adress_field->text();
+    QString birth = "";
+    QString number = "";
+
+    if (ui->is_individual->isChecked()) {
+        birth = ui->birthday_field->date().toString("yyyy.MM.dd");
+    }
+    if (ui->is_entity->isChecked()) {
+        number = ui->state_number_field->text();
+    }
+    db->executeQuery(
+                "select update_contractor('" + old_contr_name + "','" + name + "','" + phone + "','" + adress + "','" + birth + "','" + number + "');",
+                "operator",
+                this
+    );
+    renew_contractors();
+}
+
 void MainWindow::on_clear_contr_form_clicked()
 {
     ui->contractor_name_field->clear();
@@ -150,6 +239,8 @@ void MainWindow::on_clear_contr_form_clicked()
     ui->is_entity->setChecked(false);
     ui->state_number_field->setEnabled(false);
     ui->state_number_field->clear();
+    ui->add_contractor_button->setEnabled(true);
+    ui->update_contractor->setEnabled(false);
 }
 
 void MainWindow::on_delete_contr_clicked()

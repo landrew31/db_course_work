@@ -15,7 +15,6 @@
 #include <QModelIndex>
 
 #include "db_setup.h"
-#include "contractors.h"
 
 
 namespace Ui {
@@ -48,9 +47,21 @@ private slots:
 
     void on_delete_contr_clicked();
 
+    void on_tableView_actions_pressed(const QModelIndex &index);
+
+    void on_clear_action_form_clicked();
+
+    void on_delete_action_clicked();
+
+    void on_update_action_clicked();
+
+    void on_update_contractor_clicked();
+
 private:
     Ui::MainWindow *ui;
     DB_setup *db;
+    QString old_action_name;
+    QString old_contr_name;
 };
 
 #endif // MAINWINDOW_H

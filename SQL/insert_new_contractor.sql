@@ -9,8 +9,6 @@ BEGIN
   IF NOT EXISTS (SELECT * FROM "Lupa_A".contractors WHERE contr_name = got_name) THEN
   INSERT INTO "Lupa_A".contractors (contr_name, phone, adress) 
     VALUES (got_name, got_phone, got_adress);
-  ELSE
-    UPDATE "Lupa_A".contractors SET (phone, adress) = (got_phone, got_adress) WHERE contr_name = got_name;
   END IF;
   SELECT "Id_contr" into id FROM "Lupa_A".contractors
     WHERE contr_name = got_name;
@@ -19,18 +17,10 @@ BEGIN
     INSERT INTO "Lupa_A".individ_contr (birthday, "Id_contr")
       VALUES (to_date(got_birth, 'YYYY-MM-DD'), id);
   END IF;
-  IF got_birth <> '' THEN
-    UPDATE "Lupa_A".individ_contr SET birthday = to_date(got_birth, 'YYYY-MM-DD') WHERE "Id_contr" = id;
-  END IF;
-  IF got_birth = '' THEN
-    DELETE FROM "Lupa_A".individ_contr WHERE "Id_contr" = id;
-  END IF;
   IF got_state_number <> '' AND 
   NOT EXISTS (SELECT * FROM "Lupa_A".entity_contr WHERE "Id_contr" = id)THEN
     INSERT INTO "Lupa_A".entity_contr (state_number, "Id_contr")
       VALUES (got_state_number, id);
-  ELSE
-    UPDATE "Lupa_A".entity_contr SET state_number = got_state_number WHERE "Id_contr" = id; 
   END IF;
 RETURN id;
 END;

@@ -441,7 +441,7 @@
     <property name="currentIndex">
      <number>2</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tab_actions">
      <attribute name="title">
       <string>Акції</string>
      </attribute>
@@ -643,7 +643,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_3">
+    <widget class="QWidget" name="tab_contractors">
      <attribute name="title">
       <string>Контрагенти</string>
      </attribute>
@@ -821,17 +821,17 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="tab_programs">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Акційні програми</string>
      </attribute>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QTableView" name="tableView">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>280</y>
-        <width>113</width>
-        <height>27</height>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>511</height>
        </rect>
       </property>
      </widget>
