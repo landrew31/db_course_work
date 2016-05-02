@@ -1,4 +1,5 @@
-﻿CREATE OR REPLACE FUNCTION "Lupa_A".delete_action()
+﻿
+CREATE OR REPLACE FUNCTION "Lupa_A".delete_action()
 RETURNS trigger AS
 $BODY$
 DECLARE

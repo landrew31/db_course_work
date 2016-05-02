@@ -12,13 +12,15 @@ MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
     this->db = db;
     renew_actions();
     renew_contractors();
+    renew_programs();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
- /* refresh actions view */
+
+/* refresh actions view */
 void MainWindow::renew_actions()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions;");
@@ -49,15 +51,27 @@ void MainWindow::renew_contractors()
     model->setHeaderData(4, Qt::Horizontal, tr("Номер в реєстрі (юр.особа)"));
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
-//    model->sort(2, Qt::AscendingOrder);
     ui->tableView_contractors->setModel(proxyModel);
     ui->tableView_contractors->setSortingEnabled(true);
-//    ui->tableView_contractors->sortByColumn(2, Qt::AscendingOrder);
     ui->tableView_contractors->resizeColumnToContents(0);
     ui->tableView_contractors->resizeColumnToContents(1);
     ui->tableView_contractors->resizeColumnToContents(2);
     ui->tableView_contractors->resizeColumnToContents(3);
     ui->tableView_contractors->resizeColumnToContents(4);
+}
+
+void MainWindow::renew_programs()
+{
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_not_finished_actions_on_programs;");
+
+    model->setHeaderData(0, Qt::Horizontal, tr("Назва програми"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Доступні зараз акції"));
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    ui->tableView_programs->setModel(proxyModel);
+    ui->tableView_programs->setSortingEnabled(true);
+    ui->tableView_programs->resizeColumnToContents(0);
+    ui->tableView_programs->resizeColumnToContents(1);
 }
 
 /* adding action */
@@ -78,11 +92,13 @@ void MainWindow::on_add_action_button_clicked()
     renew_actions();
 
 }
+
 /* check one action by pressing on table */
 void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
 {
     ui->add_action_button->setEnabled(false);
     ui->update_action->setEnabled(true);
+    ui->delete_action->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
     old_action_name = name;
@@ -122,6 +138,7 @@ void MainWindow::on_clear_action_form_clicked()
     ui->stop_action_date->date();
     ui->add_action_button->setEnabled(true);
     ui->update_action->setEnabled(false);
+    ui->delete_action->setEnabled(false);
 }
 
 
@@ -173,6 +190,7 @@ void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
 {
     ui->add_contractor_button->setEnabled(false);
     ui->update_contractor->setEnabled(true);
+    ui->delete_contr->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
     old_contr_name = name;
@@ -204,7 +222,6 @@ void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
     }
     qDebug() << name << phone << adress << birth << numb << endl;
 }
-
 
 void MainWindow::on_update_contractor_clicked()
 {
@@ -241,6 +258,7 @@ void MainWindow::on_clear_contr_form_clicked()
     ui->state_number_field->clear();
     ui->add_contractor_button->setEnabled(true);
     ui->update_contractor->setEnabled(false);
+    ui->delete_contr->setEnabled(false);
 }
 
 void MainWindow::on_delete_contr_clicked()
@@ -252,4 +270,89 @@ void MainWindow::on_delete_contr_clicked()
                 this
     );
     renew_contractors();
+}
+
+void MainWindow::on_add_program_button_clicked()
+{
+    QString name = ui->program_name_field->text();
+    QString action_in_program = ui->action_in_program_field->text();
+
+    db->executeQuery(
+                "select insert_new_program('"+ name + "','" + action_in_program + "');",
+                "operator",
+                this
+    );
+    renew_programs();
+}
+
+void MainWindow::on_clear_program_form_clicked()
+{
+    ui->program_name_field->clear();
+    ui->action_in_program_field->clear();
+    ui->add_program_button->setEnabled(true);
+    ui->update_program_button->setEnabled(false);
+    ui->add_new_action_to_program_button->setEnabled(false);
+    ui->delete_action_from_program_button->setEnabled(false);
+    ui->delete_program_button->setEnabled(false);
+}
+
+void MainWindow::on_tableView_programs_pressed(const QModelIndex &index)
+{
+    ui->add_program_button->setEnabled(false);
+    ui->update_program_button->setEnabled(true);
+    ui->add_new_action_to_program_button->setEnabled(true);
+    ui->delete_action_from_program_button->setEnabled(true);
+    ui->delete_program_button->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    old_program_name = name;
+    ui->program_name_field->setText(name);
+}
+
+void MainWindow::on_update_program_button_clicked()
+{
+    QString name = ui->program_name_field->text();
+
+    db->executeQuery(
+                "select update_program_name('"+ old_program_name + "','" + name + "');",
+                "operator",
+                this
+    );
+    renew_programs();
+}
+
+void MainWindow::on_delete_program_button_clicked()
+{
+    QString name = ui->program_name_field->text();
+
+    db->executeQuery(
+                "delete from \"Lupa_A\".action_programs where program_name = '" + name + "';",
+                "operator",
+                this
+    );
+    renew_programs();
+}
+
+void MainWindow::on_add_new_action_to_program_button_clicked()
+{
+    QString action_in_program = ui->action_in_program_field->text();
+
+    db->executeQuery(
+                "select insert_new_action_in_program('"+ old_program_name + "','" + action_in_program + "');",
+                "operator",
+                this
+    );
+    renew_programs();
+}
+
+void MainWindow::on_delete_action_from_program_button_clicked()
+{
+    QString action_in_program = ui->action_in_program_field->text();
+
+    db->executeQuery(
+                "select delete_action_from_program('"+ old_program_name + "','" + action_in_program + "');",
+                "operator",
+                this
+    );
+    renew_programs();
 }
