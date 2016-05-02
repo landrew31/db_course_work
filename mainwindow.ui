@@ -872,7 +872,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>210</y>
+        <y>170</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -887,7 +887,7 @@
         <x>1030</x>
         <y>20</y>
         <width>301</width>
-        <height>181</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -902,7 +902,7 @@
          <x>10</x>
          <y>10</y>
          <width>281</width>
-         <height>161</height>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
@@ -923,18 +923,10 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="action_in_program_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Акція в програмі
-(вказувати не більше 1)</string>
+           <string>Акція в програмі</string>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -943,6 +935,9 @@
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QComboBox" name="action_on_program"/>
         </item>
        </layout>
       </widget>
@@ -954,7 +949,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>290</y>
+        <y>250</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -970,7 +965,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>250</y>
+        <y>210</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -986,7 +981,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>330</y>
+        <y>290</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -999,7 +994,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>370</y>
+        <y>330</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -1015,7 +1010,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>410</y>
+        <y>370</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -1023,6 +1018,52 @@
       <property name="text">
        <string>Видалити програму</string>
       </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_cards">
+     <attribute name="title">
+      <string>Картки</string>
+     </attribute>
+     <widget class="QTableView" name="tableView">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_4">
+      <property name="geometry">
+       <rect>
+        <x>1030</x>
+        <y>20</y>
+        <width>301</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>281</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QComboBox" name="comboBox"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </widget>

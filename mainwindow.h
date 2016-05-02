@@ -30,6 +30,7 @@ public:
     void renew_actions();
     void renew_contractors();
     void renew_programs();
+    void renew_action_on_program_comboBox();
     ~MainWindow();
 
 private slots:

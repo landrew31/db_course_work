@@ -15,7 +15,6 @@ class DB_setup
 public:
     DB_setup();
     ~DB_setup();
-
     bool connect_to_db(QWidget*);
     bool getConnected();
     QString getUser();

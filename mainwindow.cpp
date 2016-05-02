@@ -13,11 +13,19 @@ MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
     renew_actions();
     renew_contractors();
     renew_programs();
+    renew_action_on_program_comboBox();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::renew_action_on_program_comboBox()
+{
+    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
+    ui->action_on_program->setModel(model);
+    ui->action_on_program->setCurrentIndex(-1);
 }
 
 /* refresh actions view */
@@ -72,6 +80,7 @@ void MainWindow::renew_programs()
     ui->tableView_programs->setSortingEnabled(true);
     ui->tableView_programs->resizeColumnToContents(0);
     ui->tableView_programs->resizeColumnToContents(1);
+    ui->action_on_program->setCurrentIndex(-1);
 }
 
 /* adding action */
@@ -275,8 +284,7 @@ void MainWindow::on_delete_contr_clicked()
 void MainWindow::on_add_program_button_clicked()
 {
     QString name = ui->program_name_field->text();
-    QString action_in_program = ui->action_in_program_field->text();
-
+    QString action_in_program = ui->action_on_program->currentText();
     db->executeQuery(
                 "select insert_new_program('"+ name + "','" + action_in_program + "');",
                 "operator",
@@ -288,7 +296,7 @@ void MainWindow::on_add_program_button_clicked()
 void MainWindow::on_clear_program_form_clicked()
 {
     ui->program_name_field->clear();
-    ui->action_in_program_field->clear();
+    ui->action_on_program->setCurrentIndex(-1);
     ui->add_program_button->setEnabled(true);
     ui->update_program_button->setEnabled(false);
     ui->add_new_action_to_program_button->setEnabled(false);
@@ -335,7 +343,7 @@ void MainWindow::on_delete_program_button_clicked()
 
 void MainWindow::on_add_new_action_to_program_button_clicked()
 {
-    QString action_in_program = ui->action_in_program_field->text();
+    QString action_in_program = ui->action_on_program->currentText();
 
     db->executeQuery(
                 "select insert_new_action_in_program('"+ old_program_name + "','" + action_in_program + "');",
@@ -347,8 +355,7 @@ void MainWindow::on_add_new_action_to_program_button_clicked()
 
 void MainWindow::on_delete_action_from_program_button_clicked()
 {
-    QString action_in_program = ui->action_in_program_field->text();
-
+    QString action_in_program = ui->action_on_program->currentText();
     db->executeQuery(
                 "select delete_action_from_program('"+ old_program_name + "','" + action_in_program + "');",
                 "operator",
