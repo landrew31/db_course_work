@@ -13,7 +13,11 @@ MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
     renew_actions();
     renew_contractors();
     renew_programs();
+    renew_cards();
     renew_action_on_program_comboBox();
+    renew_contr_on_card_comboBox();
+    renew_program_on_card_comboBox();
+    renew_action_on_card_comboBox();
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/* RENEW COMBOBOXES BLOCK */
 void MainWindow::renew_action_on_program_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
@@ -28,7 +33,29 @@ void MainWindow::renew_action_on_program_comboBox()
     ui->action_on_program->setCurrentIndex(-1);
 }
 
-/* refresh actions view */
+void MainWindow::renew_contr_on_card_comboBox()
+{
+    QSqlQueryModel *model = db->getQueryModel("SELECT contr_name FROM \"Lupa_A\".contractors ORDER BY contr_name;");
+    ui->contr_for_card->setModel(model);
+    ui->contr_for_card->setCurrentIndex(-1);
+}
+
+void MainWindow::renew_program_on_card_comboBox()
+{
+    QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".action_programs ORDER BY program_name;");
+    ui->program_on_card->setModel(model);
+    ui->program_on_card->setCurrentIndex(-1);
+}
+
+void MainWindow::renew_action_on_card_comboBox()
+{
+    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
+    ui->single_action_on_card->setModel(model);
+    ui->single_action_on_card->setCurrentIndex(-1);
+}
+/* END RENEW COMBOBOXES BLOCK */
+
+/* RENEW VIEWS BLOCK */
 void MainWindow::renew_actions()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions;");
@@ -47,7 +74,6 @@ void MainWindow::renew_actions()
     ui->tableView_actions->resizeColumnToContents(3);
 }
 
-/* refresh contractors view */
 void MainWindow::renew_contractors()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_contractors;");
@@ -83,7 +109,29 @@ void MainWindow::renew_programs()
     ui->action_on_program->setCurrentIndex(-1);
 }
 
-/* adding action */
+void MainWindow::renew_cards()
+{
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_cards;");
+
+    model->setHeaderData(0, Qt::Horizontal, tr("Контрагент"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Доступні зараз програми"));
+    model->setHeaderData(2, Qt::Horizontal, tr("Доступні зараз акції"));
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    ui->tableView_cards->setModel(proxyModel);
+    ui->tableView_cards->setSortingEnabled(true);
+    ui->tableView_cards->resizeColumnToContents(0);
+    ui->tableView_cards->resizeColumnToContents(1);
+    ui->tableView_cards->resizeColumnToContents(2);
+    ui->contr_for_card->setCurrentIndex(-1);
+    ui->program_on_card->setCurrentIndex(-1);
+    ui->single_action_on_card->setCurrentIndex(-1);
+}
+
+/* END RENEW VIEWS BLOCK */
+
+/* START ACTIONS TAB SLOTS BLOCK */
+
 void MainWindow::on_add_action_button_clicked()
 {
     QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
@@ -102,7 +150,6 @@ void MainWindow::on_add_action_button_clicked()
 
 }
 
-/* check one action by pressing on table */
 void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
 {
     ui->add_action_button->setEnabled(false);
@@ -150,7 +197,6 @@ void MainWindow::on_clear_action_form_clicked()
     ui->delete_action->setEnabled(false);
 }
 
-
 void MainWindow::on_delete_action_clicked()
 {
     QString name = ui->action_name_field->text();
@@ -162,6 +208,9 @@ void MainWindow::on_delete_action_clicked()
     renew_actions();
 }
 
+/* END ACTIONS TAB SLOTS BLOCK */
+
+/* START CONTRACTORS TAB SLOTS BLOCK */
 
 void MainWindow::on_is_individual_clicked(bool checked)
 {
@@ -193,6 +242,7 @@ void MainWindow::on_add_contractor_button_clicked()
                 this
     );
     renew_contractors();
+    renew_contr_on_card_comboBox();
 }
 
 void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
@@ -281,6 +331,10 @@ void MainWindow::on_delete_contr_clicked()
     renew_contractors();
 }
 
+/* END CONTRACTORS TAB SLOTS BLOCK */
+
+/* START PROGRAMS TAB SLOTS BLOCK */
+
 void MainWindow::on_add_program_button_clicked()
 {
     QString name = ui->program_name_field->text();
@@ -362,4 +416,97 @@ void MainWindow::on_delete_action_from_program_button_clicked()
                 this
     );
     renew_programs();
+}
+
+/* END PROGRAMS TAB SLOTS BLOCK */
+
+/* START CARDS TAB SLOTS BLOCK */
+
+void MainWindow::on_add_card_clicked()
+{
+    QString contr_name = ui->contr_for_card->currentText();
+    QString program = ui->program_on_card->currentText();
+    QString action = ui->single_action_on_card->currentText();
+    qDebug() << contr_name << program << action << endl;
+    qDebug() << "select insert_new_card('" + contr_name + "','" + program + "','" + action + "');" << endl;
+    db->executeQuery(
+                "select insert_new_card('" + contr_name + "','" + program + "','" + action + "');",
+                "operator",
+                this
+    );
+    renew_cards();
+}
+
+void MainWindow::on_clear_card_form_clicked()
+{
+    ui->contr_for_card->setCurrentIndex(-1);
+    ui->program_on_card->setCurrentIndex(-1);
+    ui->single_action_on_card->setCurrentIndex(-1);
+    ui->add_card->setEnabled(true);
+    ui->add_program_on_card->setEnabled(false);
+    ui->delete_program_from_card->setEnabled(false);
+    ui->add_single_action_on_card->setEnabled(false);
+    ui->delete_single_action_from_card->setEnabled(false);
+}
+
+void MainWindow::on_tableView_cards_pressed(const QModelIndex &index)
+{
+    ui->add_card->setEnabled(false);
+    ui->add_program_on_card->setEnabled(true);
+    ui->delete_program_from_card->setEnabled(true);
+    ui->add_single_action_on_card->setEnabled(true);
+    ui->delete_single_action_from_card->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    ui->contr_for_card->setCurrentIndex(ui->contr_for_card->findText(name));
+    old_card_name = name;
+}
+
+void MainWindow::on_add_program_on_card_clicked()
+{
+    QString program_on_card = ui->program_on_card->currentText();
+
+    db->executeQuery(
+                "select insert_new_program_on_card('"+ old_card_name + "','" + program_on_card + "');",
+                "operator",
+                this
+    );
+    renew_cards();
+}
+
+void MainWindow::on_add_single_action_on_card_clicked()
+{
+    QString action_on_card = ui->single_action_on_card->currentText();
+
+    db->executeQuery(
+                "select insert_new_action_on_card('"+ old_card_name + "','" + action_on_card + "');",
+                "operator",
+                this
+    );
+    renew_cards();
+}
+
+void MainWindow::on_delete_program_from_card_clicked()
+{
+    QString program_on_card = ui->program_on_card->currentText();
+
+    db->executeQuery(
+                "select delete_program_from_card('"+ old_card_name + "','" + program_on_card + "');",
+                "operator",
+                this
+    );
+    qDebug() << "select delete_program_from_card('"+ old_card_name + "','" + program_on_card + "');" << endl;
+    renew_cards();
+}
+
+void MainWindow::on_delete_single_action_from_card_clicked()
+{
+    QString action_on_card = ui->single_action_on_card->currentText();
+
+    db->executeQuery(
+                "select delete_action_from_card('"+ old_card_name + "','" + action_on_card + "');",
+                "operator",
+                this
+    );
+    renew_cards();
 }
