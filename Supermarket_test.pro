@@ -22,7 +22,6 @@ SOURCES += main.cpp \
 HEADERS  += \
     mainwindow.h \
     dialogentry.h \
-    db_setup.h
     db_setup.h \
     messagebox.h
 

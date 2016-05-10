@@ -462,11 +462,7 @@
     <property name="currentIndex">
      <number>3</number>
     </property>
-<<<<<<< HEAD
-    <widget class="QWidget" name="tab1">
-=======
     <widget class="QWidget" name="tab_actions">
->>>>>>> andrew_lupa
      <attribute name="title">
       <string>Акції</string>
      </attribute>
