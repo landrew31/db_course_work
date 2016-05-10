@@ -15,11 +15,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     mainwindow.cpp \
-    dialogentry.cpp
+    dialogentry.cpp \
+    db_setup.cpp \
+    messagebox.cpp
 
 HEADERS  += \
     mainwindow.h \
-    dialogentry.h
+    dialogentry.h \
+    db_setup.h \
+    messagebox.h
 
 FORMS    += \
     mainwindow.ui \
