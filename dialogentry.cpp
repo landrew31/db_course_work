@@ -8,6 +8,7 @@ DialogEntry::DialogEntry(DB_setup *db, QWidget *parent) :
 {
     ui->setupUi(this);
     this->db = db;
+    ui->username_field->setFocus();
 }
 
 DialogEntry::~DialogEntry()
@@ -45,4 +46,3 @@ void DialogEntry::on_enter_button_clicked()
         mainWindow->show();
     }
 }
-

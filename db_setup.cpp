@@ -60,7 +60,7 @@ void DB_setup::setPassword(QString password)
 }
 
 QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
-{   
+{
     QSqlQueryModel *model = new QSqlQueryModel();
     //base.open();
     QSqlQuery query = base.exec(queryText);
@@ -78,12 +78,25 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
      query.prepare(queryText);
      bool executed = query.exec();
      qDebug() << executed << (user == executer )<< endl;
-     if (!executed && user != executer) {
-         QMessageBox::about(qwidget, "Помилка", "Вибачте, у Вас немає прав для даної операції.");
+     if (!executed && user == executer) {
+         showMessage("Помилка", "Вибачте, у Вас немає прав для даної операції.");
      } else if (!executed){
-         QMessageBox::about(qwidget, "Помилка", "Введіть, будь ласка, коректні дані.");
+         showMessage("Помилка", "Введіть, будь ласка, коректні дані.");
      } else {
-         QMessageBox::about(qwidget, "Сповіщення", "Дані додано. Ви можете оновити відображення.");
+         showMessage("Сповіщення", "Дані додано.");
      };
      return executed;
+ }
+
+ void DB_setup::showMessage(QString title, QString text)
+ {
+     MessageBox msgBox;
+     msgBox.setWindowTitle(title);
+     msgBox.setText(text);
+     msgBox.setIcon(QMessageBox::Information);
+     msgBox.setStandardButtons(QMessageBox::Ok);
+     msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
+     msgBox.setAutoClose(true);
+     msgBox.setTimeout(10); //Closes after ten seconds
+     msgBox.exec();
  }
