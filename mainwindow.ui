@@ -444,6 +444,12 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -459,10 +465,22 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab_actions">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
@@ -477,6 +495,9 @@
         <width>991</width>
         <height>511</height>
        </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="add_action_button">
@@ -1213,6 +1234,27 @@
       </property>
       <property name="text">
        <string>Очистити форму</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_stuff">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <attribute name="title">
+      <string>Персонал</string>
+     </attribute>
+     <widget class="QTableView" name="tableView_persons">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>511</height>
+       </rect>
       </property>
      </widget>
     </widget>

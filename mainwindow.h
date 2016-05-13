@@ -26,6 +26,8 @@ public:
     void renew_contr_on_card_comboBox();
     void renew_program_on_card_comboBox();
     void renew_action_on_card_comboBox();
+
+    void renew_persons();
     ~MainWindow();
 
 private slots:
