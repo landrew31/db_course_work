@@ -463,6 +463,9 @@
      <number>3</number>
     </property>
     <widget class="QWidget" name="tab_actions">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <attribute name="title">
       <string>Акції</string>
      </attribute>
