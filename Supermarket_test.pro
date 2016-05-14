@@ -17,14 +17,18 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     dialogentry.cpp \
     db_setup.cpp \
-    messagebox.cpp
+    messagebox.cpp \
+    functions.cpp \
+    hr_department.cpp
 
 HEADERS  += \
     mainwindow.h \
     dialogentry.h \
     db_setup.h \
-    messagebox.h
+    messagebox.h \
+    hr_department.h
 
 FORMS    += \
     mainwindow.ui \
-    dialogentry.ui
+    dialogentry.ui \
+    hr_department.ui

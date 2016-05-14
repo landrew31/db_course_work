@@ -18,8 +18,6 @@ MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
     renew_contr_on_card_comboBox();
     renew_program_on_card_comboBox();
     renew_action_on_card_comboBox();
-
-    renew_persons();
 }
 
 MainWindow::~MainWindow()
@@ -74,22 +72,6 @@ void MainWindow::renew_actions()
     ui->tableView_actions->resizeColumnToContents(1);
     ui->tableView_actions->resizeColumnToContents(2);
     ui->tableView_actions->resizeColumnToContents(3);
-}
-
-void MainWindow::renew_persons()
-{
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Myronenko_O\".show_persons;");
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Ім'я"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Прізвище"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Освіта"));
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
-    ui->tableView_persons->setModel(proxyModel);
-    ui->tableView_persons->setSortingEnabled(true);
-    ui->tableView_persons->resizeColumnToContents(0);
-    ui->tableView_persons->resizeColumnToContents(1);
-    ui->tableView_persons->resizeColumnToContents(2);
 }
 
 void MainWindow::renew_contractors()

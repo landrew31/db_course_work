@@ -475,7 +475,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_actions">
      <property name="enabled">
@@ -1238,6 +1238,9 @@
      </widget>
     </widget>
     <widget class="QWidget" name="tab_stuff">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
@@ -1245,7 +1248,7 @@
       <string/>
      </property>
      <attribute name="title">
-      <string>Персонал</string>
+      <string>Робітники</string>
      </attribute>
      <widget class="QTableView" name="tableView_persons">
       <property name="geometry">

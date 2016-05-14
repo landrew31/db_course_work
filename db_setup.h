@@ -19,7 +19,7 @@ public:
     bool getConnected();
     QString getUser();
     QString getPassword();
-    //QSqlDatabase getBase();
+//    QSqlDatabase getBase();
     void setUser(QString);
     void setPassword(QString);
     void showMessage(QString, QString);

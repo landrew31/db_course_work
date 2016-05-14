@@ -5,9 +5,11 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "db_setup.h"
 #include "mainwindow.h"
+#include "hr_department.h"
 
 namespace Ui {
     class DialogEntry;
@@ -30,6 +32,7 @@ private slots:
 private:
     Ui::DialogEntry *ui;
     DB_setup *db;
+    QStringList sale_dep_users, hr_dep_users, all_departments;
 };
 
 #endif // DIALOGENTRY_H
