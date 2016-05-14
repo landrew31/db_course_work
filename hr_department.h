@@ -27,6 +27,8 @@ public:
 
 private slots:
 
+    void on_button_addStuff_clicked();
+
 private:
     Ui::HR_department *ui;
     DB_setup *db;

@@ -1,17 +1,22 @@
-﻿CREATE OR REPLACE FUNCTION "Lupa_A".insert_new_contr()
+﻿CREATE OR REPLACE FUNCTION "Myronenko_O".insert_new_person()
 RETURNS trigger AS
 $BODY$
 BEGIN
-IF char_length(NEW.contr_name) = 0 OR char_length(NEW.phone) = 0 OR char_length(NEW.adress) = 0 THEN
+IF char_length(NEW.per_name) = 0 OR
+    char_length(NEW.per_surname) = 0 OR
+    char_length(NEW.education) = 0 OR
+    EXTRACT(YEAR from AGE(NEW.birthday)) < 18
+THEN
 RAISE EXCEPTION 'invalid data';
 END IF;
+
 RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_new_contr
+CREATE TRIGGER insert_new_person
 BEFORE INSERT
-ON "Lupa_A".contractors
+ON "Myronenko_O".person
 FOR EACH ROW
-EXECUTE PROCEDURE "Lupa_A".insert_new_contr();
+EXECUTE PROCEDURE "Myronenko_O".insert_new_person();
