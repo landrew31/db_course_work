@@ -41,6 +41,19 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="enter_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Увійти</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="cancel_entry_button">
         <property name="enabled">
          <bool>true</bool>
@@ -56,19 +69,6 @@
         </property>
         <property name="text">
          <string>Вихід</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="enter_button">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Увійти</string>
         </property>
        </widget>
       </item>
