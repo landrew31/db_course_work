@@ -17,8 +17,8 @@ DialogEntry::DialogEntry(DB_setup *db, QWidget *parent) :
         if (connected) {
             this->hide();
             if (UNSECURE_DEP == 1){
-                MainWindow* mainWindow = new MainWindow(db);
-                mainWindow->show();
+                Sale_department* sale_department = new Sale_department(db);
+                sale_department->show();
                 return;
             }
             if (UNSECURE_DEP == 2){
@@ -79,9 +79,9 @@ void DialogEntry::on_enter_button_clicked()
         }
         if (inQStringList(db->getUser(), chosenDepartmentUsers)) {
             if (choseDep == "Відділ продаж") {
-                MainWindow* mainWindow = new MainWindow(db);
+                Sale_department* sale_department = new Sale_department(db);
                 this->hide();
-                mainWindow->show();
+                sale_department->show();
                 return;
             }
             if (choseDep == "Відділ кадрів") {

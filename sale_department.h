@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SALE_DEPARTMENT_H
+#define SALE_DEPARTMENT_H
 
 #include <QMainWindow>
 #include <QVBoxLayout>
@@ -8,16 +8,19 @@
 #include <QModelIndex>
 #include "db_setup.h"
 
+
+#include "ui_sale_department.h"
+
 namespace Ui {
-class MainWindow;
+class Sale_department;
 }
 
-class MainWindow : public QMainWindow
+class Sale_department : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(DB_setup *db = 0, QWidget *parent = 0);
+    explicit Sale_department(DB_setup *db = 0, QWidget *parent = 0);
     void renew_actions();
     void renew_contractors();
     void renew_programs();
@@ -28,7 +31,7 @@ public:
     void renew_action_on_card_comboBox();
 
     void renew_persons();
-    ~MainWindow();
+    ~Sale_department();
 
 private slots:
     void on_add_action_button_clicked();
@@ -85,7 +88,7 @@ private slots:
     void on_delete_single_action_from_card_clicked();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::Sale_department *ui;
     DB_setup *db;
     QString old_action_name;
     QString old_contr_name;
@@ -93,4 +96,4 @@ private:
     QString old_card_name;
 };
 
-#endif // MAINWINDOW_H
+#endif // SALE_DEPARTMENT_H

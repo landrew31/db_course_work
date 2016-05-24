@@ -8,7 +8,7 @@
 #include <QMessageBox>
 
 #include "db_setup.h"
-#include "mainwindow.h"
+#include "sale_department.h"
 #include "hr_department.h"
 
 #define UNSECURE true

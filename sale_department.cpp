@@ -1,11 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "sale_department.h"
 #include "dialogentry.h"
 #include <QDebug>
 
-MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
+Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::Sale_department)
 {
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
@@ -20,34 +19,34 @@ MainWindow::MainWindow(DB_setup *db, QWidget *parent) :
     renew_action_on_card_comboBox();
 }
 
-MainWindow::~MainWindow()
+Sale_department::~Sale_department()
 {
     delete ui;
 }
 
 /* RENEW COMBOBOXES BLOCK */
-void MainWindow::renew_action_on_program_comboBox()
+void Sale_department::renew_action_on_program_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
     ui->action_on_program->setModel(model);
     ui->action_on_program->setCurrentIndex(-1);
 }
 
-void MainWindow::renew_contr_on_card_comboBox()
+void Sale_department::renew_contr_on_card_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT contr_name FROM \"Lupa_A\".contractors ORDER BY contr_name;");
     ui->contr_for_card->setModel(model);
     ui->contr_for_card->setCurrentIndex(-1);
 }
 
-void MainWindow::renew_program_on_card_comboBox()
+void Sale_department::renew_program_on_card_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".action_programs ORDER BY program_name;");
     ui->program_on_card->setModel(model);
     ui->program_on_card->setCurrentIndex(-1);
 }
 
-void MainWindow::renew_action_on_card_comboBox()
+void Sale_department::renew_action_on_card_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
     ui->single_action_on_card->setModel(model);
@@ -56,7 +55,7 @@ void MainWindow::renew_action_on_card_comboBox()
 /* END RENEW COMBOBOXES BLOCK */
 
 /* RENEW VIEWS BLOCK */
-void MainWindow::renew_actions()
+void Sale_department::renew_actions()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions;");
 
@@ -74,7 +73,7 @@ void MainWindow::renew_actions()
     ui->tableView_actions->resizeColumnToContents(3);
 }
 
-void MainWindow::renew_contractors()
+void Sale_department::renew_contractors()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_contractors;");
 
@@ -94,7 +93,7 @@ void MainWindow::renew_contractors()
     ui->tableView_contractors->resizeColumnToContents(4);
 }
 
-void MainWindow::renew_programs()
+void Sale_department::renew_programs()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_not_finished_actions_on_programs;");
 
@@ -109,7 +108,7 @@ void MainWindow::renew_programs()
     ui->action_on_program->setCurrentIndex(-1);
 }
 
-void MainWindow::renew_cards()
+void Sale_department::renew_cards()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_cards;");
 
@@ -132,7 +131,7 @@ void MainWindow::renew_cards()
 
 /* START ACTIONS TAB SLOTS BLOCK */
 
-void MainWindow::on_add_action_button_clicked()
+void Sale_department::on_add_action_button_clicked()
 {
     QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
     QString stop = ui->stop_action_date->date().toString("yyyy-MM-dd");
@@ -149,7 +148,7 @@ void MainWindow::on_add_action_button_clicked()
 
 }
 
-void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
+void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
 {
     ui->add_action_button->setEnabled(false);
     ui->update_action->setEnabled(true);
@@ -170,7 +169,7 @@ void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
     ui->stop_action_date->setDate(stop);
 }
 
-void MainWindow::on_update_action_clicked()
+void Sale_department::on_update_action_clicked()
 {
     QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
     QString stop = ui->stop_action_date->date().toString("yyyy-MM-dd");
@@ -185,7 +184,7 @@ void MainWindow::on_update_action_clicked()
     renew_actions();
 }
 
-void MainWindow::on_clear_action_form_clicked()
+void Sale_department::on_clear_action_form_clicked()
 {
     ui->action_name_field->clear();
     ui->action_percent_field->clear();
@@ -196,7 +195,7 @@ void MainWindow::on_clear_action_form_clicked()
     ui->delete_action->setEnabled(false);
 }
 
-void MainWindow::on_delete_action_clicked()
+void Sale_department::on_delete_action_clicked()
 {
     QString name = ui->action_name_field->text();
     db->executeQuery(
@@ -211,17 +210,17 @@ void MainWindow::on_delete_action_clicked()
 
 /* START CONTRACTORS TAB SLOTS BLOCK */
 
-void MainWindow::on_is_individual_clicked(bool checked)
+void Sale_department::on_is_individual_clicked(bool checked)
 {
     ui->birthday_field->setEnabled(checked);
 }
 
-void MainWindow::on_is_entity_clicked(bool checked)
+void Sale_department::on_is_entity_clicked(bool checked)
 {
     ui->state_number_field->setEnabled(checked);
 }
 
-void MainWindow::on_add_contractor_button_clicked()
+void Sale_department::on_add_contractor_button_clicked()
 {
     QString name = ui->contractor_name_field->text();
     QString phone = ui->phone_field->text();
@@ -244,7 +243,7 @@ void MainWindow::on_add_contractor_button_clicked()
     renew_contr_on_card_comboBox();
 }
 
-void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
+void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
 {
     ui->add_contractor_button->setEnabled(false);
     ui->update_contractor->setEnabled(true);
@@ -281,7 +280,7 @@ void MainWindow::on_tableView_contractors_pressed(const QModelIndex &index)
     qDebug() << name << phone << adress << birth << numb << endl;
 }
 
-void MainWindow::on_update_contractor_clicked()
+void Sale_department::on_update_contractor_clicked()
 {
     QString name = ui->contractor_name_field->text();
     QString phone = ui->phone_field->text();
@@ -303,7 +302,7 @@ void MainWindow::on_update_contractor_clicked()
     renew_contractors();
 }
 
-void MainWindow::on_clear_contr_form_clicked()
+void Sale_department::on_clear_contr_form_clicked()
 {
     ui->contractor_name_field->clear();
     ui->phone_field->clear();
@@ -319,7 +318,7 @@ void MainWindow::on_clear_contr_form_clicked()
     ui->delete_contr->setEnabled(false);
 }
 
-void MainWindow::on_delete_contr_clicked()
+void Sale_department::on_delete_contr_clicked()
 {
     QString name = ui->contractor_name_field->text();
     db->executeQuery(
@@ -334,7 +333,7 @@ void MainWindow::on_delete_contr_clicked()
 
 /* START PROGRAMS TAB SLOTS BLOCK */
 
-void MainWindow::on_add_program_button_clicked()
+void Sale_department::on_add_program_button_clicked()
 {
     QString name = ui->program_name_field->text();
     QString action_in_program = ui->action_on_program->currentText();
@@ -346,7 +345,7 @@ void MainWindow::on_add_program_button_clicked()
     renew_programs();
 }
 
-void MainWindow::on_clear_program_form_clicked()
+void Sale_department::on_clear_program_form_clicked()
 {
     ui->program_name_field->clear();
     ui->action_on_program->setCurrentIndex(-1);
@@ -357,7 +356,7 @@ void MainWindow::on_clear_program_form_clicked()
     ui->delete_program_button->setEnabled(false);
 }
 
-void MainWindow::on_tableView_programs_pressed(const QModelIndex &index)
+void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
 {
     ui->add_program_button->setEnabled(false);
     ui->update_program_button->setEnabled(true);
@@ -370,7 +369,7 @@ void MainWindow::on_tableView_programs_pressed(const QModelIndex &index)
     ui->program_name_field->setText(name);
 }
 
-void MainWindow::on_update_program_button_clicked()
+void Sale_department::on_update_program_button_clicked()
 {
     QString name = ui->program_name_field->text();
 
@@ -382,7 +381,7 @@ void MainWindow::on_update_program_button_clicked()
     renew_programs();
 }
 
-void MainWindow::on_delete_program_button_clicked()
+void Sale_department::on_delete_program_button_clicked()
 {
     QString name = ui->program_name_field->text();
 
@@ -394,7 +393,7 @@ void MainWindow::on_delete_program_button_clicked()
     renew_programs();
 }
 
-void MainWindow::on_add_new_action_to_program_button_clicked()
+void Sale_department::on_add_new_action_to_program_button_clicked()
 {
     QString action_in_program = ui->action_on_program->currentText();
 
@@ -406,7 +405,7 @@ void MainWindow::on_add_new_action_to_program_button_clicked()
     renew_programs();
 }
 
-void MainWindow::on_delete_action_from_program_button_clicked()
+void Sale_department::on_delete_action_from_program_button_clicked()
 {
     QString action_in_program = ui->action_on_program->currentText();
     db->executeQuery(
@@ -421,7 +420,7 @@ void MainWindow::on_delete_action_from_program_button_clicked()
 
 /* START CARDS TAB SLOTS BLOCK */
 
-void MainWindow::on_add_card_clicked()
+void Sale_department::on_add_card_clicked()
 {
     QString contr_name = ui->contr_for_card->currentText();
     QString program = ui->program_on_card->currentText();
@@ -436,7 +435,7 @@ void MainWindow::on_add_card_clicked()
     renew_cards();
 }
 
-void MainWindow::on_clear_card_form_clicked()
+void Sale_department::on_clear_card_form_clicked()
 {
     ui->contr_for_card->setCurrentIndex(-1);
     ui->program_on_card->setCurrentIndex(-1);
@@ -448,7 +447,7 @@ void MainWindow::on_clear_card_form_clicked()
     ui->delete_single_action_from_card->setEnabled(false);
 }
 
-void MainWindow::on_tableView_cards_pressed(const QModelIndex &index)
+void Sale_department::on_tableView_cards_pressed(const QModelIndex &index)
 {
     ui->add_card->setEnabled(false);
     ui->add_program_on_card->setEnabled(true);
@@ -461,7 +460,7 @@ void MainWindow::on_tableView_cards_pressed(const QModelIndex &index)
     old_card_name = name;
 }
 
-void MainWindow::on_add_program_on_card_clicked()
+void Sale_department::on_add_program_on_card_clicked()
 {
     QString program_on_card = ui->program_on_card->currentText();
 
@@ -473,7 +472,7 @@ void MainWindow::on_add_program_on_card_clicked()
     renew_cards();
 }
 
-void MainWindow::on_add_single_action_on_card_clicked()
+void Sale_department::on_add_single_action_on_card_clicked()
 {
     QString action_on_card = ui->single_action_on_card->currentText();
 
@@ -485,7 +484,7 @@ void MainWindow::on_add_single_action_on_card_clicked()
     renew_cards();
 }
 
-void MainWindow::on_delete_program_from_card_clicked()
+void Sale_department::on_delete_program_from_card_clicked()
 {
     QString program_on_card = ui->program_on_card->currentText();
 
@@ -498,7 +497,7 @@ void MainWindow::on_delete_program_from_card_clicked()
     renew_cards();
 }
 
-void MainWindow::on_delete_single_action_from_card_clicked()
+void Sale_department::on_delete_single_action_from_card_clicked()
 {
     QString action_on_card = ui->single_action_on_card->currentText();
 
