@@ -496,7 +496,7 @@
         <x>20</x>
         <y>20</y>
         <width>991</width>
-        <height>511</height>
+        <height>521</height>
        </rect>
       </property>
       <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -506,26 +506,13 @@
        <bool>false</bool>
       </attribute>
      </widget>
-     <widget class="QPushButton" name="button_addStuff">
-      <property name="geometry">
-       <rect>
-        <x>1040</x>
-        <y>300</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Додати робітника</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="frame_actions">
       <property name="geometry">
        <rect>
         <x>1040</x>
         <y>20</y>
-        <width>261</width>
-        <height>271</height>
+        <width>251</width>
+        <height>451</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -534,55 +521,217 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QWidget" name="gridLayoutWidget">
+      <widget class="QWidget" name="gridLayoutWidget_2">
        <property name="geometry">
         <rect>
          <x>9</x>
          <y>10</y>
-         <width>241</width>
-         <height>251</height>
+         <width>231</width>
+         <height>431</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="5" column="0">
+         <widget class="QPushButton" name="button_changePersSchedule">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Змінити розклад</string>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Дата народження</string>
+         <widget class="QPushButton" name="button_addPersAbsence">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Прізвище</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="line_persurname"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Ім'я</string>
+           <string>Відмітити відсутність</string>
           </property>
          </widget>
         </item>
         <item row="6" column="0">
-         <widget class="QLabel" name="label_4">
+         <widget class="QPushButton" name="button_firePers">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
-           <string>Освіта</string>
+           <string>Звільнити</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="Line" name="line">
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="button_showPersInfo">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Показати інформацію</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="button_changePersPosition">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Змінити посаду</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLineEdit" name="line_pername"/>
+         <widget class="QPushButton" name="button_editPersInfo">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Редагувати інформацію</string>
+          </property>
+         </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QDateEdit" name="date_perbirth"/>
+        <item row="8" column="0">
+         <widget class="QPushButton" name="button_addStuff">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Найняти робітника</string>
+          </property>
+         </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QLineEdit" name="line_peredu"/>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="button_closeWindow">
+      <property name="geometry">
+       <rect>
+        <x>1050</x>
+        <y>620</y>
+        <width>231</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Вихід</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_filter">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>570</y>
+        <width>301</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>281</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Фільтр </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetNoConstraint</enum>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>З</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="dateEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>по</string>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="dateEdit_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>

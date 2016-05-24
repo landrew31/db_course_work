@@ -35,24 +35,28 @@ void HR_department::renewPersons()
     ui->table_stuff->resizeColumnToContents(2);
 }
 
-void HR_department::on_button_addStuff_clicked()
+//void HR_department::on_button_addStuff_clicked()
+//{
+
+//    QString name = ui->line_pername->text();
+//    QString surname = ui->line_persurname->text();
+//    QString birthday = ui->date_perbirth->date().toString("yyyy-MM-dd");
+//    QString education = ui->line_peredu->text();
+
+//    qDebug() << name << surname << birthday << education;
+
+//    db->executeQuery(
+//                "insert into \"Myronenko_O\".person (per_name, per_surname, birthday, education) values('"
+//                    + name + "','"
+//                    + surname + "','"
+//                    + birthday + "','"
+//                    + education + "');",
+//                "operator",
+//                this
+//    );
+//    renewPersons();
+//}
+void HR_department::on_button_closeWindow_clicked()
 {
-
-    QString name = ui->line_pername->text();
-    QString surname = ui->line_persurname->text();
-    QString birthday = ui->date_perbirth->date().toString("yyyy-MM-dd");
-    QString education = ui->line_peredu->text();
-
-    qDebug() << name << surname << birthday << education;
-
-    db->executeQuery(
-                "insert into \"Myronenko_O\".person (per_name, per_surname, birthday, education) values('"
-                    + name + "','"
-                    + surname + "','"
-                    + birthday + "','"
-                    + education + "');",
-                "operator",
-                this
-    );
-    renewPersons();
+    this->close();
 }

@@ -27,7 +27,7 @@ public:
 
 private slots:
 
-    void on_button_addStuff_clicked();
+    void on_button_closeWindow_clicked();
 
 private:
     Ui::HR_department *ui;
