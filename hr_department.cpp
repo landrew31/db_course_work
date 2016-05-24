@@ -63,6 +63,5 @@ void HR_department::on_button_closeWindow_clicked()
 void HR_department::on_button_editPersInfo_clicked()
 {
     Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db);
-    dialog_editPersInfo->setModal(true);
     dialog_editPersInfo->show();
 }

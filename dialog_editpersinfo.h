@@ -6,9 +6,11 @@
 #include <QPushButton>
 #include <QDateEdit>
 #include <QModelIndex>
+#include <QDebug>
 #include "db_setup.h"
 
 #include "ui_dialogui_editpersinfo.h"
+
 
 namespace Ui {
 class DialogUi_editPersInfo;
@@ -16,8 +18,6 @@ class DialogUi_editPersInfo;
 
 class Dialog_editPersInfo: public QDialog
 {
-    Q_OBJECT
-
 public:
     explicit Dialog_editPersInfo(DB_setup* db = 0, QWidget *parent = 0);
     ~Dialog_editPersInfo();

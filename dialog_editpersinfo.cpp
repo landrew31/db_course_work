@@ -1,6 +1,4 @@
 #include "dialog_editpersinfo.h"
-#include "dialogentry.h"
-#include <QDebug>
 
 
 Dialog_editPersInfo::Dialog_editPersInfo(DB_setup *db, QWidget *parent) :

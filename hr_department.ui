@@ -435,7 +435,10 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Супермаркет</string>
+   <string>Супермаркет. Відділ кадрів</string>
+  </property>
+  <property name="locale">
+   <locale language="Ukrainian" country="Ukraine"/>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -512,7 +515,7 @@
         <x>1040</x>
         <y>20</y>
         <width>251</width>
-        <height>451</height>
+        <height>521</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -527,7 +530,7 @@
          <x>9</x>
          <y>10</y>
          <width>231</width>
-         <height>431</height>
+         <height>361</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
