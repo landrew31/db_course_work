@@ -1,6 +1,8 @@
 #include "sale_department.h"
 #include "dialogentry.h"
 #include <QDebug>
+#include "renew_sale_table_view_functions.cpp"
+#include "renew_sale_combobox_functions.cpp"
 
 Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     QMainWindow(parent),
@@ -9,14 +11,14 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     this->db = db;
-    renew_actions();
-    renew_contractors();
-    renew_programs();
-    renew_cards();
-    renew_action_on_program_comboBox();
-    renew_contr_on_card_comboBox();
-    renew_program_on_card_comboBox();
-    renew_action_on_card_comboBox();
+    renew_actions(db, ui->tableView_actions);
+    renew_contractors(db, ui->tableView_contractors);
+    renew_programs(db, ui->tableView_programs);
+    renew_cards(db, ui->tableView_cards);
+    renew_action_on_program_comboBox(db, ui->action_on_program);
+    renew_contr_on_card_comboBox(db, ui->contr_for_card);
+    renew_program_on_card_comboBox(db, ui->program_on_card);
+    renew_action_on_card_comboBox(db, ui->single_action_on_card);
 }
 
 Sale_department::~Sale_department()
@@ -24,110 +26,6 @@ Sale_department::~Sale_department()
     delete ui;
 }
 
-/* RENEW COMBOBOXES BLOCK */
-void Sale_department::renew_action_on_program_comboBox()
-{
-    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
-    ui->action_on_program->setModel(model);
-    ui->action_on_program->setCurrentIndex(-1);
-}
-
-void Sale_department::renew_contr_on_card_comboBox()
-{
-    QSqlQueryModel *model = db->getQueryModel("SELECT contr_name FROM \"Lupa_A\".contractors ORDER BY contr_name;");
-    ui->contr_for_card->setModel(model);
-    ui->contr_for_card->setCurrentIndex(-1);
-}
-
-void Sale_department::renew_program_on_card_comboBox()
-{
-    QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".action_programs ORDER BY program_name;");
-    ui->program_on_card->setModel(model);
-    ui->program_on_card->setCurrentIndex(-1);
-}
-
-void Sale_department::renew_action_on_card_comboBox()
-{
-    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
-    ui->single_action_on_card->setModel(model);
-    ui->single_action_on_card->setCurrentIndex(-1);
-}
-/* END RENEW COMBOBOXES BLOCK */
-
-/* RENEW VIEWS BLOCK */
-void Sale_department::renew_actions()
-{
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions;");
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Назва акції"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Відсоток по акції"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Початок акції"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Кінець акції"));
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
-    ui->tableView_actions->setModel(proxyModel);
-    ui->tableView_actions->setSortingEnabled(true);
-    ui->tableView_actions->resizeColumnToContents(0);
-    ui->tableView_actions->resizeColumnToContents(1);
-    ui->tableView_actions->resizeColumnToContents(2);
-    ui->tableView_actions->resizeColumnToContents(3);
-}
-
-void Sale_department::renew_contractors()
-{
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_contractors;");
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Ім'я контрагента"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Телефон"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Адреса"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Дата народження (фіз.особа)"));
-    model->setHeaderData(4, Qt::Horizontal, tr("Номер в реєстрі (юр.особа)"));
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
-    ui->tableView_contractors->setModel(proxyModel);
-    ui->tableView_contractors->setSortingEnabled(true);
-    ui->tableView_contractors->resizeColumnToContents(0);
-    ui->tableView_contractors->resizeColumnToContents(1);
-    ui->tableView_contractors->resizeColumnToContents(2);
-    ui->tableView_contractors->resizeColumnToContents(3);
-    ui->tableView_contractors->resizeColumnToContents(4);
-}
-
-void Sale_department::renew_programs()
-{
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_not_finished_actions_on_programs;");
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Назва програми"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Доступні зараз акції"));
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
-    ui->tableView_programs->setModel(proxyModel);
-    ui->tableView_programs->setSortingEnabled(true);
-    ui->tableView_programs->resizeColumnToContents(0);
-    ui->tableView_programs->resizeColumnToContents(1);
-    ui->action_on_program->setCurrentIndex(-1);
-}
-
-void Sale_department::renew_cards()
-{
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_cards;");
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Контрагент"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Доступні зараз програми"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Доступні зараз акції"));
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(model);
-    ui->tableView_cards->setModel(proxyModel);
-    ui->tableView_cards->setSortingEnabled(true);
-    ui->tableView_cards->resizeColumnToContents(0);
-    ui->tableView_cards->resizeColumnToContents(1);
-    ui->tableView_cards->resizeColumnToContents(2);
-    ui->contr_for_card->setCurrentIndex(-1);
-    ui->program_on_card->setCurrentIndex(-1);
-    ui->single_action_on_card->setCurrentIndex(-1);
-}
-
-/* END RENEW VIEWS BLOCK */
 
 /* START ACTIONS TAB SLOTS BLOCK */
 
@@ -144,7 +42,7 @@ void Sale_department::on_add_action_button_clicked()
                 "operator",
                 this
     );
-    renew_actions();
+    renew_actions(db, ui->tableView_actions);
 
 }
 
@@ -181,7 +79,7 @@ void Sale_department::on_update_action_clicked()
                 "operator",
                 this
     );
-    renew_actions();
+    renew_actions(db, ui->tableView_actions);
 }
 
 void Sale_department::on_clear_action_form_clicked()
@@ -203,7 +101,7 @@ void Sale_department::on_delete_action_clicked()
                 "operator",
                 this
     );
-    renew_actions();
+    renew_actions(db, ui->tableView_actions);
 }
 
 /* END ACTIONS TAB SLOTS BLOCK */
@@ -239,8 +137,8 @@ void Sale_department::on_add_contractor_button_clicked()
                 "operator",
                 this
     );
-    renew_contractors();
-    renew_contr_on_card_comboBox();
+    renew_contractors(db, ui->tableView_contractors);
+    renew_contr_on_card_comboBox(db, ui->contr_for_card);
 }
 
 void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
@@ -299,7 +197,7 @@ void Sale_department::on_update_contractor_clicked()
                 "operator",
                 this
     );
-    renew_contractors();
+    renew_contractors(db, ui->tableView_contractors);
 }
 
 void Sale_department::on_clear_contr_form_clicked()
@@ -326,7 +224,7 @@ void Sale_department::on_delete_contr_clicked()
                 "operator",
                 this
     );
-    renew_contractors();
+    renew_contractors(db, ui->tableView_contractors);
 }
 
 /* END CONTRACTORS TAB SLOTS BLOCK */
@@ -342,7 +240,7 @@ void Sale_department::on_add_program_button_clicked()
                 "operator",
                 this
     );
-    renew_programs();
+    renew_programs(db, ui->tableView_programs);
 }
 
 void Sale_department::on_clear_program_form_clicked()
@@ -378,7 +276,7 @@ void Sale_department::on_update_program_button_clicked()
                 "operator",
                 this
     );
-    renew_programs();
+    renew_programs(db, ui->tableView_programs);
 }
 
 void Sale_department::on_delete_program_button_clicked()
@@ -390,7 +288,7 @@ void Sale_department::on_delete_program_button_clicked()
                 "operator",
                 this
     );
-    renew_programs();
+    renew_programs(db, ui->tableView_programs);
 }
 
 void Sale_department::on_add_new_action_to_program_button_clicked()
@@ -402,7 +300,7 @@ void Sale_department::on_add_new_action_to_program_button_clicked()
                 "operator",
                 this
     );
-    renew_programs();
+    renew_programs(db, ui->tableView_programs);
 }
 
 void Sale_department::on_delete_action_from_program_button_clicked()
@@ -413,7 +311,7 @@ void Sale_department::on_delete_action_from_program_button_clicked()
                 "operator",
                 this
     );
-    renew_programs();
+    renew_programs(db, ui->tableView_programs);
 }
 
 /* END PROGRAMS TAB SLOTS BLOCK */
@@ -432,7 +330,7 @@ void Sale_department::on_add_card_clicked()
                 "operator",
                 this
     );
-    renew_cards();
+    renew_cards(db, ui->tableView_cards);
 }
 
 void Sale_department::on_clear_card_form_clicked()
@@ -469,7 +367,7 @@ void Sale_department::on_add_program_on_card_clicked()
                 "operator",
                 this
     );
-    renew_cards();
+    renew_cards(db, ui->tableView_cards);
 }
 
 void Sale_department::on_add_single_action_on_card_clicked()
@@ -481,7 +379,7 @@ void Sale_department::on_add_single_action_on_card_clicked()
                 "operator",
                 this
     );
-    renew_cards();
+    renew_cards(db, ui->tableView_cards);
 }
 
 void Sale_department::on_delete_program_from_card_clicked()
@@ -494,7 +392,7 @@ void Sale_department::on_delete_program_from_card_clicked()
                 this
     );
     qDebug() << "select delete_program_from_card('"+ old_card_name + "','" + program_on_card + "');" << endl;
-    renew_cards();
+    renew_cards(db, ui->tableView_cards);
 }
 
 void Sale_department::on_delete_single_action_from_card_clicked()
@@ -506,5 +404,5 @@ void Sale_department::on_delete_single_action_from_card_clicked()
                 "operator",
                 this
     );
-    renew_cards();
+    renew_cards(db, ui->tableView_cards);
 }

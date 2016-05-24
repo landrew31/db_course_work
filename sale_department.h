@@ -21,16 +21,6 @@ class Sale_department : public QMainWindow
 
 public:
     explicit Sale_department(DB_setup *db = 0, QWidget *parent = 0);
-    void renew_actions();
-    void renew_contractors();
-    void renew_programs();
-    void renew_cards();
-    void renew_action_on_program_comboBox();
-    void renew_contr_on_card_comboBox();
-    void renew_program_on_card_comboBox();
-    void renew_action_on_card_comboBox();
-
-    void renew_persons();
     ~Sale_department();
 
 private slots:
