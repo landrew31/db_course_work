@@ -9,6 +9,26 @@ DialogEntry::DialogEntry(DB_setup *db, QWidget *parent) :
 {
     ui->setupUi(this);
     this->db = db;
+
+    if (UNSECURE){
+        db->setUser("admin");
+        db->setPassword("admin");
+        bool connected = db->connect_to_db(this);
+        if (connected) {
+            this->hide();
+            if (UNSECURE_DEP == 1){
+                MainWindow* mainWindow = new MainWindow(db);
+                mainWindow->show();
+                return;
+            }
+            if (UNSECURE_DEP == 2){
+                HR_department* hr_department = new HR_department(db);
+                hr_department->show();
+                return;
+            }
+        };
+    }
+
     sale_dep_users.append("admin");
     sale_dep_users.append("operator");
     hr_dep_users.append("admin");

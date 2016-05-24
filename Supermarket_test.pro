@@ -19,16 +19,19 @@ SOURCES += main.cpp \
     db_setup.cpp \
     messagebox.cpp \
     functions.cpp \
-    hr_department.cpp
+    hr_department.cpp \
+    dialog_editpersinfo.cpp
 
 HEADERS  += \
     mainwindow.h \
     dialogentry.h \
     db_setup.h \
     messagebox.h \
-    hr_department.h
+    hr_department.h \
+    dialog_editpersinfo.h
 
 FORMS    += \
     mainwindow.ui \
     dialogentry.ui \
-    hr_department.ui
+    hr_department.ui \
+    dialogui_editpersinfo.ui

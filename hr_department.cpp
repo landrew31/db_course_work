@@ -1,7 +1,6 @@
 #include "hr_department.h"
-#include "ui_hr_department.h"
 #include "dialogentry.h"
-#include <QDebug>
+
 
 HR_department::HR_department(DB_setup *db, QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +10,7 @@ HR_department::HR_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
 
-    renewPersons();
+    showStaffTable();
 }
 
 HR_department::~HR_department()
@@ -19,7 +18,7 @@ HR_department::~HR_department()
     delete ui;
 }
 
-void HR_department::renewPersons()
+void HR_department::showStaffTable()
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Myronenko_O\".show_persons;");
 
@@ -28,11 +27,11 @@ void HR_department::renewPersons()
     model->setHeaderData(2, Qt::Horizontal, tr("Освіта"));
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
-    ui->table_stuff->setModel(proxyModel);
-    ui->table_stuff->setSortingEnabled(true);
-    ui->table_stuff->resizeColumnToContents(0);
-    ui->table_stuff->resizeColumnToContents(1);
-    ui->table_stuff->resizeColumnToContents(2);
+    ui->table_staff->setModel(proxyModel);
+    ui->table_staff->setSortingEnabled(true);
+    ui->table_staff->resizeColumnToContents(0);
+    ui->table_staff->resizeColumnToContents(1);
+    ui->table_staff->resizeColumnToContents(2);
 }
 
 //void HR_department::on_button_addStuff_clicked()
@@ -54,9 +53,16 @@ void HR_department::renewPersons()
 //                "operator",
 //                this
 //    );
-//    renewPersons();
+//    showStaffTable();
 //}
 void HR_department::on_button_closeWindow_clicked()
 {
     this->close();
+}
+
+void HR_department::on_button_editPersInfo_clicked()
+{
+    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db);
+    dialog_editPersInfo->setModal(true);
+    dialog_editPersInfo->show();
 }

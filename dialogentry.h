@@ -11,6 +11,9 @@
 #include "mainwindow.h"
 #include "hr_department.h"
 
+#define UNSECURE true
+#define UNSECURE_DEP 1
+
 namespace Ui {
     class DialogEntry;
 }

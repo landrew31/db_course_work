@@ -490,7 +490,7 @@
      <attribute name="title">
       <string>Робітники</string>
      </attribute>
-     <widget class="QTableView" name="table_stuff">
+     <widget class="QTableView" name="table_staff">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -618,7 +618,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>620</y>
+        <y>630</y>
         <width>231</width>
         <height>27</height>
        </rect>
