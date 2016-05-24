@@ -20,18 +20,33 @@ HR_department::~HR_department()
 
 void HR_department::showStaffTable()
 {
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Myronenko_O\".show_persons;");
+    QString viewDate = ui->date_historyView->date().toString("yyyy-MM-dd");
+    QSqlQueryModel *model = db->getQueryModel(
+        "select * from \"Myronenko_O\".show_staff where date_in <= '" + viewDate + "' and (date_out is null or date_out >= '" + viewDate + "');"
+    );
 
-    model->setHeaderData(0, Qt::Horizontal, tr("Ім'я"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Прізвище"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Освіта"));
+    model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Ім'я"));
+    model->setHeaderData(2, Qt::Horizontal, tr("Прізвище"));
+
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
     ui->table_staff->setModel(proxyModel);
     ui->table_staff->setSortingEnabled(true);
-    ui->table_staff->resizeColumnToContents(0);
-    ui->table_staff->resizeColumnToContents(1);
-    ui->table_staff->resizeColumnToContents(2);
+    ui->table_staff->resizeColumnsToContents();
+    ui->table_staff->setColumnHidden(3, true);
+    ui->table_staff->setColumnHidden(4, true);
+    ui->table_staff->setColumnHidden(5, true);
+    ui->table_staff->setColumnHidden(6, true);
+    ui->table_staff->setColumnHidden(7, true);
+    ui->table_staff->setColumnHidden(8, true);
+    ui->table_staff->setColumnHidden(9, true);
+
+    for (int c = 0; c < ui->table_staff->horizontalHeader()->count(); ++c)
+    {
+        ui->table_staff->horizontalHeader()->setSectionResizeMode(
+            c, QHeaderView::Stretch);
+    }
 }
 
 //void HR_department::on_button_addStuff_clicked()
@@ -64,4 +79,45 @@ void HR_department::on_button_editPersInfo_clicked()
 {
     Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db);
     dialog_editPersInfo->show();
+}
+
+//void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)
+//{
+//    ui->add_action_button->setEnabled(false);
+//    ui->update_action->setEnabled(true);
+//    ui->delete_action->setEnabled(true);
+//    int row = index.row();
+//    QString name = index.sibling(row, 0).data().toString();
+//    old_action_name = name;
+//    qDebug() << old_action_name << endl;
+//    QDate start = index.sibling(row, 2).data().toDate();
+//    QString str_start = start.toString();
+//    QDate stop = index.sibling(row, 3).data().toDate();
+//    QString str_stop = stop.toString();
+//    int percent = index.sibling(row, 1).data().toInt();
+//    QString str_percent = QString::number(percent);
+//    ui->action_name_field->setText(name);
+//    ui->action_percent_field->setText(str_percent);
+//    ui->start_action_date->setDate(start);
+//    ui->stop_action_date->setDate(stop);
+//}
+
+void HR_department::on_table_staff_pressed(const QModelIndex &index)
+{
+    ui->button_showPersInfo->setEnabled(true);
+    ui->button_editPersInfo->setEnabled(true);
+    ui->button_changePersPosition->setEnabled(true);
+    ui->button_addPersAbsence->setEnabled(true);
+    ui->button_changePersSchedule->setEnabled(true);
+    ui->button_firePers->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    QString id = index.sibling(row, 1).data().toString();
+    qDebug() << name << id << endl;
+
+}
+
+void HR_department::on_date_historyView_dateChanged()
+{
+    showStaffTable();
 }

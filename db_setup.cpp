@@ -62,8 +62,8 @@ void DB_setup::setPassword(QString password)
 QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
 {
     QSqlQueryModel *model = new QSqlQueryModel();
-    //base.open();
     QSqlQuery query = base.exec(queryText);
+//    qDebug() << query.lastError();
     query.first();
     //QString result = query.record().value(0).toString();
     //query->exec();

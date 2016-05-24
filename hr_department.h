@@ -36,6 +36,10 @@ private slots:
 
     void on_button_editPersInfo_clicked();
 
+    void on_table_staff_pressed(const QModelIndex &index);
+
+    void on_date_historyView_dateChanged();
+
 private:
     Ui::HR_department *ui;
     DB_setup *db;

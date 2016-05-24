@@ -530,12 +530,22 @@
          <x>9</x>
          <y>10</y>
          <width>231</width>
-         <height>361</height>
+         <height>341</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="7" column="0">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="5" column="0">
          <widget class="QPushButton" name="button_changePersSchedule">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -546,6 +556,9 @@
         </item>
         <item row="4" column="0">
          <widget class="QPushButton" name="button_addPersAbsence">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -556,6 +569,9 @@
         </item>
         <item row="6" column="0">
          <widget class="QPushButton" name="button_firePers">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -564,18 +580,11 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="Line" name="line">
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QPushButton" name="button_showPersInfo">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -586,6 +595,9 @@
         </item>
         <item row="2" column="0">
          <widget class="QPushButton" name="button_changePersPosition">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -596,6 +608,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QPushButton" name="button_editPersInfo">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -685,12 +700,12 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>З</string>
+             <string>Показати на момент</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QDateEdit" name="dateEdit">
+           <widget class="QDateEdit" name="date_historyView">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -700,34 +715,15 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>по</string>
-            </property>
-            <property name="scaledContents">
-             <bool>false</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDateEdit" name="dateEdit_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2016</year>
+              <month>5</month>
+              <day>24</day>
+             </datetime>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
