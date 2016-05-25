@@ -1,7 +1,11 @@
 #include "dialog_actions.h"
 #include "ui_dialog_actions.h"
 
-Dialog_actions::Dialog_actions(DB_setup *db, QString mode, QTableView* table, QString *old_data, QWidget *parent) :
+Dialog_actions::Dialog_actions(DB_setup *db,
+                               QString mode,
+                               QTableView* table,
+                               QString *old_data,
+                               QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_actions)
 {

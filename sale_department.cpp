@@ -12,7 +12,7 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
     Dialog_actions::renew_actions(db, ui->tableView_actions);
-    renew_contractors(db, ui->tableView_contractors);
+    Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     renew_programs(db, ui->tableView_programs);
     renew_cards(db, ui->tableView_cards);
     renew_action_on_program_comboBox(db, ui->action_on_program);
@@ -91,123 +91,67 @@ void Sale_department::on_delete_action_clicked()
 
 /* START CONTRACTORS TAB SLOTS BLOCK */
 
-void Sale_department::on_is_individual_clicked(bool checked)
-{
-    ui->birthday_field->setEnabled(checked);
-}
-
-void Sale_department::on_is_entity_clicked(bool checked)
-{
-    ui->state_number_field->setEnabled(checked);
-}
-
 void Sale_department::on_add_contractor_button_clicked()
 {
-    QString name = ui->contractor_name_field->text();
-    QString phone = ui->phone_field->text();
-    QString adress = ui->adress_field->text();
-    QString birth = "";
-    QString number = "";
-
-    if (ui->is_individual->isChecked()) {
-        birth = ui->birthday_field->date().toString("yyyy.MM.dd");
-    }
-    if (ui->is_entity->isChecked()) {
-        number = ui->state_number_field->text();
-    }
-    db->executeQuery(
-                "select insert_new_contractor('"+ name + "','" + phone + "','" + adress + "','" + birth + "','" + number + "');",
-                "operator",
-                this
-    );
-    renew_contractors(db, ui->tableView_contractors);
-    renew_contr_on_card_comboBox(db, ui->contr_for_card);
+    Dialog_contractors* dialog_contractors = new Dialog_contractors(db, "add",
+                                                                    ui->tableView_contractors, ui->contr_for_card,
+                                                                    old_contr_data);
+    dialog_contractors->setModal(true);
+    dialog_contractors->show();
 }
 
 void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
 {
-    ui->add_contractor_button->setEnabled(false);
     ui->update_contractor->setEnabled(true);
     ui->delete_contr->setEnabled(true);
+    ui->clear_contractor_buffer->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
-    old_contr_name = name;
     QString phone = index.sibling(row, 1).data().toString();
     QString adress = index.sibling(row, 2).data().toString();
     QDate birth = index.sibling(row, 3).data().toDate();
     QString str_birth = birth.toString();
     QString numb = index.sibling(row, 4).data().toString();
-    ui->contractor_name_field->setText(name);
-    ui->phone_field->setText(phone);
-    ui->adress_field->setText(adress);
-    if (str_birth != "") {
-        ui->is_individual->setChecked(true);
-        ui->birthday_field->setEnabled(true);
-        ui->birthday_field->setDate(birth);
-    } else {
-        ui->is_individual->setChecked(false);
-        ui->birthday_field->setEnabled(false);
-        ui->birthday_field->date();
-    }
-    if (numb != "") {
-        ui->is_entity->setChecked(true);
-        ui->state_number_field->setEnabled(true);
-        ui->state_number_field->setText(numb);
-    } else {
-        ui->is_entity->setChecked(false);
-        ui->state_number_field->setEnabled(false);
-        ui->state_number_field->clear();
-    }
-    qDebug() << name << phone << adress << birth << numb << endl;
+    old_contr_data[0] = name;
+    old_contr_data[1] = str_birth;
+    old_contr_data[2] = numb;
+    old_contr_data[3] = phone;
+    old_contr_data[4] = adress;
+    ui->contractor_buffer->setText(name);
+}
+
+void Sale_department::on_clear_contractor_buffer_clicked()
+{
+    ui->update_contractor->setEnabled(false);
+    ui->delete_contr->setEnabled(false);
+    ui->clear_contractor_buffer->setEnabled(false);
+    ui->contractor_buffer->clear();
 }
 
 void Sale_department::on_update_contractor_clicked()
 {
-    QString name = ui->contractor_name_field->text();
-    QString phone = ui->phone_field->text();
-    QString adress = ui->adress_field->text();
-    QString birth = "";
-    QString number = "";
-
-    if (ui->is_individual->isChecked()) {
-        birth = ui->birthday_field->date().toString("yyyy.MM.dd");
-    }
-    if (ui->is_entity->isChecked()) {
-        number = ui->state_number_field->text();
-    }
-    db->executeQuery(
-                "select update_contractor('" + old_contr_name + "','" + name + "','" + phone + "','" + adress + "','" + birth + "','" + number + "');",
-                "operator",
-                this
-    );
-    renew_contractors(db, ui->tableView_contractors);
-}
-
-void Sale_department::on_clear_contr_form_clicked()
-{
-    ui->contractor_name_field->clear();
-    ui->phone_field->clear();
-    ui->adress_field->clear();
-    ui->is_individual->setChecked(false);
-    ui->birthday_field->setEnabled(false);
-    ui->birthday_field->date();
-    ui->is_entity->setChecked(false);
-    ui->state_number_field->setEnabled(false);
-    ui->state_number_field->clear();
-    ui->add_contractor_button->setEnabled(true);
-    ui->update_contractor->setEnabled(false);
-    ui->delete_contr->setEnabled(false);
+    Dialog_contractors* dialog_contractors = new Dialog_contractors(db, "update",
+                                                                    ui->tableView_contractors, ui->contr_for_card,
+                                                                    old_contr_data);
+    dialog_contractors->setModal(true);
+    dialog_contractors->show();
 }
 
 void Sale_department::on_delete_contr_clicked()
 {
-    QString name = ui->contractor_name_field->text();
-    db->executeQuery(
+    QString name = old_contr_data[0];
+    int button = QMessageBox::question(this,
+                 "Підтвердження видалення",
+                 "Ви впевнені що хочете видалити контрагента '" + name + "'?",
+                 QMessageBox::Yes | QMessageBox::No);
+    if (button == QMessageBox::Yes) {
+        db->executeQuery(
                 "delete from \"Lupa_A\".contractors where contr_name = '" + name +"';",
                 "operator",
                 this
-    );
-    renew_contractors(db, ui->tableView_contractors);
+        );
+        Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
+    };
 }
 
 /* END CONTRACTORS TAB SLOTS BLOCK */

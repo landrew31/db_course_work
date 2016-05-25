@@ -475,7 +475,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_actions">
      <property name="enabled">
@@ -640,10 +640,10 @@
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
-        <x>1030</x>
+        <x>1040</x>
         <y>20</y>
-        <width>301</width>
-        <height>341</height>
+        <width>281</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -652,180 +652,112 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QWidget" name="gridLayoutWidget_2">
+      <widget class="QPushButton" name="add_contractor_button">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>281</width>
-         <height>321</height>
+         <width>261</width>
+         <height>27</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="phone_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Додати контрагента</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>1039</x>
+        <y>90</y>
+        <width>281</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>261</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Адреса</string>
+           <string>Контрагент у буффері:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="9" column="0">
-         <widget class="QLineEdit" name="state_number_field">
+        <item>
+         <widget class="QLineEdit" name="contractor_buffer">
           <property name="enabled">
            <bool>false</bool>
-          </property>
-          <property name="dragEnabled">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QCheckBox" name="is_individual">
-          <property name="text">
-           <string>Фіз. особа (дата народження)</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QDateEdit" name="birthday_field">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>false</bool>
-          </property>
-          <property name="displayFormat">
-           <string>dd.MM.yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-          <property name="date">
-           <date>
-            <year>2000</year>
-            <month>1</month>
-            <day>1</day>
-           </date>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Номер телефону</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="contractor_name_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Ім'я контрагента</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLineEdit" name="adress_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QCheckBox" name="is_entity">
-          <property name="text">
-           <string>Юридична особа (номер в реєстрі)</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-     </widget>
-     <widget class="QPushButton" name="add_contractor_button">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>370</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Додати контрагента</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="clear_contr_form">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>450</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Очистити форму</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="delete_contr">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>490</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Видалити контрагента</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="update_contractor">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>410</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Редагувати контрагента</string>
-      </property>
+      <widget class="QPushButton" name="update_contractor">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Редагувати контрагента</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="delete_contr">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Видалити контрагента</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="clear_contractor_buffer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Очистити буффер</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_programs">

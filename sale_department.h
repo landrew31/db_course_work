@@ -13,6 +13,7 @@
 #include "ui_dialog_actions.h"
 
 #include "dialog_actions.h"
+#include "dialog_contractors.h"
 
 namespace Ui {
 class Sale_department;
@@ -29,16 +30,13 @@ public:
 private slots:
     void on_add_action_button_clicked();
 
-    void on_is_individual_clicked(bool checked);
 
-    void on_is_entity_clicked(bool checked);
 
     void on_add_contractor_button_clicked();
 
 
     void on_tableView_contractors_pressed(const QModelIndex &index);
 
-    void on_clear_contr_form_clicked();
 
     void on_delete_contr_clicked();
 
@@ -82,11 +80,13 @@ private slots:
 
     void on_clear_action_buffer_clicked();
 
+    void on_clear_contractor_buffer_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;
     QString old_action_data[4];
-    QString old_contr_name;
+    QString old_contr_data[5];
     QString old_program_name;
     QString old_card_name;
 };
