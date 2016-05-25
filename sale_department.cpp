@@ -11,7 +11,7 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     this->db = db;
-    renew_actions(db, ui->tableView_actions);
+    Dialog_actions::renew_actions(db, ui->tableView_actions);
     renew_contractors(db, ui->tableView_contractors);
     renew_programs(db, ui->tableView_programs);
     renew_cards(db, ui->tableView_cards);
@@ -31,19 +31,9 @@ Sale_department::~Sale_department()
 
 void Sale_department::on_add_action_button_clicked()
 {
-    QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
-    QString stop = ui->stop_action_date->date().toString("yyyy-MM-dd");
-    QString name = ui->action_name_field->text();
-    int percent = ui->action_percent_field->text().toInt();
-    qDebug() << start << stop << percent;
-
-    db->executeQuery(
-                "insert into \"Lupa_A\".actions (day_start, day_stop, action_name, percent) values('"+ start + "','" + stop + "','" + name + "','" + QString::number(percent) + "');",
-                "operator",
-                this
-    );
-    renew_actions(db, ui->tableView_actions);
-
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", ui->tableView_actions);
+    dialog_actions->setModal(true);
+    dialog_actions->show();
 }
 
 void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
@@ -79,7 +69,7 @@ void Sale_department::on_update_action_clicked()
                 "operator",
                 this
     );
-    renew_actions(db, ui->tableView_actions);
+    Dialog_actions::renew_actions(db, ui->tableView_actions);
 }
 
 void Sale_department::on_clear_action_form_clicked()
@@ -101,7 +91,7 @@ void Sale_department::on_delete_action_clicked()
                 "operator",
                 this
     );
-    renew_actions(db, ui->tableView_actions);
+    Dialog_actions::renew_actions(db, ui->tableView_actions);
 }
 
 /* END ACTIONS TAB SLOTS BLOCK */

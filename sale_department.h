@@ -10,6 +10,9 @@
 
 
 #include "ui_sale_department.h"
+#include "ui_dialog_actions.h"
+
+#include "dialog_actions.h"
 
 namespace Ui {
 class Sale_department;
