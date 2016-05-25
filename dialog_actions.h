@@ -24,6 +24,7 @@ class Dialog_actions : public QDialog
 public:
     explicit Dialog_actions(DB_setup* db=0, QString mode="",
                             QTableView *table=0,
+                            QString* old_data = 0,
                             QWidget *parent = 0);
     static void renew_actions(DB_setup* db, QTableView* table);
     ~Dialog_actions();
@@ -31,11 +32,14 @@ public:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_clear_action_form_clicked();
+
 private:
     Ui::Dialog_actions *ui;
     DB_setup *db;
     QString mode;
     QTableView *table;
+    QString *old_data;
 };
 
 #endif // DIALOG_ACTIONS_H

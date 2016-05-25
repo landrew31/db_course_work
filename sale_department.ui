@@ -500,198 +500,127 @@
        <enum>Qt::NoFocus</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="add_action_button">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>320</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Додати акцію</string>
-      </property>
-     </widget>
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>1030</x>
+        <x>1039</x>
         <y>20</y>
-        <width>301</width>
-        <height>291</height>
+        <width>281</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+       <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QWidget" name="gridLayoutWidget">
+      <widget class="QPushButton" name="add_action_button">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>281</width>
-         <height>271</height>
+         <width>261</width>
+         <height>27</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Назва акції</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Відсотки по акції</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLineEdit" name="action_percent_field">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QDateEdit" name="stop_action_date">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="displayFormat">
-           <string>dd.MM.yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-          <property name="date">
-           <date>
-            <year>2016</year>
-            <month>1</month>
-            <day>2</day>
-           </date>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Кінець акції</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QDateEdit" name="start_action_date">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="dateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>2016</year>
-            <month>1</month>
-            <day>1</day>
-           </datetime>
-          </property>
-          <property name="displayFormat">
-           <string>dd.MM.yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-          <property name="date">
-           <date>
-            <year>2016</year>
-            <month>1</month>
-            <day>1</day>
-           </date>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
+       <property name="text">
+        <string>Додати акцію</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_5">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>90</y>
+        <width>281</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="update_action">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Редагувати акцію</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="delete_action">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Видалити акцію</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>10</y>
+         <width>261</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Початок акції</string>
+           <string>Акція в буффері:</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QLineEdit" name="action_name_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+        <item>
+         <widget class="QLineEdit" name="action_buffer">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-     </widget>
-     <widget class="QPushButton" name="clear_action_form">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>400</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Очистити форму</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="delete_action">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>440</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Видалити акцію</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="update_action">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>360</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Редагувати акцію</string>
-      </property>
+      <widget class="QPushButton" name="clear_action_buffer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>8</x>
+         <y>80</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Очистити буффер</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_contractors">

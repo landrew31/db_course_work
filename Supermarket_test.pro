@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     sale_department.cpp \
     dialog_actions.cpp \
     renew_sale_combobox_functions.cpp \
-    renew_sale_table_view_functions.cpp
+    renew_sale_table_view_functions.cpp \
+    dialog_contractors.cpp
 
 HEADERS  += \
     dialogentry.h \
@@ -32,11 +33,13 @@ HEADERS  += \
     hr_department.h \
     dialog_editpersinfo.h \
     sale_department.h \
-    dialog_actions.h
+    dialog_actions.h \
+    dialog_contractors.h
 
 FORMS    += \
     dialogentry.ui \
     hr_department.ui \
     dialogui_editpersinfo.ui \
     sale_department.ui \
-    dialog_actions.ui
+    dialog_actions.ui \
+    dialog_contractors.ui

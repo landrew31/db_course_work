@@ -26,74 +26,67 @@ Sale_department::~Sale_department()
     delete ui;
 }
 
-
 /* START ACTIONS TAB SLOTS BLOCK */
 
 void Sale_department::on_add_action_button_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", ui->tableView_actions);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", ui->tableView_actions, old_action_data);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }
 
 void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
 {
-    ui->add_action_button->setEnabled(false);
     ui->update_action->setEnabled(true);
     ui->delete_action->setEnabled(true);
+    ui->clear_action_buffer->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
-    old_action_name = name;
-    qDebug() << old_action_name << endl;
     QDate start = index.sibling(row, 2).data().toDate();
     QString str_start = start.toString();
     QDate stop = index.sibling(row, 3).data().toDate();
     QString str_stop = stop.toString();
     int percent = index.sibling(row, 1).data().toInt();
     QString str_percent = QString::number(percent);
-    ui->action_name_field->setText(name);
-    ui->action_percent_field->setText(str_percent);
-    ui->start_action_date->setDate(start);
-    ui->stop_action_date->setDate(stop);
+    old_action_data[0] = str_start;
+    old_action_data[1] = str_stop;
+    old_action_data[2] = str_percent;
+    old_action_data[3] = name;
+    ui->action_buffer->setText(name);
+}
+
+void Sale_department::on_clear_action_buffer_clicked()
+{
+    ui->update_action->setEnabled(false);
+    ui->delete_action->setEnabled(false);
+    ui->clear_action_buffer->setEnabled(false);
+    ui->action_buffer->clear();
 }
 
 void Sale_department::on_update_action_clicked()
 {
-    QString start = ui->start_action_date->date().toString("yyyy-MM-dd");
-    QString stop = ui->stop_action_date->date().toString("yyyy-MM-dd");
-    QString name = ui->action_name_field->text();
-    int percent = ui->action_percent_field->text().toInt();
-    qDebug() << "select update_action('" + old_action_name + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');" << endl;
-    db->executeQuery(
-                "select update_action('" + old_action_name + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');",
-                "operator",
-                this
-    );
-    Dialog_actions::renew_actions(db, ui->tableView_actions);
-}
-
-void Sale_department::on_clear_action_form_clicked()
-{
-    ui->action_name_field->clear();
-    ui->action_percent_field->clear();
-    ui->start_action_date->date();
-    ui->stop_action_date->date();
-    ui->add_action_button->setEnabled(true);
-    ui->update_action->setEnabled(false);
-    ui->delete_action->setEnabled(false);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", ui->tableView_actions, old_action_data);
+    dialog_actions->setModal(true);
+    dialog_actions->show();
 }
 
 void Sale_department::on_delete_action_clicked()
 {
-    QString name = ui->action_name_field->text();
-    db->executeQuery(
+
+    QString name = old_action_data[3];
+    int button = QMessageBox::question(this,
+                 "Підтвердження видалення",
+                 "Ви впевнені що хочете видалити акцію '" + name + "'?",
+                 QMessageBox::Yes | QMessageBox::No);
+    if (button == QMessageBox::Yes) {
+        db->executeQuery(
                 "delete from \"Lupa_A\".actions where action_name = '" + name +"';",
                 "operator",
                 this
-    );
-    Dialog_actions::renew_actions(db, ui->tableView_actions);
+        );
+        Dialog_actions::renew_actions(db, ui->tableView_actions);
+    };
 }
-
 /* END ACTIONS TAB SLOTS BLOCK */
 
 /* START CONTRACTORS TAB SLOTS BLOCK */
@@ -396,3 +389,5 @@ void Sale_department::on_delete_single_action_from_card_clicked()
     );
     renew_cards(db, ui->tableView_cards);
 }
+
+

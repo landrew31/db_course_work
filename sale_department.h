@@ -44,7 +44,7 @@ private slots:
 
     void on_tableView_actions_pressed(const QModelIndex &index);
 
-    void on_clear_action_form_clicked();
+
 
     void on_delete_action_clicked();
 
@@ -80,10 +80,12 @@ private slots:
 
     void on_delete_single_action_from_card_clicked();
 
+    void on_clear_action_buffer_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;
-    QString old_action_name;
+    QString old_action_data[4];
     QString old_contr_name;
     QString old_program_name;
     QString old_card_name;
