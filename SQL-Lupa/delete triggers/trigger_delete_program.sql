@@ -2,7 +2,7 @@
 RETURNS trigger AS
 $BODY$
 BEGIN
-IF NOT EXISTS (SELECT "Id_program" FROM "Lupa_A".action_programs
+IF NOT EXISTS (SELECT "Id_program" FROM "Lupa_A".programs
     WHERE program_name = OLD.program_name) THEN
       RAISE EXCEPTION 'wrong name';
 END IF;
@@ -13,6 +13,6 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_program
 BEFORE DELETE
-ON "Lupa_A".action_programs
+ON "Lupa_A".programs
 FOR EACH ROW
 EXECUTE PROCEDURE "Lupa_A".delete_program();

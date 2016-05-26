@@ -475,7 +475,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_actions">
      <property name="enabled">
@@ -503,7 +503,7 @@
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>1039</x>
+        <x>1040</x>
         <y>20</y>
         <width>281</width>
         <height>51</height>
@@ -579,7 +579,7 @@
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>9</x>
+         <x>10</x>
          <y>10</y>
          <width>261</width>
          <height>61</height>
@@ -611,7 +611,7 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>8</x>
+         <x>10</x>
          <y>80</y>
          <width>261</width>
          <height>27</height>
@@ -636,6 +636,12 @@
         <height>511</height>
        </rect>
       </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
      </widget>
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
@@ -669,7 +675,7 @@
      <widget class="QFrame" name="frame_6">
       <property name="geometry">
        <rect>
-        <x>1039</x>
+        <x>1040</x>
         <y>90</y>
         <width>281</width>
         <height>201</height>
@@ -774,80 +780,6 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="add_program_button">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>180</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Додати нову програму</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="frame_3">
-      <property name="geometry">
-       <rect>
-        <x>1030</x>
-        <y>20</y>
-        <width>301</width>
-        <height>151</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QWidget" name="gridLayoutWidget_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>281</width>
-         <height>131</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="program_name_field">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Назва акційної програми</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Акція в програмі</string>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QComboBox" name="action_on_program"/>
-        </item>
-       </layout>
-      </widget>
-     </widget>
      <widget class="QPushButton" name="add_new_action_to_program_button">
       <property name="enabled">
        <bool>false</bool>
@@ -855,7 +787,7 @@
       <property name="geometry">
        <rect>
         <x>1050</x>
-        <y>260</y>
+        <y>350</y>
         <width>261</width>
         <height>27</height>
        </rect>
@@ -864,52 +796,7 @@
        <string>Додати нову акцію в програму</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="update_program_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>220</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Редагувати назву програми</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="delete_action_from_program_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>300</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Видалити акцію з програми</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="clear_program_form">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>340</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Очистити форму</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="delete_program_button">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -922,8 +809,130 @@
        </rect>
       </property>
       <property name="text">
-       <string>Видалити програму</string>
+       <string>Видалити акцію з програми</string>
       </property>
+     </widget>
+     <widget class="QFrame" name="frame_3">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>20</y>
+        <width>281</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="add_program_button">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Додати нову програму</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_7">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>90</y>
+        <width>281</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>261</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Програма в буффері</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="program_buffer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="update_program_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Редагувати назву програми</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="delete_program_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Видалити програму</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="clear_program_buffer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Очистити буффер</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_cards">
