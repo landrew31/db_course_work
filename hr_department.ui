@@ -589,7 +589,7 @@
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="text">
-           <string>Показати інформацію</string>
+           <string>Особистий профіль</string>
           </property>
          </widget>
         </item>
@@ -615,7 +615,7 @@
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="text">
-           <string>Редагувати інформацію</string>
+           <string>Редагувати профіль</string>
           </property>
          </widget>
         </item>

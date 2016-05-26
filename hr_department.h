@@ -15,6 +15,7 @@
 
 #include "dialog_editpersinfo.h"
 
+#define DEBUGMODE true
 
 namespace Ui {
 class HR_department;
@@ -30,6 +31,12 @@ public:
 
     void showStaffTable();
 
+private:
+    Ui::HR_department *ui;
+    DB_setup *db;
+
+    QString selectedStaffId;
+
 private slots:
 
     void on_button_closeWindow_clicked();
@@ -40,9 +47,7 @@ private slots:
 
     void on_date_historyView_dateChanged();
 
-private:
-    Ui::HR_department *ui;
-    DB_setup *db;
+
 };
 
 #endif // HR_DEPARTMENT_H

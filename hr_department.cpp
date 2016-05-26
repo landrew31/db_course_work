@@ -49,27 +49,6 @@ void HR_department::showStaffTable()
     }
 }
 
-//void HR_department::on_button_addStuff_clicked()
-//{
-
-//    QString name = ui->line_pername->text();
-//    QString surname = ui->line_persurname->text();
-//    QString birthday = ui->date_perbirth->date().toString("yyyy-MM-dd");
-//    QString education = ui->line_peredu->text();
-
-//    qDebug() << name << surname << birthday << education;
-
-//    db->executeQuery(
-//                "insert into \"Myronenko_O\".person (per_name, per_surname, birthday, education) values('"
-//                    + name + "','"
-//                    + surname + "','"
-//                    + birthday + "','"
-//                    + education + "');",
-//                "operator",
-//                this
-//    );
-//    showStaffTable();
-//}
 void HR_department::on_button_closeWindow_clicked()
 {
     this->close();
@@ -77,7 +56,7 @@ void HR_department::on_button_closeWindow_clicked()
 
 void HR_department::on_button_editPersInfo_clicked()
 {
-    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db);
+    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedStaffId);
     dialog_editPersInfo->show();
 }
 
@@ -110,11 +89,9 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
     ui->button_addPersAbsence->setEnabled(true);
     ui->button_changePersSchedule->setEnabled(true);
     ui->button_firePers->setEnabled(true);
-    int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
-    QString id = index.sibling(row, 1).data().toString();
-    qDebug() << name << id << endl;
 
+    int row = index.row();
+    selectedStaffId = index.sibling(row, 4).data().toString();
 }
 
 void HR_department::on_date_historyView_dateChanged()

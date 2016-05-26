@@ -63,7 +63,7 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
 {
     QSqlQueryModel *model = new QSqlQueryModel();
     QSqlQuery query = base.exec(queryText);
-//    qDebug() << query.lastError();
+    //qDebug() << query.lastError();
     query.first();
     //QString result = query.record().value(0).toString();
     //query->exec();

@@ -1,4 +1,5 @@
-﻿CREATE OR REPLACE VIEW show_persons AS SELECT
+﻿CREATE OR REPLACE VIEW "Myronenko_O".show_persInfo
+AS SELECT
   per_name,
   per_surname,
   education
