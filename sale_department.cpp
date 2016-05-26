@@ -170,6 +170,7 @@ void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
 {
     ui->update_program_button->setEnabled(true);
     ui->delete_program_button->setEnabled(true);
+    ui->action_on_program_info->setEnabled(true);
     ui->clear_program_buffer->setEnabled(true);
     int row = index.row();
     QString name = index.sibling(row, 0).data().toString();
@@ -180,7 +181,7 @@ void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
     old_program_data[0] = str_start;
     old_program_data[1] = str_stop;
     old_program_data[2] = name;
-    ui->action_buffer->setText(name);
+    ui->program_buffer->setText(name);
 }
 
 
@@ -189,6 +190,7 @@ void Sale_department::on_clear_program_buffer_clicked()
     ui->update_program_button->setEnabled(false);
     ui->delete_program_button->setEnabled(false);
     ui->clear_program_buffer->setEnabled(false);
+    ui->action_on_program_info->setEnabled(false);
     ui->program_buffer->clear();
 }
 
@@ -217,28 +219,14 @@ void Sale_department::on_delete_program_button_clicked()
     };
 }
 
-
-void Sale_department::on_add_new_action_to_program_button_clicked()
+void Sale_department::on_action_on_program_info_clicked()
 {
-//    QString action_in_program = ui->action_on_program->currentText();
-
-//    db->executeQuery(
-//                "select insert_new_action_in_program('"+ old_program_name + "','" + action_in_program + "');",
-//                "operator",
-//                this
-//    );
-//    renew_programs(db, ui->tableView_programs);
-}
-
-void Sale_department::on_delete_action_from_program_button_clicked()
-{
-//    QString action_in_program = ui->action_on_program->currentText();
-//    db->executeQuery(
-//                "select delete_action_from_program('"+ old_program_name + "','" + action_in_program + "');",
-//                "operator",
-//                this
-//    );
-//    renew_programs(db, ui->tableView_programs);
+    Dialog_program_info* program_info = new Dialog_program_info(db,
+                                                                ui->tableView_programs,
+                                                                ui->tableView_actions,
+                                                                old_program_data);
+    program_info->setModal(true);
+    program_info->show();
 }
 
 /* END PROGRAMS TAB SLOTS BLOCK */

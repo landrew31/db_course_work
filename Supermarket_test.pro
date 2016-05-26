@@ -25,7 +25,9 @@ SOURCES += main.cpp \
     renew_sale_combobox_functions.cpp \
     renew_sale_table_view_functions.cpp \
     dialog_contractors.cpp \
-    dialog_programs.cpp
+    dialog_programs.cpp \
+    dialog_program_info.cpp \
+    dialog_card_info.cpp
 
 HEADERS  += \
     dialogentry.h \
@@ -36,7 +38,9 @@ HEADERS  += \
     sale_department.h \
     dialog_actions.h \
     dialog_contractors.h \
-    dialog_programs.h
+    dialog_programs.h \
+    dialog_program_info.h \
+    dialog_card_info.h
 
 FORMS    += \
     dialogentry.ui \
@@ -45,4 +49,6 @@ FORMS    += \
     sale_department.ui \
     dialog_actions.ui \
     dialog_contractors.ui \
-    dialog_programs.ui
+    dialog_programs.ui \
+    dialog_program_info.ui \
+    dialog_card_info.ui

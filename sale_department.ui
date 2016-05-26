@@ -780,38 +780,6 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="add_new_action_to_program_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>350</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Додати нову акцію в програму</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="delete_action_from_program_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>380</y>
-        <width>261</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Видалити акцію з програми</string>
-      </property>
-     </widget>
      <widget class="QFrame" name="frame_3">
       <property name="geometry">
        <rect>
@@ -847,7 +815,7 @@
         <x>1040</x>
         <y>90</y>
         <width>281</width>
-        <height>201</height>
+        <height>241</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -898,7 +866,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Редагувати назву програми</string>
+        <string>Редагувати основну інформацію</string>
        </property>
       </widget>
       <widget class="QPushButton" name="delete_program_button">
@@ -908,7 +876,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>160</y>
+         <y>200</y>
          <width>261</width>
          <height>27</height>
         </rect>
@@ -931,6 +899,22 @@
        </property>
        <property name="text">
         <string>Очистити буффер</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="action_on_program_info">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Інформація про акції</string>
        </property>
       </widget>
      </widget>

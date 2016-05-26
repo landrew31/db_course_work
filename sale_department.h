@@ -15,6 +15,7 @@
 #include "dialog_actions.h"
 #include "dialog_contractors.h"
 #include "dialog_programs.h"
+#include "dialog_program_info.h"
 
 namespace Ui {
 class Sale_department;
@@ -58,10 +59,6 @@ private slots:
 
     void on_delete_program_button_clicked();
 
-    void on_add_new_action_to_program_button_clicked();
-
-    void on_delete_action_from_program_button_clicked();
-
     void on_add_card_clicked();
 
     void on_clear_card_form_clicked();
@@ -81,6 +78,8 @@ private slots:
     void on_clear_contractor_buffer_clicked();
 
     void on_clear_program_buffer_clicked();
+
+    void on_action_on_program_info_clicked();
 
 private:
     Ui::Sale_department *ui;
