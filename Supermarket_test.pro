@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     dialog_contractors.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
-    dialog_card_info.cpp
+    dialog_card_info.cpp \
+    dialog_doc_types.cpp
 
 HEADERS  += \
     dialogentry.h \
@@ -40,7 +41,8 @@ HEADERS  += \
     dialog_contractors.h \
     dialog_programs.h \
     dialog_program_info.h \
-    dialog_card_info.h
+    dialog_card_info.h \
+    dialog_doc_types.h
 
 FORMS    += \
     dialogentry.ui \
@@ -51,4 +53,5 @@ FORMS    += \
     dialog_contractors.ui \
     dialog_programs.ui \
     dialog_program_info.ui \
-    dialog_card_info.ui
+    dialog_card_info.ui \
+    dialog_doc_types.ui
