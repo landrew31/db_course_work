@@ -306,3 +306,62 @@ void Sale_department::on_delete_doc_type_clicked()
         Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
     };
 }
+
+/* END DOCUMENT TYPES SLOTS BLOCK */
+
+void Sale_department::on_add_new_good_type_clicked()
+{
+    Dialog_good_types* dialog_good_types = new Dialog_good_types(db, "add", ui->tableView_good_types, old_good_data);
+    dialog_good_types->setModal(true);
+    dialog_good_types->show();
+}
+
+void Sale_department::on_tableView_good_types_pressed(const QModelIndex &index)
+{
+    ui->update_good_type->setEnabled(true);
+    ui->delete_good_type->setEnabled(true);
+    ui->clear_good_type_buffer->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    QString term = index.sibling(row, 1).data().toString();
+    QString item = index.sibling(row, 2).data().toString();
+    QString price = index.sibling(row, 3).data().toString();
+    old_good_data[0] = name;
+    old_good_data[1] = term;
+    old_good_data[2] = item;
+    old_good_data[3] = price;
+    ui->good_type_buffer->setText(name);
+}
+
+void Sale_department::on_update_good_type_clicked()
+{
+    Dialog_good_types* dialog_good_types = new Dialog_good_types(db, "update", ui->tableView_good_types, old_good_data);
+    dialog_good_types->setModal(true);
+    dialog_good_types->show();
+}
+
+void Sale_department::on_clear_good_type_buffer_clicked()
+{
+    ui->update_good_type->setEnabled(false);
+    ui->delete_good_type->setEnabled(false);
+    ui->clear_good_type_buffer->setEnabled(false);
+    ui->good_type_buffer->clear();
+}
+
+void Sale_department::on_delete_good_type_clicked()
+{
+    QString name = old_good_data[0];
+    int button = QMessageBox::question(this,
+                 "Підтвердження видалення",
+                 "Ви впевнені що хочете видалити вид товару '" + name + "'?",
+                 QMessageBox::Yes | QMessageBox::No);
+    if (button == QMessageBox::Yes) {
+        db->executeQuery(
+                "delete from \"Lupa_A\".goods where good_name = '" + name + "';",
+                "operator",
+                this,
+                3
+        );
+        Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
+    };
+}
