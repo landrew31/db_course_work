@@ -14,6 +14,7 @@ Dialog_program_info::Dialog_program_info(DB_setup* db,
     this->table_programs = table_programs;
     this->table_actions = table_actions;
     this->program_data = program_data;
+    this->old_action_data = new QString[4];
 //    qDebug() << program_data[2] <<endl;
     renew_program_actions(db, this->program_data[2], ui->tableView_program_actions);
     renew_action_on_card_comboBox(db, ui->existing_actions_box);

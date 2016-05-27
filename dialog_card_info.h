@@ -60,7 +60,7 @@ private:
     QTableView *table_programs;
     QTableView *table_actions;
     QString *contr_data;
-    QString *old_program_data = new QString[3];
+    QString *old_program_data; // = new QString[3];
 };
 
 #endif // DIALOG_CARD_INFO_H

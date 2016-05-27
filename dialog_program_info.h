@@ -55,7 +55,7 @@ private:
     QTableView *table_programs;
     QTableView *table_actions;
     QString *program_data;
-    QString *old_action_data = new QString[4];
+    QString *old_action_data; //= new QString[4];
 };
 
 #endif // DIALOG_PROGRAM_INFO_H
