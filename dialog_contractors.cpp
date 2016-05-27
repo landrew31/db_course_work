@@ -141,9 +141,10 @@ void Dialog_contractors::on_buttonBox_accepted()
     QString query = "";
     if (mode == "add") {
         query = "select insert_new_contractor('"+ name + "','" + phone + "','" + adress + "','" + birth + "','" + number + "');";
+        db->executeQuery(query, "operator", this, 0);
     } else if (mode == "update") {
         query = "select update_contractor('" + old_data[0] + "','" + name + "','" + phone + "','" + adress + "','" + birth + "','" + number + "');";
+        db->executeQuery(query, "operator", this, 2);
     };
-    db->executeQuery(query, "operator", this);
     renew_contractors(db, table);
 }

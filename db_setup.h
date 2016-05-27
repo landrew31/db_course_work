@@ -24,7 +24,7 @@ public:
     void setPassword(QString);
     void showMessage(QString, QString);
     QSqlQueryModel* getQueryModel(QString);
-    bool executeQuery(QString, QString, QWidget*);
+    bool executeQuery(QString, QString, QWidget*, int);
 
 private:
     QSqlDatabase base;

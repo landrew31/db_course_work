@@ -75,9 +75,10 @@ void Dialog_actions::on_buttonBox_accepted()
     QString query = "";
     if (mode == "add") {
         query = "insert into \"Lupa_A\".actions (day_start, day_stop, action_name, percent) values('"+ start + "','" + stop + "','" + name + "','" + QString::number(percent) + "');";
+        db->executeQuery(query, "operator", this, 1);
     } else if (mode == "update") {
         query = "select update_action('" + old_data[3] + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');";
+        db->executeQuery(query, "operator", this, 0);
     };
-    db->executeQuery(query, "operator", this);
     renew_actions(db, table);
 }

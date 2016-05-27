@@ -76,7 +76,8 @@ void Dialog_program_info::on_add_action_to_program_clicked()
     db->executeQuery(
             "select insert_new_action_in_program('" + program_data[2] + "','" + action + "');",
             "operator",
-            this
+            this,
+            0
     );
     renew_program_actions(db, program_data[2], ui->tableView_program_actions);
 }
@@ -127,7 +128,8 @@ void Dialog_program_info::on_delete_action_clicked()
         db->executeQuery(
                 "select \"Lupa_A\".delete_action_from_program('" + program_data[2] + "','" + name + "');",
                 "operator",
-                this
+                this,
+                0
         );
         Dialog_program_info::renew_program_actions(db, program_data[2], ui->tableView_program_actions);
     };

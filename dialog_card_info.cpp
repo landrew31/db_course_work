@@ -99,7 +99,8 @@ void Dialog_card_info::on_add_program_on_card_clicked()
     db->executeQuery(
             "select insert_new_program_in_card('" + contr_data[0] + "','" + program + "');",
             "operator",
-            this
+            this,
+            0
     );
     renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
 
@@ -142,7 +143,8 @@ void Dialog_card_info::on_delete_program_button_clicked()
         db->executeQuery(
                 "select \"Lupa_A\".delete_program_from_card('" + contr_data[0] + "','" + name + "');",
                 "operator",
-                this
+                this,
+                0
         );
         renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
     };

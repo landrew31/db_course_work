@@ -83,7 +83,8 @@ void Sale_department::on_delete_action_clicked()
         db->executeQuery(
                 "delete from \"Lupa_A\".actions where action_name = '" + name +"';",
                 "operator",
-                this
+                this,
+                3
         );
         Dialog_actions::renew_actions(db, ui->tableView_actions);
     };
@@ -166,7 +167,8 @@ void Sale_department::on_delete_contr_clicked()
         db->executeQuery(
                 "delete from \"Lupa_A\".contractors where contr_name = '" + name +"';",
                 "operator",
-                this
+                this,
+                3
         );
         Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     };
@@ -230,7 +232,8 @@ void Sale_department::on_delete_program_button_clicked()
         db->executeQuery(
                 "delete from \"Lupa_A\".programs where program_name = '" + name + "';",
                 "operator",
-                this
+                this,
+                3
         );
         Dialog_programs::renew_programs(db, ui->tableView_programs);
     };

@@ -103,6 +103,6 @@ void Dialog_editPersInfo::accept()
         "birthday = '" + birthday + "', "
         "education = '" + education + "' "
       "where \"Id_person\" = " + persId + ";";
-    db->executeQuery(updateQuery, "admin", this);
+    db->executeQuery(updateQuery, "admin", this, 2);
 }
 

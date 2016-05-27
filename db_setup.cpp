@@ -72,10 +72,9 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
     return model;
 }
 
- bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget)
+ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget, int queryType)
  {
      QSqlQuery query;
-     int queryType = 2;
      query.prepare(queryText);
      bool executed = query.exec();
      if (!executed && user == executer) {
@@ -84,8 +83,17 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
          showMessage("Помилка", "Введіть, будь ласка, коректні дані.");
      } else {
          switch (queryType){
+         case 0:
+            showMessage("Сповіщення", "Дані отримано.");
+            break;
+         case 1:
+            showMessage("Сповіщення", "Дані додано.");
+            break;
          case 2:
             showMessage("Сповіщення", "Дані оновлено.");
+            break;
+         case 3:
+            showMessage("Сповіщення", "Дані видалено.");
             break;
          default:
             showMessage("Сповіщення", "Опрерація пройшла успішно.");
