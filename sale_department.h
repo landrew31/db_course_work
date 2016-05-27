@@ -17,6 +17,7 @@
 #include "dialog_programs.h"
 #include "dialog_program_info.h"
 #include "dialog_card_info.h"
+#include "dialog_doc_types.h"
 
 namespace Ui {
 class Sale_department;
@@ -70,12 +71,23 @@ private slots:
 
     void on_card_info_clicked();
 
+    void on_add_new_doc_type_clicked();
+
+    void on_tableView_doc_types_pressed(const QModelIndex &index);
+
+    void on_clear_doc_type_buffer_clicked();
+
+    void on_update_doc_type_clicked();
+
+    void on_delete_doc_type_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;
     QString old_action_data[4];
     QString old_contr_data[5];
     QString old_program_data[3];
+    QString old_doc_type_data;
 };
 
 #endif // SALE_DEPARTMENT_H

@@ -14,6 +14,7 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     Dialog_actions::renew_actions(db, ui->tableView_actions);
     Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     Dialog_programs::renew_programs(db, ui->tableView_programs);
+    Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
 //    renew_cards(db, ui->tableView_cards);
 //    renew_action_on_program_comboBox(db, ui->action_on_program);
 //    renew_contr_on_card_comboBox(db, ui->contr_for_card);
@@ -116,7 +117,9 @@ void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
     QString numb = index.sibling(row, 4).data().toString();
     if (str_birth != "") {
         ui->card_info->setEnabled(true);
-    };
+    } else if (numb != "") {
+        ui->card_info->setEnabled(false);
+    }
     old_contr_data[0] = name;
     old_contr_data[1] = str_birth;
     old_contr_data[2] = numb;
@@ -251,3 +254,55 @@ void Sale_department::on_action_on_program_info_clicked()
 
 /* END PROGRAMS TAB SLOTS BLOCK */
 
+
+/* START DOCUMENT TYPES TAB SLOTS BLOCK */
+void Sale_department::on_add_new_doc_type_clicked()
+{
+    Dialog_doc_types* dialog_doc_type = new Dialog_doc_types(db, "add", ui->tableView_doc_types, old_doc_type_data);
+    dialog_doc_type->setModal(true);
+    dialog_doc_type->show();
+}
+
+void Sale_department::on_tableView_doc_types_pressed(const QModelIndex &index)
+{
+    ui->update_doc_type->setEnabled(true);
+    ui->delete_doc_type->setEnabled(true);
+    ui->clear_doc_type_buffer->setEnabled(true);
+    int row = index.row();
+    QString name = index.sibling(row, 0).data().toString();
+    old_doc_type_data = name;
+    ui->doc_type_buffer->setText(name);
+}
+
+void Sale_department::on_clear_doc_type_buffer_clicked()
+{
+    ui->update_doc_type->setEnabled(false);
+    ui->delete_doc_type->setEnabled(false);
+    ui->clear_doc_type_buffer->setEnabled(false);
+    ui->doc_type_buffer->clear();
+}
+
+void Sale_department::on_update_doc_type_clicked()
+{
+    Dialog_doc_types* dialog_doc_type = new Dialog_doc_types(db, "update", ui->tableView_doc_types, old_doc_type_data);
+    dialog_doc_type->setModal(true);
+    dialog_doc_type->show();
+}
+
+void Sale_department::on_delete_doc_type_clicked()
+{
+    QString name = old_doc_type_data;
+    int button = QMessageBox::question(this,
+                 "Підтвердження видалення",
+                 "Ви впевнені що хочете видалити тип документа '" + name + "'?",
+                 QMessageBox::Yes | QMessageBox::No);
+    if (button == QMessageBox::Yes) {
+        db->executeQuery(
+                "delete from \"Lupa_A\".doc_types where doc_type_name = '" + name +"';",
+                "operator",
+                this,
+                3
+        );
+        Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
+    };
+}

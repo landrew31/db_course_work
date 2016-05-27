@@ -1,24 +1,35 @@
-﻿CREATE OR REPLACE FUNCTION "Lupa_A".delete_program_from_card(IN got_name VARCHAR,
+﻿CREATE OR REPLACE FUNCTION "Lupa_A".delete_program_from_card(IN got_contr_name VARCHAR,
   IN got_program_name VARCHAR)
 RETURNS integer AS
 $BODY$
 DECLARE
-  got_id_program integer;
-  got_id_contr integer;
+  card_id integer;
+  program_id integer;
 BEGIN
-  SELECT "Id_program" into got_id_program FROM "Lupa_A".action_programs
+  IF NOT EXISTS (SELECT "Id_program" FROM "Lupa_A".programs
+    WHERE program_name = got_program_name) THEN
+    RAISE EXCEPTION 'wrong program';
+  END IF;
+  IF NOT EXISTS (SELECT ind."Id_ind" 
+    FROM 
+      ("Lupa_A".individ_contr ind 
+    JOIN "Lupa_A".contractors contr ON
+      (ind."Id_contr" = contr."Id_contr" AND
+       contr.contr_name = got_contr_name))) THEN
+     RAISE EXCEPTION 'wrong program';
+  END IF;
+  SELECT "Id_program" into program_id FROM "Lupa_A".programs
     WHERE program_name = got_program_name;
-  SELECT "Id_contr" into got_id_contr FROM "Lupa_A".contractors
-    WHERE contr_name = got_name;
-  UPDATE "Lupa_A".cards SET programs_on_card = 
-    ( SELECT
-      array_remove( (SELECT
-        programs_on_card FROM "Lupa_A".cards
-          WHERE id_contr = got_id_contr),
-        got_id_program ) )
-     WHERE id_contr = got_id_contr;
+  SELECT ind."Id_ind" into card_id
+    FROM 
+      ("Lupa_A".individ_contr ind 
+    JOIN "Lupa_A".contractors contr ON
+      (ind."Id_contr" = contr."Id_contr" AND
+       contr.contr_name = got_contr_name));
+  DELETE FROM "Lupa_A".individ_contr_program WHERE 
+    (id_individ = card_id AND id_program = program_id);
     
-RETURN got_id_contr;
+RETURN program_id;
 END;
 $BODY$
 LANGUAGE plpgsql;

@@ -8,6 +8,9 @@
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 
+#include <QTableView>
+#include <QHeaderView>
+
 #include "messagebox.h"
 
 
@@ -25,6 +28,7 @@ public:
     void showMessage(QString, QString);
     QSqlQueryModel* getQueryModel(QString);
     bool executeQuery(QString, QString, QWidget*, int);
+    static void table_column_entire_width(QTableView *table);
 
 private:
     QSqlDatabase base;

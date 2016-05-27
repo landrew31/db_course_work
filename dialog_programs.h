@@ -12,6 +12,7 @@
 
 #include "ui_dialog_programs.h"
 
+
 namespace Ui {
 class Dialog_programs;
 }

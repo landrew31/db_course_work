@@ -56,6 +56,8 @@ void Dialog_actions::renew_actions(DB_setup* db, QTableView* table )
     table->resizeColumnToContents(1);
     table->resizeColumnToContents(2);
     table->resizeColumnToContents(3);
+
+    DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_actions::on_clear_action_form_clicked()

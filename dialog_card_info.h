@@ -15,6 +15,7 @@
 
 #include "ui_dialog_card_info.h"
 
+
 namespace Ui {
 class Dialog_card_info;
 }

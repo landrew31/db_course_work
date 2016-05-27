@@ -97,15 +97,24 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
      return executed;
  }
 
-void DB_setup::showMessage(QString title, QString text)
+ void DB_setup::showMessage(QString title, QString text)
+ {
+     MessageBox msgBox;
+     msgBox.setWindowTitle(title);
+     msgBox.setText(text);
+     msgBox.setIcon(QMessageBox::Information);
+     msgBox.setStandardButtons(QMessageBox::Ok);
+     msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
+     msgBox.setAutoClose(true);
+     msgBox.setTimeout(10); //Closes after ten seconds
+     msgBox.exec();
+ }
+
+void DB_setup::table_column_entire_width(QTableView *table)
 {
-    MessageBox msgBox;
-    msgBox.setWindowTitle(title);
-    msgBox.setText(text);
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
-    msgBox.setAutoClose(true);
-    msgBox.setTimeout(10); //Closes after ten seconds
-    msgBox.exec();
-}
+     for (int c = 0; c < table->horizontalHeader()->count(); ++c)
+     {
+         table->horizontalHeader()->setSectionResizeMode(
+                     c, QHeaderView::Stretch);
+     }
+ }

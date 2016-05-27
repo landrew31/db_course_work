@@ -18,7 +18,7 @@ Dialog_card_info::Dialog_card_info(DB_setup* db,
     this->contr_data = contr_data;
     this->old_program_data = new QString[3];
 
-    renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
+    renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
     renew_program_on_card_comboBox(db, ui->existing_programs_box);
 
     this->setWindowTitle("Редагування картки контрагента '" + contr_data[2] + "'");
@@ -47,6 +47,8 @@ void Dialog_card_info::renew_contr_programs(DB_setup* db, QString contr, QTableV
     table->resizeColumnToContents(0);
     table->resizeColumnToContents(1);
     table->resizeColumnToContents(2);
+
+    DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_card_info::renew_program_on_card_comboBox(DB_setup* db, QComboBox* box)
@@ -103,7 +105,7 @@ void Dialog_card_info::on_add_program_on_card_clicked()
             this,
             0
     );
-    renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
+    renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
 
 }
 
@@ -147,6 +149,6 @@ void Dialog_card_info::on_delete_program_button_clicked()
                 this,
                 0
         );
-        renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
+        renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
     };
 }

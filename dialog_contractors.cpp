@@ -29,14 +29,16 @@ Dialog_contractors::Dialog_contractors(DB_setup *db,
         ui->adress_field->setEnabled(true);
         if (old_data[1] != "") {
             ui->is_individual->setChecked(true);
+            ui->is_entity->setEnabled(false);
             ui->contractor_name_field->setText(old_data[0]);
             QDate birth = QDate::fromString(old_data[1], "yyyy-MM-dd");
             ui->birthday_field->setDate(birth);
             ui->contractor_name_field->setEnabled(true);
             ui->birthday_field->setEnabled(true);
-            ui->is_entity->setEnabled(false);
+            ui->is_individual->setEnabled(false);
         } else if (old_data[2] != "") {
             ui->is_entity->setChecked(true);
+            ui->is_individual->setEnabled(false);
             ui->company_name_field->setText(old_data[0]);
             ui->state_number_field->setText(old_data[2]);
             ui->company_name_field->setEnabled(true);
@@ -72,6 +74,8 @@ void Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
     table->resizeColumnToContents(2);
     table->resizeColumnToContents(3);
     table->resizeColumnToContents(4);
+
+    DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_contractors::on_is_individual_clicked(bool checked)

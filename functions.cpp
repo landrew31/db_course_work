@@ -13,6 +13,7 @@ bool inQStringList(QString item, QStringList list) {
     return false;
 }
 
+
 int searchIdByNameInModel(QString key, QSqlQueryModel* model, int idPosit, int keyPosit)
 {
     int id = -1;
@@ -29,4 +30,13 @@ int searchIdByNameInModel(QString key, QSqlQueryModel* model, int idPosit, int k
         }
     }
     return id;
+}
+
+void table_column_entire_width(QTableView *table)
+{
+    for (int c = 0; c < table->horizontalHeader()->count(); ++c)
+    {
+        table->horizontalHeader()->setSectionResizeMode(
+                    c, QHeaderView::Stretch);
+    }
 }
