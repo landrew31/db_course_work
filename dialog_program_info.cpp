@@ -47,6 +47,8 @@ void Dialog_program_info::renew_program_actions(DB_setup* db, QString program, Q
     table->resizeColumnToContents(1);
     table->resizeColumnToContents(2);
     table->resizeColumnToContents(3);
+
+    DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_program_info::renew_action_on_card_comboBox(DB_setup* db, QComboBox* box)

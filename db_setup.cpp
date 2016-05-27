@@ -114,3 +114,11 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
      msgBox.setTimeout(10); //Closes after ten seconds
      msgBox.exec();
  }
+
+void DB_setup::table_column_entire_width(QTableView *table) {
+     for (int c = 0; c < table->horizontalHeader()->count(); ++c)
+     {
+         table->horizontalHeader()->setSectionResizeMode(
+                     c, QHeaderView::Stretch);
+     }
+ }

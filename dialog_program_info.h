@@ -14,6 +14,7 @@
 
 #include "ui_dialog_program_info.h"
 
+
 namespace Ui {
 class Dialog_program_info;
 }

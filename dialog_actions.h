@@ -13,6 +13,7 @@
 #include "ui_dialog_actions.h"
 
 
+
 namespace Ui {
 class Dialog_actions;
 }

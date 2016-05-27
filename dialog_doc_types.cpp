@@ -43,6 +43,8 @@ void Dialog_doc_types::renew_doc_types(DB_setup* db, QTableView* table )
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
     table->resizeColumnToContents(0);
+
+    DB_setup::table_column_entire_width(table);
 }
 void Dialog_doc_types::on_clear_doc_type_form_clicked()
 {

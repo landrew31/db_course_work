@@ -475,7 +475,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab_actions">
      <property name="enabled">
@@ -1071,6 +1071,11 @@
        </property>
       </widget>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tab_good_types">
+     <attribute name="title">
+      <string>Типи товарів</string>
+     </attribute>
     </widget>
    </widget>
   </widget>

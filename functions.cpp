@@ -10,3 +10,11 @@ bool inQStringList(QString item, QStringList list) {
     }
     return false;
 }
+
+void table_column_entire_width(QTableView *table) {
+    for (int c = 0; c < table->horizontalHeader()->count(); ++c)
+    {
+        table->horizontalHeader()->setSectionResizeMode(
+                    c, QHeaderView::Stretch);
+    }
+}

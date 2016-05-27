@@ -12,6 +12,7 @@
 
 #include "ui_dialog_doc_types.h"
 
+
 namespace Ui {
 class Dialog_doc_types;
 }

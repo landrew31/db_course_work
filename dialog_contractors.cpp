@@ -74,6 +74,8 @@ void Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
     table->resizeColumnToContents(2);
     table->resizeColumnToContents(3);
     table->resizeColumnToContents(4);
+
+    DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_contractors::on_is_individual_clicked(bool checked)
