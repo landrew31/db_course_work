@@ -16,6 +16,7 @@ Dialog_card_info::Dialog_card_info(DB_setup* db,
     this->table_programs = table_programs;
     this->table_actions = table_actions;
     this->contr_data = contr_data;
+    this->old_program_data = new QString[3];
 
     renew_contr_programs(db, this->contr_data[2], ui->tableView_contr_programs);
     renew_program_on_card_comboBox(db, ui->existing_programs_box);
