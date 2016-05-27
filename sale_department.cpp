@@ -116,7 +116,9 @@ void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
     QString numb = index.sibling(row, 4).data().toString();
     if (str_birth != "") {
         ui->card_info->setEnabled(true);
-    };
+    } else if (numb != "") {
+        ui->card_info->setEnabled(false);
+    }
     old_contr_data[0] = name;
     old_contr_data[1] = str_birth;
     old_contr_data[2] = numb;
