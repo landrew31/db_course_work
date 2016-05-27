@@ -89,6 +89,9 @@ void Dialog_editPersInfo::showInpValues()
         QLabel* label  = new QLabel(labelTitle);
         QPushButton* delButton  = new QPushButton(QString("Видалити"));
         delButton->setCursor(Qt::PointingHandCursor);
+        index = modelPersonSkills->index(i, 3);
+//        int skillId = index.data(Qt::DisplayRole).toInt();
+        connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
 
         ui->layout_persSkills->addWidget(label, i, 0);
         ui->layout_persSkills->addWidget(skillVal, i, 1);
@@ -153,4 +156,9 @@ void Dialog_editPersInfo::on_button_createSkill_clicked()
     Dialog_createSkill* createSkillWindow = new Dialog_createSkill(db, this);
     createSkillWindow->show();
     connect(createSkillWindow, SIGNAL(accepted()), this, SLOT(showInpValues()));
+}
+
+void Dialog_editPersInfo::removeSkill(){
+    int skillId = 0;
+    if (DEBUGMODE) qDebug() << "Remove" << skillId << "skill" << endl;
 }

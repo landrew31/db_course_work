@@ -25,6 +25,7 @@ private slots:
     void on_button_addSkill_clicked();
     void on_button_createSkill_clicked();
     void showInpValues();
+    void removeSkill();
 
 private:
     Ui::DialogUi_editPersInfo *ui;
