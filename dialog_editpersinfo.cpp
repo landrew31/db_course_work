@@ -89,7 +89,7 @@ void Dialog_editPersInfo::showInpValues()
 
 }
 
-void Dialog_editPersInfo::on_buttonBox_accepted()
+void Dialog_editPersInfo::accept()
 {
     if (DEBUGMODE) qDebug() << "dialog accepted";
     QString name = ui->persName->text();
@@ -105,3 +105,4 @@ void Dialog_editPersInfo::on_buttonBox_accepted()
       "where \"Id_person\" = " + persId + ";";
     db->executeQuery(updateQuery, "admin", this);
 }
+

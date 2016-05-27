@@ -75,15 +75,21 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
  bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget)
  {
      QSqlQuery query;
+     int queryType = 2;
      query.prepare(queryText);
      bool executed = query.exec();
-     qDebug() << executed << (user == executer )<< endl;
      if (!executed && user == executer) {
          showMessage("Помилка", "Вибачте, у Вас немає прав для даної операції.");
      } else if (!executed){
          showMessage("Помилка", "Введіть, будь ласка, коректні дані.");
      } else {
-         showMessage("Сповіщення", "Дані додано.");
+         switch (queryType){
+         case 2:
+            showMessage("Сповіщення", "Дані оновлено.");
+            break;
+         default:
+            showMessage("Сповіщення", "Опрерація пройшла успішно.");
+         }
      };
      return executed;
  }

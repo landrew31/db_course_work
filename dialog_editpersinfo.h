@@ -29,7 +29,7 @@ public:
     void showInpValues();
 
 private slots:
-    void accepted();
+    void accept();
 
 private:
     Ui::DialogUi_editPersInfo *ui;
