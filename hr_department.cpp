@@ -59,7 +59,7 @@ void HR_department::on_button_closeWindow_clicked()
 
 void HR_department::on_button_editPersInfo_clicked()
 {
-    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedStaffId);
+    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedStaffId, this);
     dialog_editPersInfo->show();
 }
 

@@ -1,6 +1,5 @@
 #include "dialogentry.h"
 #include "ui_dialogentry.h"
-#include "functions.cpp"
 
 
 DialogEntry::DialogEntry(DB_setup *db, QWidget *parent) :

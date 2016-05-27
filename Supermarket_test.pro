@@ -28,7 +28,7 @@ SOURCES += main.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
     dialog_card_info.cpp \
-    dialog_addskill.cpp
+    dialog_createskill.cpp
 
 HEADERS  += \
     dialogentry.h \
@@ -42,7 +42,8 @@ HEADERS  += \
     dialog_programs.h \
     dialog_program_info.h \
     dialog_card_info.h \
-    dialog_addskill.h
+    dialog_createskill.h \
+    functions.h
 
 FORMS    += \
     dialogentry.ui \
@@ -53,4 +54,5 @@ FORMS    += \
     dialog_contractors.ui \
     dialog_programs.ui \
     dialog_program_info.ui \
-    dialog_card_info.ui
+    dialog_card_info.ui \
+    dialog_createskill.ui

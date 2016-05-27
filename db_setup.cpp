@@ -44,11 +44,6 @@ QString DB_setup::getPassword()
     return password;
 }
 
-//QSqlDatabase DB_setup::getBase()
-//{
-//    return base;
-//}
-
 void DB_setup::setUser(QString user)
 {
     this->user = user;
@@ -72,7 +67,7 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
     return model;
 }
 
- bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget, int queryType)
+bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget, int queryType)
  {
      QSqlQuery query;
      query.prepare(queryText);
@@ -102,15 +97,15 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
      return executed;
  }
 
- void DB_setup::showMessage(QString title, QString text)
- {
-     MessageBox msgBox;
-     msgBox.setWindowTitle(title);
-     msgBox.setText(text);
-     msgBox.setIcon(QMessageBox::Information);
-     msgBox.setStandardButtons(QMessageBox::Ok);
-     msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
-     msgBox.setAutoClose(true);
-     msgBox.setTimeout(10); //Closes after ten seconds
-     msgBox.exec();
- }
+void DB_setup::showMessage(QString title, QString text)
+{
+    MessageBox msgBox;
+    msgBox.setWindowTitle(title);
+    msgBox.setText(text);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
+    msgBox.setAutoClose(true);
+    msgBox.setTimeout(10); //Closes after ten seconds
+    msgBox.exec();
+}

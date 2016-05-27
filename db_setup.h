@@ -2,13 +2,14 @@
 #define DB_SETUP_H
 
 #include <QString>
-#include <QSqlDatabase>
+
 #include <QtSql>
-#include <QDebug>
-#include <QMessageBox>
+#include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+
 #include "messagebox.h"
+
 
 class DB_setup
 {
@@ -19,7 +20,6 @@ public:
     bool getConnected();
     QString getUser();
     QString getPassword();
-//    QSqlDatabase getBase();
     void setUser(QString);
     void setPassword(QString);
     void showMessage(QString, QString);
