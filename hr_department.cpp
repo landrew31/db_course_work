@@ -57,7 +57,9 @@ void HR_department::on_button_closeWindow_clicked()
 void HR_department::on_button_editPersInfo_clicked()
 {
     Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedStaffId);
+
     dialog_editPersInfo->show();
+    dialog_editPersInfo->setModal(true);
 }
 
 //void MainWindow::on_tableView_actions_pressed(const QModelIndex &index)

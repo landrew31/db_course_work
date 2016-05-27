@@ -22,6 +22,10 @@ void Dialog_editPersInfo::showInpValues()
 {
     QModelIndex index;
 
+    //-------------
+    // PERSINFO BLOCK
+    //-------------
+
     QSqlQueryModel *modelPerson = db->getQueryModel(
         "select * from \"Myronenko_O\".person where \"Id_person\" = " + persId + ";"
     );
@@ -52,6 +56,9 @@ void Dialog_editPersInfo::showInpValues()
     QString education = index.data(Qt::DisplayRole).toString();
     ui->persEdu->setText(education);
 
+    //-------------
+    // SKILLS BLOCK
+    //-------------
 
     QString skillsQuery =
             "select skill_name, skill_description, per_skills.\"Id_person\", per_skills.\"Id_skill\" "
@@ -67,23 +74,26 @@ void Dialog_editPersInfo::showInpValues()
         index = modelPersonSkills->index(i, 0);
         if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
 
-        QString weditName = QString("lineEdit_skill%1").arg(i+1);
-        QLineEdit* wedit = ui->frame_editFrame->findChild<QLineEdit*>(weditName);
-        if (wedit)
+        QString skillValName = QString("label_skill%1").arg(i+1);
+        QLabel* skillVal = ui->frame_editFrame->findChild<QLabel*>(skillValName);
+        if (skillVal)
         {
-            if (DEBUGMODE) qDebug() << "!- " << weditName << " already exists";
-            wedit->setText( index.data(Qt::DisplayRole).toString() );
+            if (DEBUGMODE) qDebug() << "!- " << skillValName << " already exists";
+            skillVal->setText( index.data(Qt::DisplayRole).toString() );
             continue;
         }
 
-        wedit  = new QLineEdit(index.data(Qt::DisplayRole).toString());
-        if (DEBUGMODE) qDebug() << "!- " << weditName << " created";
+        skillVal  = new QLabel(index.data(Qt::DisplayRole).toString());
+        skillVal->setObjectName(skillValName);
+        if (DEBUGMODE) qDebug() << "!- " << skillValName << " created";
         QString labelTitle = QString("Навичка %1").arg(i+1);
         QLabel* label  = new QLabel(labelTitle);
-        wedit->setObjectName(weditName);
+        QPushButton* delButton  = new QPushButton(QString("Видалити"));
+        delButton->setCursor(Qt::PointingHandCursor);
 
         ui->layout_persSkills->addWidget(label, i, 0);
-        ui->layout_persSkills->addWidget(wedit, i, 1);
+        ui->layout_persSkills->addWidget(skillVal, i, 1);
+        ui->layout_persSkills->addWidget(delButton, i, 2);
     }
     if (DEBUGMODE) qDebug() << endl;
 
