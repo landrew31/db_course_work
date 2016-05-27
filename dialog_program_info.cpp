@@ -121,7 +121,7 @@ void Dialog_program_info::on_delete_action_clicked()
     QString name = old_action_data[3];
     int button = QMessageBox::question(this,
                  "Підтвердження видалення",
-                 "Ви впевнені що хочете видалити акцію '" + name + "'?",
+                 "Ви впевнені що хочете видалити акцію '" + name + "' з поточної програми?",
                  QMessageBox::Yes | QMessageBox::No);
     if (button == QMessageBox::Yes) {
         db->executeQuery(

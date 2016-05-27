@@ -24,12 +24,9 @@ public:
     explicit Dialog_contractors(DB_setup* db=0,
                                 QString mode="",
                                 QTableView *table = 0,
-                                QComboBox *combobox = 0,
                                 QString* old_data=0,
                                 QWidget *parent = 0);
     static void renew_contractors(DB_setup* db, QTableView* table);
-    static void renew_contr_on_card_comboBox(DB_setup* db, QComboBox* box);
-
     ~Dialog_contractors();
 
 private slots:
@@ -46,7 +43,6 @@ private:
     DB_setup *db;
     QString mode;
     QTableView *table;
-    QComboBox *combobox;
     QString *old_data;
 };
 

@@ -16,6 +16,7 @@
 #include "dialog_contractors.h"
 #include "dialog_programs.h"
 #include "dialog_program_info.h"
+#include "dialog_card_info.h"
 
 namespace Ui {
 class Sale_department;
@@ -59,20 +60,6 @@ private slots:
 
     void on_delete_program_button_clicked();
 
-    void on_add_card_clicked();
-
-    void on_clear_card_form_clicked();
-
-    void on_tableView_cards_pressed(const QModelIndex &index);
-
-    void on_add_program_on_card_clicked();
-
-    void on_add_single_action_on_card_clicked();
-
-    void on_delete_program_from_card_clicked();
-
-    void on_delete_single_action_from_card_clicked();
-
     void on_clear_action_buffer_clicked();
 
     void on_clear_contractor_buffer_clicked();
@@ -81,13 +68,14 @@ private slots:
 
     void on_action_on_program_info_clicked();
 
+    void on_card_info_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;
     QString old_action_data[4];
     QString old_contr_data[5];
     QString old_program_data[3];
-    QString old_card_name;
 };
 
 #endif // SALE_DEPARTMENT_H

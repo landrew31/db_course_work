@@ -14,11 +14,11 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     Dialog_actions::renew_actions(db, ui->tableView_actions);
     Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     Dialog_programs::renew_programs(db, ui->tableView_programs);
-    renew_cards(db, ui->tableView_cards);
+//    renew_cards(db, ui->tableView_cards);
 //    renew_action_on_program_comboBox(db, ui->action_on_program);
-    renew_contr_on_card_comboBox(db, ui->contr_for_card);
-    renew_program_on_card_comboBox(db, ui->program_on_card);
-    renew_action_on_card_comboBox(db, ui->single_action_on_card);
+//    renew_contr_on_card_comboBox(db, ui->contr_for_card);
+//    renew_program_on_card_comboBox(db, ui->program_on_card);
+//    renew_action_on_card_comboBox(db, ui->single_action_on_card);
 }
 
 Sale_department::~Sale_department()
@@ -95,7 +95,7 @@ void Sale_department::on_delete_action_clicked()
 void Sale_department::on_add_contractor_button_clicked()
 {
     Dialog_contractors* dialog_contractors = new Dialog_contractors(db, "add",
-                                                                    ui->tableView_contractors, ui->contr_for_card,
+                                                                    ui->tableView_contractors,
                                                                     old_contr_data);
     dialog_contractors->setModal(true);
     dialog_contractors->show();
@@ -113,6 +113,9 @@ void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
     QDate birth = index.sibling(row, 3).data().toDate();
     QString str_birth = birth.toString("yyyy-MM-dd");
     QString numb = index.sibling(row, 4).data().toString();
+    if (str_birth != "") {
+        ui->card_info->setEnabled(true);
+    };
     old_contr_data[0] = name;
     old_contr_data[1] = str_birth;
     old_contr_data[2] = numb;
@@ -126,17 +129,31 @@ void Sale_department::on_clear_contractor_buffer_clicked()
     ui->update_contractor->setEnabled(false);
     ui->delete_contr->setEnabled(false);
     ui->clear_contractor_buffer->setEnabled(false);
+    ui->card_info->setEnabled(false);
     ui->contractor_buffer->clear();
 }
 
 void Sale_department::on_update_contractor_clicked()
 {
     Dialog_contractors* dialog_contractors = new Dialog_contractors(db, "update",
-                                                                    ui->tableView_contractors, ui->contr_for_card,
+                                                                    ui->tableView_contractors,
                                                                     old_contr_data);
     dialog_contractors->setModal(true);
     dialog_contractors->show();
 }
+
+void Sale_department::on_card_info_clicked()
+{
+    Dialog_card_info * card_info = new Dialog_card_info(db,
+                                                        ui->tableView_contractors,
+                                                        ui->tableView_programs,
+                                                        ui->tableView_actions,
+                                                        old_contr_data
+                                                      );
+    card_info->setModal(true);
+    card_info->show();
+}
+
 
 void Sale_department::on_delete_contr_clicked()
 {
@@ -196,9 +213,9 @@ void Sale_department::on_clear_program_buffer_clicked()
 
 void Sale_department::on_update_program_button_clicked()
 {
-    Dialog_programs* dialog_actions = new Dialog_programs(db, "update", ui->tableView_programs, old_program_data);
-    dialog_actions->setModal(true);
-    dialog_actions->show();
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", ui->tableView_programs, old_program_data);
+    dialog_programs->setModal(true);
+    dialog_programs->show();
 
 }
 
@@ -230,95 +247,4 @@ void Sale_department::on_action_on_program_info_clicked()
 }
 
 /* END PROGRAMS TAB SLOTS BLOCK */
-
-/* START CARDS TAB SLOTS BLOCK */
-
-void Sale_department::on_add_card_clicked()
-{
-    QString contr_name = ui->contr_for_card->currentText();
-    QString program = ui->program_on_card->currentText();
-    QString action = ui->single_action_on_card->currentText();
-    qDebug() << contr_name << program << action << endl;
-    qDebug() << "select insert_new_card('" + contr_name + "','" + program + "','" + action + "');" << endl;
-    db->executeQuery(
-                "select insert_new_card('" + contr_name + "','" + program + "','" + action + "');",
-                "operator",
-                this
-    );
-    renew_cards(db, ui->tableView_cards);
-}
-
-void Sale_department::on_clear_card_form_clicked()
-{
-    ui->contr_for_card->setCurrentIndex(-1);
-    ui->program_on_card->setCurrentIndex(-1);
-    ui->single_action_on_card->setCurrentIndex(-1);
-    ui->add_card->setEnabled(true);
-    ui->add_program_on_card->setEnabled(false);
-    ui->delete_program_from_card->setEnabled(false);
-    ui->add_single_action_on_card->setEnabled(false);
-    ui->delete_single_action_from_card->setEnabled(false);
-}
-
-void Sale_department::on_tableView_cards_pressed(const QModelIndex &index)
-{
-    ui->add_card->setEnabled(false);
-    ui->add_program_on_card->setEnabled(true);
-    ui->delete_program_from_card->setEnabled(true);
-    ui->add_single_action_on_card->setEnabled(true);
-    ui->delete_single_action_from_card->setEnabled(true);
-    int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
-    ui->contr_for_card->setCurrentIndex(ui->contr_for_card->findText(name));
-    old_card_name = name;
-}
-
-void Sale_department::on_add_program_on_card_clicked()
-{
-    QString program_on_card = ui->program_on_card->currentText();
-
-    db->executeQuery(
-                "select insert_new_program_on_card('"+ old_card_name + "','" + program_on_card + "');",
-                "operator",
-                this
-    );
-    renew_cards(db, ui->tableView_cards);
-}
-
-void Sale_department::on_add_single_action_on_card_clicked()
-{
-    QString action_on_card = ui->single_action_on_card->currentText();
-
-    db->executeQuery(
-                "select insert_new_action_on_card('"+ old_card_name + "','" + action_on_card + "');",
-                "operator",
-                this
-    );
-    renew_cards(db, ui->tableView_cards);
-}
-
-void Sale_department::on_delete_program_from_card_clicked()
-{
-    QString program_on_card = ui->program_on_card->currentText();
-
-    db->executeQuery(
-                "select delete_program_from_card('"+ old_card_name + "','" + program_on_card + "');",
-                "operator",
-                this
-    );
-    qDebug() << "select delete_program_from_card('"+ old_card_name + "','" + program_on_card + "');" << endl;
-    renew_cards(db, ui->tableView_cards);
-}
-
-void Sale_department::on_delete_single_action_from_card_clicked()
-{
-    QString action_on_card = ui->single_action_on_card->currentText();
-
-    db->executeQuery(
-                "select delete_action_from_card('"+ old_card_name + "','" + action_on_card + "');",
-                "operator",
-                this
-    );
-    renew_cards(db, ui->tableView_cards);
-}
 

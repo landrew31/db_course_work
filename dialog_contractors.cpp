@@ -4,7 +4,6 @@
 Dialog_contractors::Dialog_contractors(DB_setup *db,
                                        QString mode,
                                        QTableView* table,
-                                       QComboBox* combobox,
                                        QString *old_data,
                                        QWidget *parent) :
     QDialog(parent),
@@ -15,7 +14,6 @@ Dialog_contractors::Dialog_contractors(DB_setup *db,
     this->mode = mode;
     this->table = table;
     this->old_data = old_data;
-    this->combobox = combobox;
 
 
     QString action = "";
@@ -74,13 +72,6 @@ void Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
     table->resizeColumnToContents(2);
     table->resizeColumnToContents(3);
     table->resizeColumnToContents(4);
-}
-
-void Dialog_contractors::renew_contr_on_card_comboBox(DB_setup* db, QComboBox* box)
-{
-    QSqlQueryModel *model = db->getQueryModel("SELECT contr_name FROM \"Lupa_A\".contractors ORDER BY contr_name;");
-    box->setModel(model);
-    box->setCurrentIndex(-1);
 }
 
 void Dialog_contractors::on_is_individual_clicked(bool checked)
@@ -155,5 +146,4 @@ void Dialog_contractors::on_buttonBox_accepted()
     };
     db->executeQuery(query, "operator", this);
     renew_contractors(db, table);
-    renew_contr_on_card_comboBox(db, combobox);
 }

@@ -179,7 +179,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Видалити акцію</string>
+     <string>Видалити акцію з програми</string>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
