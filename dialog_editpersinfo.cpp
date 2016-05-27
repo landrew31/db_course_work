@@ -26,9 +26,8 @@ void Dialog_editPersInfo::showInpValues()
     // PERSINFO BLOCK
     //-------------
 
-    QSqlQueryModel *modelPerson = db->getQueryModel(
-        "select * from \"Myronenko_O\".person where \"Id_person\" = " + persId + ";"
-    );
+    QString queryText = "select * from \"Myronenko_O\".person where \"Id_person\" = " + persId + ";";
+    QSqlQueryModel *modelPerson = db->getQueryModel(queryText);
     if (DEBUGMODE)
     {
         qDebug() << "Dialog_editPersInfo got modelPerson:";
@@ -57,16 +56,16 @@ void Dialog_editPersInfo::showInpValues()
     ui->persEdu->setText(education);
 
     //-------------
-    // SKILLS BLOCK
+    // LIST SKILLS BLOCK
     //-------------
 
-    QString skillsQuery =
+    queryText =
             "select skill_name, skill_description, per_skills.\"Id_person\", per_skills.\"Id_skill\" "
             "from \"Myronenko_O\".personal_skills per_skills "
                 "join \"Myronenko_O\".skills "
                 "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
             "where per_skills.\"Id_person\" = " + persId + ";";
-    QSqlQueryModel *modelPersonSkills = db->getQueryModel(skillsQuery);
+    QSqlQueryModel *modelPersonSkills = db->getQueryModel(queryText);
     int skillsCount = modelPersonSkills->rowCount();
     if (DEBUGMODE) qDebug() << "Dialog_editPersInfo got modelPersonSkills:";
     for (int i=0; i < skillsCount; i++)
@@ -97,6 +96,30 @@ void Dialog_editPersInfo::showInpValues()
     }
     if (DEBUGMODE) qDebug() << endl;
 
+    //-------------
+    // EDIT SKILLS BLOCK
+    //-------------
+
+    queryText =
+            "select \"Id_skill\", skill_name "
+            "from \"Myronenko_O\".skills;";
+    modelAllSkills = db->getQueryModel(queryText);
+    int allSkillsCount = modelAllSkills->rowCount();
+    if (DEBUGMODE) qDebug() << "Dialog_editPersInfo got modelAllSkills:";
+    for (int i=0; i < allSkillsCount; i++)
+    {
+        index = modelAllSkills->index(i, 1);
+        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
+        ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
+    }
+    if (DEBUGMODE) qDebug() << endl;
+}
+
+void Dialog_editPersInfo::on_button_addSkill_clicked()
+{
+    QString newSkillName = ui->comboBox_selectSkill->currentText();
+    QString newSkillId = searchSkillIdByNameInModel(newSkillName);
+    if (DEBUGMODE) qDebug() << "Selected new skill: " << newSkillName << newSkillId;
 }
 
 void Dialog_editPersInfo::accept()
@@ -116,3 +139,8 @@ void Dialog_editPersInfo::accept()
     db->executeQuery(updateQuery, "admin", this, 2);
 }
 
+QString Dialog_editPersInfo::searchSkillIdByNameInModel(QString skillName)
+{
+    QString id = "266";
+    return id;
+}
