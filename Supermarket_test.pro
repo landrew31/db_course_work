@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     dialog_program_info.cpp \
     dialog_card_info.cpp \
     dialog_createskill.cpp \
-    dialog_doc_types.cpp
+    dialog_doc_types.cpp \
+    dialog_good_types.cpp
 
 
 HEADERS  += \
@@ -46,7 +47,8 @@ HEADERS  += \
     dialog_card_info.h \
     dialog_createskill.h \
     functions.h \
-    dialog_doc_types.h
+    dialog_doc_types.h \
+    dialog_good_types.h
 
 FORMS    += \
     dialogentry.ui \
@@ -59,4 +61,5 @@ FORMS    += \
     dialog_program_info.ui \
     dialog_card_info.ui \
     dialog_createskill.ui \
-    dialog_doc_types.ui
+    dialog_doc_types.ui \
+    dialog_good_types.ui

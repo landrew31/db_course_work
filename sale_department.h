@@ -18,6 +18,7 @@
 #include "dialog_program_info.h"
 #include "dialog_card_info.h"
 #include "dialog_doc_types.h"
+#include "dialog_good_types.h"
 
 namespace Ui {
 class Sale_department;
@@ -81,6 +82,16 @@ private slots:
 
     void on_delete_doc_type_clicked();
 
+    void on_add_new_good_type_clicked();
+
+    void on_tableView_good_types_pressed(const QModelIndex &index);
+
+    void on_update_good_type_clicked();
+
+    void on_clear_good_type_buffer_clicked();
+
+    void on_delete_good_type_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;
@@ -88,6 +99,7 @@ private:
     QString old_contr_data[5];
     QString old_program_data[3];
     QString old_doc_type_data;
+    QString old_good_data[4];
 };
 
 #endif // SALE_DEPARTMENT_H

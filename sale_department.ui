@@ -1076,6 +1076,138 @@
      <attribute name="title">
       <string>Типи товарів</string>
      </attribute>
+     <widget class="QTableView" name="tableView_good_types">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_9">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>20</y>
+        <width>281</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="add_new_good_type">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Додати новий тип товару</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_10">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>90</y>
+        <width>281</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>10</y>
+         <width>261</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Тип товару в буффері:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="good_type_buffer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="delete_good_type">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>170</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Видалити тип</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="update_good_type">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>130</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Редагувати тип</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="clear_good_type_buffer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>261</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Очистити буффер</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>
