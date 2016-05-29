@@ -32,6 +32,9 @@ private:
     DB_setup *db;
     int positId;
     QSqlQueryModel* modelAllSkills;
+    QVector<int> skills;
+
+    void inserSkillIntoList(QString, int);
 };
 
 #endif // DIALOG_EDITPOSITION_H

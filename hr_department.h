@@ -51,6 +51,7 @@ private slots:
 
     void on_table_positions_pressed(const QModelIndex &index);
     void on_button_editPosition_clicked();
+    void on_button_addPosition_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

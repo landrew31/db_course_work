@@ -10,7 +10,7 @@ Dialog_editPosition::Dialog_editPosition(DB_setup* db, int selectedPositId, QWid
     positId = selectedPositId;
     qDebug() << "positId:" << positId <<endl;
 
-    showInpValues();
+    if (positId != -1) showInpValues();
 }
 
 Dialog_editPosition::~Dialog_editPosition()
@@ -60,35 +60,17 @@ void Dialog_editPosition::showInpValues()
                 "where nec_skills.\"Id_position\" = %1;").arg(positId);
     QSqlQueryModel *modelPositionSkills = db->getQueryModel(queryText);
     int skillsCount = modelPositionSkills->rowCount();
-    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelPositionSkills:";
+    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelPositionSkills:";   
+
     for (int i=0; i < skillsCount; i++)
     {
         index = modelPositionSkills->index(i, 0);
-        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
-
-        QString skillValName = QString("label_skill%1").arg(i+1);
-        QLabel* skillVal = ui->frame_editFrame->findChild<QLabel*>(skillValName);
-        if (skillVal)
-        {
-            if (DEBUGMODE) qDebug() << "!- " << skillValName << " already exists";
-            skillVal->setText( index.data(Qt::DisplayRole).toString() );
-            continue;
-        }
-
-        skillVal  = new QLabel(index.data(Qt::DisplayRole).toString());
-        skillVal->setObjectName(skillValName);
-        if (DEBUGMODE) qDebug() << "!- " << skillValName << " created";
-        QString labelTitle = QString("Навичка %1").arg(i+1);
-        QLabel* label  = new QLabel(labelTitle);
-        QPushButton* delButton  = new QPushButton(QString("Видалити"));
-        delButton->setCursor(Qt::PointingHandCursor);
+        QString skillName = index.data(Qt::DisplayRole).toString();
         index = modelPositionSkills->index(i, 3);
-//        int skillId = index.data(Qt::DisplayRole).toInt();
-        connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
+        int skillId = index.data(Qt::DisplayRole).toInt();
 
-        ui->layout_positSkills->addWidget(label, i, 0);
-        ui->layout_positSkills->addWidget(skillVal, i, 1);
-        ui->layout_positSkills->addWidget(delButton, i, 2);
+        if (DEBUGMODE) qDebug() << "-" << skillName;
+        inserSkillIntoList(skillName, skillId);
     }
     if (DEBUGMODE) qDebug() << endl;
 
@@ -112,17 +94,12 @@ void Dialog_editPosition::showInpValues()
     if (DEBUGMODE) qDebug() << endl;
 }
 
-
 void Dialog_editPosition::on_button_addSkill_clicked()
 {
     QString newSkillName = ui->comboBox_selectSkill->currentText();
     int newSkillId = searchIdByNameInModel(newSkillName, modelAllSkills, 0, 1);
-    if (DEBUGMODE) qDebug() << "Selected new skill for" << positId << "position:" << newSkillName << newSkillId << endl;
-    QString queryText = QString(
-        "insert into \"Myronenko_O\".neccessary_skills (\"Id_skill\", \"Id_position\") "
-            "values (%1, %2);").arg(newSkillId).arg(positId);
-    db->executeQuery(queryText, "admin", this, 1);
-    showInpValues();
+    if (DEBUGMODE) qDebug() << "New skill added for" << positId << "position:" << newSkillName << newSkillId << endl;
+    inserSkillIntoList(newSkillName, newSkillId);
 }
 
 void Dialog_editPosition::on_button_createSkill_clicked()
@@ -138,11 +115,43 @@ void Dialog_editPosition::accept()
     QString name = ui->positName->text();
     QString description = ui->positDescr->toPlainText();
     if (DEBUGMODE) qDebug() << "data to update:" << name << description;
-    QString queryText = QString("update \"Myronenko_O\".positions set "
-        "posit_name = '%1', "
-        "posit_description = '%2' "
-      "where \"Id_position\" = %3;").arg(name).arg(description).arg(positId);
-    db->executeQuery(queryText, "admin", this, 2);
+    QString queryText = "";
+
+
+    // SKILLS UPDATE
+    queryText = QString(
+        "delete from \"Myronenko_O\".neccessary_skills "
+        "where \"Id_position\" = %1;").arg(positId);
+    db->executeQuery(queryText, "admin", this, -1);
+    for (int i=0; i < skills.length(); i++)
+    {
+        queryText = QString(
+            "insert into \"Myronenko_O\".neccessary_skills (\"Id_skill\", \"Id_position\") "
+                "values (%1, %2);").arg(skills[i]).arg(positId);
+        qDebug() << queryText;
+        db->executeQuery(queryText, "admin", this, -1);
+    };
+
+
+    // INFO UPDATE
+    if (positId == -1)
+    {
+        queryText = QString(
+            "insert into \"Myronenko_O\".positions "
+            "values ("
+                "posit_name = '%1', "
+                "posit_description = '%2');").arg(name).arg(description);
+        db->executeQuery(queryText, "admin", this, 1);
+    } else {
+        queryText = QString(
+            "update \"Myronenko_O\".positions set"
+                "posit_name = '%1',"
+                "posit_description = '%2'"
+            "where \"Id_position\" = %3;").arg(name).arg(description).arg(positId);
+        db->executeQuery(queryText, "admin", this, 2);
+    }
+
+
     this->accepted();
     this->close();
 }
@@ -150,4 +159,19 @@ void Dialog_editPosition::accept()
 void Dialog_editPosition::removeSkill(){
     int skillId = 0;
     if (DEBUGMODE) qDebug() << "Remove" << skillId << "skill" << endl;
+}
+
+void Dialog_editPosition::inserSkillIntoList(QString skillName, int skillId)
+{
+    QLabel* skillVal  = new QLabel(skillName);
+
+    QPushButton* delButton  = new QPushButton(QString("Видалити"));
+    delButton->setCursor(Qt::PointingHandCursor);
+
+    int rowNumber = ui->layout_positSkills->rowCount();
+    ui->layout_positSkills->addWidget(skillVal, rowNumber, 0);
+    ui->layout_positSkills->addWidget(delButton, rowNumber, 1);
+
+    skills.append(skillId);
+    connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
 }

@@ -88,8 +88,6 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
          case 3:
             showMessage("Сповіщення", "Дані видалено.");
             break;
-         default:
-            showMessage("Сповіщення", "Опрерація пройшла успішно.");
          }
      };
      return executed;
