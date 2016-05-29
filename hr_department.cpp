@@ -141,7 +141,7 @@ void HR_department::on_button_editPosition_clicked()
 
 void HR_department::on_button_addPosition_clicked()
 {
-    Dialog_editPosition* dialog_editPosition = new Dialog_editPosition(db, -1, this);
-    dialog_editPosition->show();
-    connect(dialog_editPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
+    Dialog_editPosition* dialog_addPosition = new Dialog_editPosition(db, -1, this);
+    dialog_addPosition->show();
+    connect(dialog_addPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
 }

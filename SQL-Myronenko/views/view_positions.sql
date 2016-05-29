@@ -1,11 +1,11 @@
 CREATE OR REPLACE VIEW "Myronenko_O".show_positions
 AS SELECT
     positions.posit_name,
-    stuffCount.count,
     positions."Id_position"
+    stuffCount.count
 FROM
   "Myronenko_O".positions positions
-  join (
+  LEFT JOIN (
     SELECT
       vacancies."Id_position", count(*)
     FROM

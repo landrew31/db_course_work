@@ -32,6 +32,9 @@ private:
     DB_setup *db;
     int persId;
     QSqlQueryModel* modelAllSkills;
+    QVector<int> skills;
+
+    void inserSkillIntoList(QString, int);
 };
 
 #endif // DIALOG_EDITPERSINFO_H

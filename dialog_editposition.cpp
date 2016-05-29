@@ -8,9 +8,7 @@ Dialog_editPosition::Dialog_editPosition(DB_setup* db, int selectedPositId, QWid
     ui->setupUi(this);
     this->db = db;
     positId = selectedPositId;
-    qDebug() << "positId:" << positId <<endl;
-
-    if (positId != -1) showInpValues();
+    showInpValues();
 }
 
 Dialog_editPosition::~Dialog_editPosition()
@@ -20,13 +18,37 @@ Dialog_editPosition::~Dialog_editPosition()
 
 void Dialog_editPosition::showInpValues()
 {
+    QString queryText;
     QModelIndex index;
+
+
+    //-------------
+    // EDIT SKILLS BLOCK
+    //-------------
+
+    queryText =
+            "select \"Id_skill\", skill_name "
+            "from \"Myronenko_O\".skills;";
+    modelAllSkills = db->getQueryModel(queryText);
+    int allSkillsCount = modelAllSkills->rowCount();
+    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelAllSkills:";
+    ui->comboBox_selectSkill->clear();
+    for (int i=0; i < allSkillsCount; i++)
+    {
+        index = modelAllSkills->index(i, 1);
+        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
+        ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
+    }
+    if (DEBUGMODE) qDebug() << endl;
+
+    if (positId == -1) return;
+
 
     //-------------
     // POSITINFO BLOCK
     //-------------
 
-    QString queryText = QString(
+    queryText = QString(
         "select * from \"Myronenko_O\".positions where \"Id_position\" = %1;").arg(positId);
     QSqlQueryModel *modelPosition = db->getQueryModel(queryText);
     if (DEBUGMODE)
@@ -47,6 +69,7 @@ void Dialog_editPosition::showInpValues()
     index = modelPosition->index(0, 2);
     QString descr = index.data(Qt::DisplayRole).toString();
     ui->positDescr->setText(descr);
+
 
     //-------------
     // LIST SKILLS BLOCK
@@ -73,25 +96,6 @@ void Dialog_editPosition::showInpValues()
         inserSkillIntoList(skillName, skillId);
     }
     if (DEBUGMODE) qDebug() << endl;
-
-    //-------------
-    // EDIT SKILLS BLOCK
-    //-------------
-
-    queryText =
-            "select \"Id_skill\", skill_name "
-            "from \"Myronenko_O\".skills;";
-    modelAllSkills = db->getQueryModel(queryText);
-    int allSkillsCount = modelAllSkills->rowCount();
-    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelAllSkills:";
-    ui->comboBox_selectSkill->clear();
-    for (int i=0; i < allSkillsCount; i++)
-    {
-        index = modelAllSkills->index(i, 1);
-        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
-        ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
-    }
-    if (DEBUGMODE) qDebug() << endl;
 }
 
 void Dialog_editPosition::on_button_addSkill_clicked()
@@ -111,49 +115,55 @@ void Dialog_editPosition::on_button_createSkill_clicked()
 
 void Dialog_editPosition::accept()
 {
-    if (DEBUGMODE) qDebug() << "dialog accepted";
+    ui->buttonBox->setDisabled(true);
+    if (DEBUGMODE) qDebug() << "editPosition dialog accepted";
     QString name = ui->positName->text();
     QString description = ui->positDescr->toPlainText();
-    if (DEBUGMODE) qDebug() << "data to update:" << name << description;
+    if (DEBUGMODE) qDebug() << "data to insert/update:" << name << description;
     QString queryText = "";
 
 
-    // SKILLS UPDATE
-    queryText = QString(
-        "delete from \"Myronenko_O\".neccessary_skills "
-        "where \"Id_position\" = %1;").arg(positId);
-    db->executeQuery(queryText, "admin", this, -1);
-    for (int i=0; i < skills.length(); i++)
-    {
-        queryText = QString(
-            "insert into \"Myronenko_O\".neccessary_skills (\"Id_skill\", \"Id_position\") "
-                "values (%1, %2);").arg(skills[i]).arg(positId);
-        qDebug() << queryText;
-        db->executeQuery(queryText, "admin", this, -1);
-    };
-
-
-    // INFO UPDATE
+    // INFO INSERT / UPDATE
     if (positId == -1)
     {
         queryText = QString(
-            "insert into \"Myronenko_O\".positions "
-            "values ("
-                "posit_name = '%1', "
-                "posit_description = '%2');").arg(name).arg(description);
+            "insert into \"Myronenko_O\".positions (posit_name, posit_description)"
+            "values('%1', '%2');").arg(name).arg(description);
         db->executeQuery(queryText, "admin", this, 1);
+        queryText = QString(
+                    "select \"Id_position\" "
+                    "from \"Myronenko_O\".positions "
+                    "where posit_name = '%1';").arg(name);
+        QSqlQueryModel *modelNewPosition = db->getQueryModel(queryText);
+        QModelIndex index = modelNewPosition->index(0, 0);
+        positId = index.data(Qt::DisplayRole).toInt();
     } else {
         queryText = QString(
-            "update \"Myronenko_O\".positions set"
-                "posit_name = '%1',"
-                "posit_description = '%2'"
+            "delete from \"Myronenko_O\".neccessary_skills "
+            "where \"Id_position\" = %1;").arg(positId);
+        db->executeQuery(queryText, "admin", this, -1);
+
+        queryText = QString(
+            "update \"Myronenko_O\".positions set "
+                "posit_name = '%1', "
+                "posit_description = '%2' "
             "where \"Id_position\" = %3;").arg(name).arg(description).arg(positId);
         db->executeQuery(queryText, "admin", this, 2);
     }
 
 
+    // SKILLS INSERT / UPDATE
+    for (int i=0; i < skills.length(); i++)
+    {
+        queryText = QString(
+            "insert into \"Myronenko_O\".neccessary_skills (\"Id_skill\", \"Id_position\") "
+                "values (%1, %2);").arg(skills[i]).arg(positId);
+        db->executeQuery(queryText, "admin", this, -1);
+    };
+
     this->accepted();
     this->close();
+    ui->buttonBox->setEnabled(true);
 }
 
 void Dialog_editPosition::removeSkill(){
