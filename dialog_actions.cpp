@@ -52,10 +52,6 @@ void Dialog_actions::renew_actions(DB_setup* db, QTableView* table )
     proxyModel->setSourceModel(model);
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
-    table->resizeColumnToContents(0);
-    table->resizeColumnToContents(1);
-    table->resizeColumnToContents(2);
-    table->resizeColumnToContents(3);
 
     DB_setup::table_column_entire_width(table);
 }

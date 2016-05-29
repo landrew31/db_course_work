@@ -16,11 +16,6 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     Dialog_programs::renew_programs(db, ui->tableView_programs);
     Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
     Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
-//    renew_cards(db, ui->tableView_cards);
-//    renew_action_on_program_comboBox(db, ui->action_on_program);
-//    renew_contr_on_card_comboBox(db, ui->contr_for_card);
-//    renew_program_on_card_comboBox(db, ui->program_on_card);
-//    renew_action_on_card_comboBox(db, ui->single_action_on_card);
 }
 
 Sale_department::~Sale_department()
@@ -43,19 +38,14 @@ void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
     ui->delete_action->setEnabled(true);
     ui->clear_action_buffer->setEnabled(true);
     int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
+    old_action_data[3] = index.sibling(row, 0).data().toString();
     QDate start = index.sibling(row, 2).data().toDate();
-    QString str_start = start.toString("yyyy-MM-dd");
+    old_action_data[0] = start.toString("yyyy-MM-dd");
     QDate stop = index.sibling(row, 3).data().toDate();
-    QString str_stop = stop.toString("yyyy-MM-dd");
+    old_action_data[1] = stop.toString("yyyy-MM-dd");
     int percent = index.sibling(row, 1).data().toInt();
-    QString str_percent = QString::number(percent);
-    old_action_data[0] = str_start;
-    old_action_data[1] = str_stop;
-    qDebug() << old_action_data[0] << endl;
-    old_action_data[2] = str_percent;
-    old_action_data[3] = name;
-    ui->action_buffer->setText(name);
+    old_action_data[2] = QString::number(percent);
+    ui->action_buffer->setText(old_action_data[3]);
 }
 
 void Sale_department::on_clear_action_buffer_clicked()
@@ -110,23 +100,18 @@ void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
     ui->delete_contr->setEnabled(true);
     ui->clear_contractor_buffer->setEnabled(true);
     int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
-    QString phone = index.sibling(row, 1).data().toString();
-    QString adress = index.sibling(row, 2).data().toString();
+    old_contr_data[0] = index.sibling(row, 0).data().toString();
+    old_contr_data[3] = index.sibling(row, 1).data().toString();
+    old_contr_data[4] = index.sibling(row, 2).data().toString();
     QDate birth = index.sibling(row, 3).data().toDate();
-    QString str_birth = birth.toString("yyyy-MM-dd");
-    QString numb = index.sibling(row, 4).data().toString();
-    if (str_birth != "") {
+    old_contr_data[1] = birth.toString("yyyy-MM-dd");
+    old_contr_data[2] = index.sibling(row, 4).data().toString();
+    if (old_contr_data[1] != "") {
         ui->card_info->setEnabled(true);
-    } else if (numb != "") {
+    } else if (old_contr_data[2] != "") {
         ui->card_info->setEnabled(false);
     }
-    old_contr_data[0] = name;
-    old_contr_data[1] = str_birth;
-    old_contr_data[2] = numb;
-    old_contr_data[3] = phone;
-    old_contr_data[4] = adress;
-    ui->contractor_buffer->setText(name);
+    ui->contractor_buffer->setText(old_contr_data[0]);
 }
 
 void Sale_department::on_clear_contractor_buffer_clicked()
@@ -324,6 +309,7 @@ void Sale_department::on_tableView_good_types_pressed(const QModelIndex &index)
     ui->update_good_type->setEnabled(true);
     ui->delete_good_type->setEnabled(true);
     ui->clear_good_type_buffer->setEnabled(true);
+    ui->action_on_good_info->setEnabled(true);
     int row = index.row();
     old_good_data[0] = index.sibling(row, 0).data().toString(); // name
     old_good_data[3] = index.sibling(row, 1).data().toString(); // price
@@ -344,6 +330,7 @@ void Sale_department::on_clear_good_type_buffer_clicked()
     ui->update_good_type->setEnabled(false);
     ui->delete_good_type->setEnabled(false);
     ui->clear_good_type_buffer->setEnabled(false);
+    ui->action_on_good_info->setEnabled(false);
     ui->good_type_buffer->clear();
 }
 
@@ -363,4 +350,14 @@ void Sale_department::on_delete_good_type_clicked()
         );
         Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
     };
+}
+
+void Sale_department::on_action_on_good_info_clicked()
+{
+    Dialog_good_actions_info* good_actions_info = new Dialog_good_actions_info(db,
+                                                                ui->tableView_good_types,
+                                                                ui->tableView_actions,
+                                                                old_good_data);
+    good_actions_info->setModal(true);
+    good_actions_info->show();
 }

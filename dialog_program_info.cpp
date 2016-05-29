@@ -43,10 +43,6 @@ void Dialog_program_info::renew_program_actions(DB_setup* db, QString program, Q
     proxyModel->setSourceModel(model);
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
-    table->resizeColumnToContents(0);
-    table->resizeColumnToContents(1);
-    table->resizeColumnToContents(2);
-    table->resizeColumnToContents(3);
 
     DB_setup::table_column_entire_width(table);
 }
