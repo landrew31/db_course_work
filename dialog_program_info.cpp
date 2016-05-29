@@ -17,7 +17,7 @@ Dialog_program_info::Dialog_program_info(DB_setup* db,
     this->old_action_data = new QString[4];
 //    qDebug() << program_data[2] <<endl;
     renew_program_actions(db, this->program_data[2], ui->tableView_program_actions);
-    renew_action_on_card_comboBox(db, ui->existing_actions_box);
+    renew_actions_comboBox();
 
     this->setWindowTitle("Редагування програми '" + program_data[2] + "'");
 
@@ -47,11 +47,11 @@ void Dialog_program_info::renew_program_actions(DB_setup* db, QString program, Q
     DB_setup::table_column_entire_width(table);
 }
 
-void Dialog_program_info::renew_action_on_card_comboBox(DB_setup* db, QComboBox* box)
+void Dialog_program_info::renew_actions_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
-    box->setModel(model);
-    box->setCurrentIndex(-1);
+    ui->existing_actions_box->setModel(model);
+    ui->existing_actions_box->setCurrentIndex(-1);
 }
 
 void Dialog_program_info::on_update_program_clicked()
@@ -66,6 +66,7 @@ void Dialog_program_info::on_add_new_action_clicked()
     Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, program_data);
     dialog_actions->setModal(true);
     dialog_actions->show();
+    connect(dialog_actions, SIGNAL(actionsChanged()), this, SLOT(renew_actions_comboBox()));
 }
 
 void Dialog_program_info::on_add_action_to_program_clicked()

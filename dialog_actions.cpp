@@ -78,5 +78,6 @@ void Dialog_actions::on_buttonBox_accepted()
         query = "select update_action('" + old_data[3] + "','" + name + "','" + QString::number(percent) + "','" + start + "','" + stop + "');";
         db->executeQuery(query, "operator", this, 0);
     };
+    emit actionsChanged();
     renew_actions(db, table);
 }

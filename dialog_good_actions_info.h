@@ -33,7 +33,8 @@ public:
     ~Dialog_good_actions_info();
 
 private slots:
-    void renew_actions_comboBox(DB_setup* db, QComboBox* box);
+    void renew_actions_comboBox();
+
     void on_tableView_actions_good_pressed(const QModelIndex &index);
 
     void on_update_good_type_clicked();

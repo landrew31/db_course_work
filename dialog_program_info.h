@@ -30,12 +30,13 @@ public:
                                  QString* program_data = 0,
                                  QWidget *parent = 0);
     static void renew_program_actions(DB_setup* db, QString program, QTableView* table);
-    static void renew_action_on_card_comboBox(DB_setup* db, QComboBox* box);
     ~Dialog_program_info();
 
 
 
 private slots:
+    void renew_actions_comboBox();
+
     void on_update_program_clicked();
 
     void on_add_new_action_clicked();

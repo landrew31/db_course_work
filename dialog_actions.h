@@ -30,6 +30,9 @@ public:
     static void renew_actions(DB_setup* db, QTableView* table);
     ~Dialog_actions();
 
+signals:
+    void actionsChanged();
+
 private slots:
     void on_buttonBox_accepted();
 
