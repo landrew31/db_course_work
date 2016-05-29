@@ -28,13 +28,9 @@ SOURCES += main.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
     dialog_card_info.cpp \
-<<<<<<< HEAD
     dialog_doc_types.cpp \
-    dialog_good_types.cpp
-=======
-    dialog_createskill.cpp \
-    dialog_doc_types.cpp
->>>>>>> 0678f8d849b4eb537aea249f98fea684f00fed70
+    dialog_good_types.cpp \
+    dialog_createskill.cpp
 
 
 HEADERS  += \
@@ -49,14 +45,10 @@ HEADERS  += \
     dialog_programs.h \
     dialog_program_info.h \
     dialog_card_info.h \
-<<<<<<< HEAD
     dialog_doc_types.h \
-    dialog_good_types.h
-=======
+    dialog_good_types.h \
     dialog_createskill.h \
-    functions.h \
-    dialog_doc_types.h
->>>>>>> 0678f8d849b4eb537aea249f98fea684f00fed70
+    functions.h
 
 FORMS    += \
     dialogentry.ui \
@@ -68,10 +60,6 @@ FORMS    += \
     dialog_programs.ui \
     dialog_program_info.ui \
     dialog_card_info.ui \
-<<<<<<< HEAD
     dialog_doc_types.ui \
-    dialog_good_types.ui
-=======
-    dialog_createskill.ui \
-    dialog_doc_types.ui
->>>>>>> 0678f8d849b4eb537aea249f98fea684f00fed70
+    dialog_good_types.ui \
+    dialog_createskill.ui

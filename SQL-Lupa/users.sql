@@ -8,6 +8,7 @@ GRANT SELECT ON "Lupa_A".show_not_finished_actions_on_programs TO admin;
 GRANT SELECT ON "Lupa_A".show_cards TO admin;
 GRANT SELECT ON "Lupa_A".show_actions TO admin;
 GRANT SELECT ON "Lupa_A".show_doc_types TO admin;
+GRANT SELECT ON "Lupa_A".show_good_types TO admin, operator;
 
 CREATE USER operator WITH PASSWORD 'operator';
 GRANT ALL PRIVILEGES ON DATABASE db_work TO operator;

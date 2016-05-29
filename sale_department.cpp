@@ -15,6 +15,7 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     Dialog_programs::renew_programs(db, ui->tableView_programs);
     Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
+    Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
 //    renew_cards(db, ui->tableView_cards);
 //    renew_action_on_program_comboBox(db, ui->action_on_program);
 //    renew_contr_on_card_comboBox(db, ui->contr_for_card);
@@ -309,6 +310,8 @@ void Sale_department::on_delete_doc_type_clicked()
 
 /* END DOCUMENT TYPES SLOTS BLOCK */
 
+/* START GOOD TYPES SLOTS BLOCK */
+
 void Sale_department::on_add_new_good_type_clicked()
 {
     Dialog_good_types* dialog_good_types = new Dialog_good_types(db, "add", ui->tableView_good_types, old_good_data);
@@ -322,15 +325,11 @@ void Sale_department::on_tableView_good_types_pressed(const QModelIndex &index)
     ui->delete_good_type->setEnabled(true);
     ui->clear_good_type_buffer->setEnabled(true);
     int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
-    QString term = index.sibling(row, 1).data().toString();
-    QString item = index.sibling(row, 2).data().toString();
-    QString price = index.sibling(row, 3).data().toString();
-    old_good_data[0] = name;
-    old_good_data[1] = term;
-    old_good_data[2] = item;
-    old_good_data[3] = price;
-    ui->good_type_buffer->setText(name);
+    old_good_data[0] = index.sibling(row, 0).data().toString(); // name
+    old_good_data[3] = index.sibling(row, 1).data().toString(); // price
+    old_good_data[1] = index.sibling(row, 2).data().toString(); // term
+    old_good_data[2] = index.sibling(row, 3).data().toString(); // item
+    ui->good_type_buffer->setText(old_good_data[0]);
 }
 
 void Sale_department::on_update_good_type_clicked()
