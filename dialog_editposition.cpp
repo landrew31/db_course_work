@@ -116,7 +116,7 @@ void Dialog_editPosition::on_button_createSkill_clicked()
 void Dialog_editPosition::accept()
 {
     ui->buttonBox->setDisabled(true);
-    if (DEBUGMODE) qDebug() << "editPosition dialog accepted";
+    if (DEBUGMODE) qDebug() << "editPosition dialog accepted:";
     QString name = ui->positName->text();
     QString description = ui->positDescr->toPlainText();
     if (DEBUGMODE) qDebug() << "data to insert/update:" << name << description;

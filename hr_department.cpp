@@ -75,6 +75,11 @@ void HR_department::on_button_editPersInfo_clicked()
     connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showStaffTable()));
 }
 
+void HR_department::on_button_addStuff_clicked()
+{
+
+}
+
 void HR_department::on_table_staff_pressed(const QModelIndex &index)
 {
 //    ui->button_showPersInfo->setEnabled(true);
@@ -145,3 +150,4 @@ void HR_department::on_button_addPosition_clicked()
     dialog_addPosition->show();
     connect(dialog_addPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
 }
+

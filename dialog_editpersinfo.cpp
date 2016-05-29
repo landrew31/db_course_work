@@ -114,7 +114,7 @@ void Dialog_editPersInfo::on_button_addSkill_clicked()
 
 void Dialog_editPersInfo::accept()
 {
-    ui->buttonBox->setEnabled(false);
+    ui->buttonBox->setDisabled(true);
     if (DEBUGMODE) qDebug() << "editPersInfo dialog accepted:";
     QString name = ui->persName->text();
     QString surname = ui->persSurname->text();
@@ -122,21 +122,6 @@ void Dialog_editPersInfo::accept()
     QString education = ui->persEdu->text();
     if (DEBUGMODE) qDebug() << "data to update:" << name << surname << birthday << education;
     QString queryText = "";
-
-
-    // SKILLS UPDATE
-    queryText = QString(
-        "delete from \"Myronenko_O\".personal_skills "
-        "where \"Id_person\" = %1;").arg(persId);
-    db->executeQuery(queryText, "admin", this, -1);
-    for (int i=0; i < skills.length(); i++)
-    {
-        queryText = QString(
-            "insert into \"Myronenko_O\".personal_skills (\"Id_person\", \"Id_skill\") "
-                "values (%1, %2);").arg(persId).arg(skills[i]);
-        qDebug() << queryText;
-        db->executeQuery(queryText, "admin", this, -1);
-    };
 
 
     // INFO UPDATE
@@ -149,7 +134,20 @@ void Dialog_editPersInfo::accept()
                 "birthday = '%3', "
                 "education = '%4');").arg(name).arg(surname).arg(birthday).arg(education);
         db->executeQuery(queryText, "admin", this, 1);
+        queryText = QString(
+                    "select \"Id_person\" "
+                    "from \"Myronenko_O\".person "
+                    "where per_name = '%1' "
+                      "and per_surname = %2;").arg(name).arg(surname);
+        QSqlQueryModel *modelNewPosition = db->getQueryModel(queryText);
+        QModelIndex index = modelNewPosition->index(0, 0);
+        persId = index.data(Qt::DisplayRole).toInt();
     } else {
+        queryText = QString(
+            "delete from \"Myronenko_O\".personal_skills "
+            "where \"Id_person\" = %1;").arg(persId);
+        db->executeQuery(queryText, "admin", this, -1);
+
         queryText = QString(
             "update \"Myronenko_O\".person set "
                 "per_name = '%1', "
@@ -160,8 +158,21 @@ void Dialog_editPersInfo::accept()
         db->executeQuery(queryText, "admin", this, 2);
     }
 
+
+    // SKILLS UPDATE
+    for (int i=0; i < skills.length(); i++)
+    {
+        queryText = QString(
+            "insert into \"Myronenko_O\".personal_skills (\"Id_person\", \"Id_skill\") "
+                "values (%1, %2);").arg(persId).arg(skills[i]);
+        qDebug() << queryText;
+        db->executeQuery(queryText, "admin", this, -1);
+    };
+
+
     this->accepted();
     this->close();
+    ui->buttonBox->setEnabled(true);
 }
 
 void Dialog_editPersInfo::on_button_createSkill_clicked()
