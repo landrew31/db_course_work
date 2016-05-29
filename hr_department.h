@@ -1,21 +1,22 @@
 #ifndef HR_DEPARTMENT_H
 #define HR_DEPARTMENT_H
 
-#include <QMainWindow>
 #include <QObject>
+#include <QMainWindow>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDateEdit>
 #include <QModelIndex>
 #include <QDebug>
+
 #include "db_setup.h"
-
 #include "ui_hr_department.h"
-
 #include "dialog_editpersinfo.h"
+#include "functions.h"
 
 #define DEBUGMODE true
+
 
 namespace Ui {
 class HR_department;

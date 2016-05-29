@@ -8,7 +8,7 @@ Dialog_editPersInfo::Dialog_editPersInfo(DB_setup *db, QString selectedPersId, Q
     ui->setupUi(this);
     this->db = db;
 
-    persId = selectedPersId;
+    persId = selectedPersId.toInt();
     if (DEBUGMODE) qDebug() << "selectedPersId: " << persId;
     showInpValues();
 }
@@ -22,9 +22,12 @@ void Dialog_editPersInfo::showInpValues()
 {
     QModelIndex index;
 
-    QSqlQueryModel *modelPerson = db->getQueryModel(
-        "select * from \"Myronenko_O\".person where \"Id_person\" = " + persId + ";"
-    );
+    //-------------
+    // PERSINFO BLOCK
+    //-------------
+
+    QString queryText = QString("select * from \"Myronenko_O\".person where \"Id_person\" = %1;").arg(persId);
+    QSqlQueryModel *modelPerson = db->getQueryModel(queryText);
     if (DEBUGMODE)
     {
         qDebug() << "Dialog_editPersInfo got modelPerson:";
@@ -52,14 +55,17 @@ void Dialog_editPersInfo::showInpValues()
     QString education = index.data(Qt::DisplayRole).toString();
     ui->persEdu->setText(education);
 
+    //-------------
+    // LIST SKILLS BLOCK
+    //-------------
 
-    QString skillsQuery =
+    queryText = QString(
             "select skill_name, skill_description, per_skills.\"Id_person\", per_skills.\"Id_skill\" "
             "from \"Myronenko_O\".personal_skills per_skills "
                 "join \"Myronenko_O\".skills "
                 "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
-            "where per_skills.\"Id_person\" = " + persId + ";";
-    QSqlQueryModel *modelPersonSkills = db->getQueryModel(skillsQuery);
+            "where per_skills.\"Id_person\" = %1;").arg(persId);
+    QSqlQueryModel *modelPersonSkills = db->getQueryModel(queryText);
     int skillsCount = modelPersonSkills->rowCount();
     if (DEBUGMODE) qDebug() << "Dialog_editPersInfo got modelPersonSkills:";
     for (int i=0; i < skillsCount; i++)
@@ -67,26 +73,63 @@ void Dialog_editPersInfo::showInpValues()
         index = modelPersonSkills->index(i, 0);
         if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
 
-        QString weditName = QString("lineEdit_skill%1").arg(i+1);
-        QLineEdit* wedit = ui->frame_editFrame->findChild<QLineEdit*>(weditName);
-        if (wedit)
+        QString skillValName = QString("label_skill%1").arg(i+1);
+        QLabel* skillVal = ui->frame_editFrame->findChild<QLabel*>(skillValName);
+        if (skillVal)
         {
-            if (DEBUGMODE) qDebug() << "!- " << weditName << " already exists";
-            wedit->setText( index.data(Qt::DisplayRole).toString() );
+            if (DEBUGMODE) qDebug() << "!- " << skillValName << " already exists";
+            skillVal->setText( index.data(Qt::DisplayRole).toString() );
             continue;
         }
 
-        wedit  = new QLineEdit(index.data(Qt::DisplayRole).toString());
-        if (DEBUGMODE) qDebug() << "!- " << weditName << " created";
+        skillVal  = new QLabel(index.data(Qt::DisplayRole).toString());
+        skillVal->setObjectName(skillValName);
+        if (DEBUGMODE) qDebug() << "!- " << skillValName << " created";
         QString labelTitle = QString("Навичка %1").arg(i+1);
         QLabel* label  = new QLabel(labelTitle);
-        wedit->setObjectName(weditName);
+        QPushButton* delButton  = new QPushButton(QString("Видалити"));
+        delButton->setCursor(Qt::PointingHandCursor);
+        index = modelPersonSkills->index(i, 3);
+//        int skillId = index.data(Qt::DisplayRole).toInt();
+        connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
 
         ui->layout_persSkills->addWidget(label, i, 0);
-        ui->layout_persSkills->addWidget(wedit, i, 1);
+        ui->layout_persSkills->addWidget(skillVal, i, 1);
+        ui->layout_persSkills->addWidget(delButton, i, 2);
     }
     if (DEBUGMODE) qDebug() << endl;
 
+    //-------------
+    // EDIT SKILLS BLOCK
+    //-------------
+
+    queryText =
+            "select \"Id_skill\", skill_name "
+            "from \"Myronenko_O\".skills;";
+    modelAllSkills = db->getQueryModel(queryText);
+    int allSkillsCount = modelAllSkills->rowCount();
+    if (DEBUGMODE) qDebug() << "Dialog_editPersInfo got modelAllSkills:";
+    ui->comboBox_selectSkill->clear();
+    for (int i=0; i < allSkillsCount; i++)
+    {
+        index = modelAllSkills->index(i, 1);
+        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
+        ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
+    }
+    if (DEBUGMODE) qDebug() << endl;
+}
+
+void Dialog_editPersInfo::on_button_addSkill_clicked()
+{
+    QString newSkillName = ui->comboBox_selectSkill->currentText();
+    int newSkillId = searchIdByNameInModel(newSkillName, modelAllSkills, 0, 1);
+    if (DEBUGMODE) qDebug() << "Selected new skill for" << persId << "person:" << newSkillName << newSkillId << endl;
+    QString queryText = QString(
+        "insert into \"Myronenko_O\".personal_skills (\"Id_person\", \"Id_skill\") "
+            "values (%1, %2);").arg(persId).arg(newSkillId);
+    qDebug() << queryText << endl;
+    db->executeQuery(queryText, "admin", this, 1);
+    showInpValues();
 }
 
 void Dialog_editPersInfo::accept()
@@ -96,13 +139,26 @@ void Dialog_editPersInfo::accept()
     QString surname = ui->persSurname->text();
     QString birthday = ui->persBirthDate->date().toString("yyyy-MM-dd");
     QString education = ui->persEdu->text();
-    if (DEBUGMODE) qDebug() << "data to update: " << name << surname << birthday << education;
-    QString updateQuery = "update \"Myronenko_O\".person "
+    if (DEBUGMODE) qDebug() << "data to update:" << name << surname << birthday << education;
+    QString queryText = "update \"Myronenko_O\".person "
         "set per_name = '" + name + "', "
         "per_surname = '" + surname + "', "
         "birthday = '" + birthday + "', "
         "education = '" + education + "' "
       "where \"Id_person\" = " + persId + ";";
-    db->executeQuery(updateQuery, "admin", this, 2);
+    db->executeQuery(queryText, "admin", this, 2);
+    this->accepted();
+    this->close();
 }
 
+void Dialog_editPersInfo::on_button_createSkill_clicked()
+{
+    Dialog_createSkill* createSkillWindow = new Dialog_createSkill(db, this);
+    createSkillWindow->show();
+    connect(createSkillWindow, SIGNAL(accepted()), this, SLOT(showInpValues()));
+}
+
+void Dialog_editPersInfo::removeSkill(){
+    int skillId = 0;
+    if (DEBUGMODE) qDebug() << "Remove" << skillId << "skill" << endl;
+}

@@ -44,11 +44,6 @@ QString DB_setup::getPassword()
     return password;
 }
 
-//QSqlDatabase DB_setup::getBase()
-//{
-//    return base;
-//}
-
 void DB_setup::setUser(QString user)
 {
     this->user = user;
@@ -72,7 +67,7 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
     return model;
 }
 
- bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget, int queryType)
+bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidget, int queryType)
  {
      QSqlQuery query;
      query.prepare(queryText);
@@ -115,7 +110,8 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
      msgBox.exec();
  }
 
-void DB_setup::table_column_entire_width(QTableView *table) {
+void DB_setup::table_column_entire_width(QTableView *table)
+{
      for (int c = 0; c < table->horizontalHeader()->count(); ++c)
      {
          table->horizontalHeader()->setSectionResizeMode(

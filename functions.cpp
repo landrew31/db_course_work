@@ -1,3 +1,5 @@
+#include "functions.h"
+
 bool inQStringList(QString item, QStringList list) {
     if (list.length() == 0){
         return false;
@@ -11,7 +13,27 @@ bool inQStringList(QString item, QStringList list) {
     return false;
 }
 
-void table_column_entire_width(QTableView *table) {
+
+int searchIdByNameInModel(QString key, QSqlQueryModel* model, int idPosit, int keyPosit)
+{
+    int id = -1;
+    QModelIndex index;
+    int rowCount = model->rowCount();
+    for (int i=0; i < rowCount; i++)
+    {
+        index = model->index(i, keyPosit);
+        if ( key.compare(index.data(Qt::DisplayRole).toString()) == 0 )
+        {
+            index = model->index(i, idPosit);
+            id = index.data(Qt::DisplayRole).toInt();
+            break;
+        }
+    }
+    return id;
+}
+
+void table_column_entire_width(QTableView *table)
+{
     for (int c = 0; c < table->horizontalHeader()->count(); ++c)
     {
         table->horizontalHeader()->setSectionResizeMode(
