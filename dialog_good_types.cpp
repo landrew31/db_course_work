@@ -48,8 +48,8 @@ void Dialog_good_types::renew_good_types(DB_setup* db, QTableView* table )
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_good_types;");
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Назва товару"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Термін придатності"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Ціна одиниці"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна одиниці"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Термін придатності"));
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("Агрегатний стан"));
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel();
     proxyModel->setSourceModel(model);
