@@ -12,12 +12,14 @@ HR_department::HR_department(DB_setup *db, QWidget *parent) :
 
     showStaffTable();
     showPositTable();
+    showVacTable();
 }
 
 HR_department::~HR_department()
 {
     delete ui;
 }
+
 
 
 //-----------
@@ -63,10 +65,6 @@ void HR_department::on_button_closeWindow_clicked()
 {
     this->close();
 }
-void HR_department::on_button_closeWindow_2_clicked()
-{
-    this->close();
-}
 
 void HR_department::on_button_editPersInfo_clicked()
 {
@@ -100,6 +98,44 @@ void HR_department::on_date_historyView_dateChanged()
 
 
 
+//-----------
+// VACANCIES TAB
+//-----------
+
+void HR_department::showVacTable()
+{
+    QString queryText =
+            "select * from \"Myronenko_O\".show_vacancies;";
+    QSqlQueryModel *model = db->getQueryModel(queryText);
+
+    model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Кількість місць"));
+
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    ui->table_vacancies->setModel(proxyModel);
+    ui->table_vacancies->setSortingEnabled(true);
+    ui->table_vacancies->resizeColumnsToContents();
+    ui->table_vacancies->setColumnHidden(2, true);
+    for (int c = 0; c < ui->table_vacancies->horizontalHeader()->count(); ++c)
+    {
+        ui->table_vacancies->horizontalHeader()->setSectionResizeMode(
+            c, QHeaderView::Stretch);
+    }
+}
+
+void HR_department::on_button_closeWindow_3_clicked()
+{
+    this->close();
+}
+
+void HR_department::on_table_vacancies_pressed(const QModelIndex &index)
+{
+    int row = index.row();
+    selectedVacId = index.sibling(row, 2).data().toInt();
+    ui->button_closeVacancy->setEnabled(true);
+}
+
 //---------------
 // POSITIONS TAB
 //---------------
@@ -118,7 +154,7 @@ void HR_department::showPositTable()
     ui->table_positions->setModel(proxyModel);
     ui->table_positions->setSortingEnabled(true);
     ui->table_positions->resizeColumnsToContents();
-    ui->table_positions->setColumnHidden(1, true);
+    ui->table_positions->setColumnHidden(2, true);
     for (int c = 0; c < ui->table_positions->horizontalHeader()->count(); ++c)
     {
         ui->table_positions->horizontalHeader()->setSectionResizeMode(
@@ -151,3 +187,7 @@ void HR_department::on_button_addPosition_clicked()
     connect(dialog_addPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
 }
 
+void HR_department::on_button_closeWindow_2_clicked()
+{
+    this->close();
+}

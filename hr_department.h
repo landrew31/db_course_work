@@ -35,23 +35,27 @@ private:
     Ui::HR_department *ui;
     DB_setup *db;
 
-    int selectedStaffId, selectedPositId;
+    int selectedStaffId, selectedPositId, selectedVacId;
 
 private slots:
     void showStaffTable();
     void showPositTable();
+    void showVacTable();
 
 private slots:
-    void on_button_closeWindow_clicked();
-    void on_button_closeWindow_2_clicked();
-
-    void on_button_editPersInfo_clicked();
     void on_table_staff_pressed(const QModelIndex &index);
+    void on_button_editPersInfo_clicked();
+    void on_button_addStuff_clicked();
     void on_date_historyView_dateChanged();
+    void on_button_closeWindow_clicked();
+
+    void on_button_closeWindow_3_clicked();
 
     void on_table_positions_pressed(const QModelIndex &index);
     void on_button_editPosition_clicked();
     void on_button_addPosition_clicked();
+    void on_button_closeWindow_2_clicked();
+    void on_table_vacancies_pressed(const QModelIndex &index);
 };
 
 #endif // HR_DEPARTMENT_H
