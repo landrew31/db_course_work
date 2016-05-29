@@ -17,7 +17,7 @@ class Dialog_editPersInfo: public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog_editPersInfo(DB_setup* db = 0, QString selectedStaffId = "", QWidget *parent = 0);
+    explicit Dialog_editPersInfo(DB_setup* db = 0, int selectedStaffId = 0, QWidget *parent = 0);
     ~Dialog_editPersInfo();
 
 private slots:

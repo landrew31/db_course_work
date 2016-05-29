@@ -13,6 +13,7 @@
 #include "db_setup.h"
 #include "ui_hr_department.h"
 #include "dialog_editpersinfo.h"
+#include "dialog_editposition.h"
 #include "functions.h"
 
 #define DEBUGMODE true
@@ -30,25 +31,23 @@ public:
     explicit HR_department(DB_setup *db = 0, QWidget *parent = 0);
     ~HR_department();
 
-    void showStaffTable();
-
 private:
     Ui::HR_department *ui;
     DB_setup *db;
 
-    QString selectedStaffId;
+    int selectedStaffId, selectedPositId;
 
 private slots:
+    void showStaffTable();
+    void showPositTable();
 
+private slots:
     void on_button_closeWindow_clicked();
-
     void on_button_editPersInfo_clicked();
-
     void on_table_staff_pressed(const QModelIndex &index);
-
     void on_date_historyView_dateChanged();
-
-
+    void on_table_positions_pressed(const QModelIndex &index);
+    void on_button_editPosition_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

@@ -1,14 +1,14 @@
 #include "dialog_editpersinfo.h"
 
 
-Dialog_editPersInfo::Dialog_editPersInfo(DB_setup *db, QString selectedPersId, QWidget *parent) :
+Dialog_editPersInfo::Dialog_editPersInfo(DB_setup *db, int selectedPersId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogUi_editPersInfo)
 {
     ui->setupUi(this);
     this->db = db;
 
-    persId = selectedPersId.toInt();
+    persId = selectedPersId;
     if (DEBUGMODE) qDebug() << "selectedPersId: " << persId;
     showInpValues();
 }
@@ -127,7 +127,6 @@ void Dialog_editPersInfo::on_button_addSkill_clicked()
     QString queryText = QString(
         "insert into \"Myronenko_O\".personal_skills (\"Id_person\", \"Id_skill\") "
             "values (%1, %2);").arg(persId).arg(newSkillId);
-    qDebug() << queryText << endl;
     db->executeQuery(queryText, "admin", this, 1);
     showInpValues();
 }
@@ -140,8 +139,8 @@ void Dialog_editPersInfo::accept()
     QString birthday = ui->persBirthDate->date().toString("yyyy-MM-dd");
     QString education = ui->persEdu->text();
     if (DEBUGMODE) qDebug() << "data to update:" << name << surname << birthday << education;
-    QString queryText = "update \"Myronenko_O\".person "
-        "set per_name = '" + name + "', "
+    QString queryText = "update \"Myronenko_O\".person set "
+        "per_name = '" + name + "', "
         "per_surname = '" + surname + "', "
         "birthday = '" + birthday + "', "
         "education = '" + education + "' "

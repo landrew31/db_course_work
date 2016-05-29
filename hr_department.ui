@@ -478,7 +478,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_stuff">
      <property name="enabled">
@@ -509,7 +509,7 @@
        <bool>false</bool>
       </attribute>
      </widget>
-     <widget class="QFrame" name="frame_actions">
+     <widget class="QFrame" name="frame_actions_1">
       <property name="geometry">
        <rect>
         <x>1040</x>
@@ -561,6 +561,9 @@
           </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="toolTip">
+           <string/>
           </property>
           <property name="text">
            <string>Відмітити відсутність</string>
@@ -614,6 +617,9 @@
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="text">
            <string>Редагувати профіль</string>
           </property>
@@ -648,7 +654,7 @@
        <string>Вихід</string>
       </property>
      </widget>
-     <widget class="QFrame" name="frame_filter">
+     <widget class="QFrame" name="frame_filter_1">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -731,6 +737,108 @@
            </widget>
           </item>
          </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_positions">
+     <attribute name="title">
+      <string>Посади</string>
+     </attribute>
+     <widget class="QTableView" name="table_positions">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>521</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_actions_3">
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>20</y>
+        <width>251</width>
+        <height>521</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>10</y>
+         <width>231</width>
+         <height>341</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="5" column="0">
+         <widget class="QPushButton" name="button_addPosition">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Створити посаду</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="button_editPosition">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>Редагувати</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="button_showPositInfo">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Переглянути опис</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="button_deletePosition">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>Видалити</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

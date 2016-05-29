@@ -1,8 +1,8 @@
-﻿CREATE OR REPLACE FUNCTION "Lupa_A".insert_new_entity_contr()
+﻿CREATE OR REPLACE FUNCTION "Myronenko_O".check_new_pers_skill()
 RETURNS trigger AS
 $BODY$
 BEGIN
-IF EXISTS (SELECT * FROM "Lupa_A".entity_contr WHERE "Id_contr" = NEW."Id_contr")
+IF NOT EXISTS (SELECT * FROM "Myronenko_O".entity_contr WHERE "Id_contr" = NEW."Id_contr")
 THEN
 RAISE EXCEPTION 'invalid data';
 END IF;
@@ -11,8 +11,8 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_new_entity_contr
+CREATE TRIGGER check_new_pers_skill
 BEFORE INSERT
-ON "Lupa_A".entity_contr
+ON "Myronenko_O".personal_skills
 FOR EACH ROW
-EXECUTE PROCEDURE "Lupa_A".insert_new_entity_contr();
+EXECUTE PROCEDURE "Myronenko_O".check_new_pers_skill();
