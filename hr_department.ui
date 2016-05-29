@@ -843,6 +843,22 @@
        </layout>
       </widget>
      </widget>
+     <widget class="QPushButton" name="button_closeWindow_2">
+      <property name="geometry">
+       <rect>
+        <x>1050</x>
+        <y>630</y>
+        <width>231</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Вихід</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -855,8 +871,25 @@
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAsd">
+    <property name="title">
+     <string>Супермаркет</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <addaction name="menuAsd"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionAsd">
+   <property name="text">
+    <string>asd</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Вихід</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

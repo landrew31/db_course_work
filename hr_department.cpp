@@ -63,6 +63,10 @@ void HR_department::on_button_closeWindow_clicked()
 {
     this->close();
 }
+void HR_department::on_button_closeWindow_2_clicked()
+{
+    this->close();
+}
 
 void HR_department::on_button_editPersInfo_clicked()
 {

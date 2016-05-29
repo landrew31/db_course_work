@@ -43,9 +43,12 @@ private slots:
 
 private slots:
     void on_button_closeWindow_clicked();
+    void on_button_closeWindow_2_clicked();
+
     void on_button_editPersInfo_clicked();
     void on_table_staff_pressed(const QModelIndex &index);
     void on_date_historyView_dateChanged();
+
     void on_table_positions_pressed(const QModelIndex &index);
     void on_button_editPosition_clicked();
 };
