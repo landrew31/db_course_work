@@ -69,6 +69,7 @@ void Dialog_programs::on_buttonBox_accepted()
     QString stop = ui->stop_program_date->date().toString("yyyy-MM-dd");
     QString name = ui->program_name_field->text();
     QString query = "";
+    qDebug() << "work" << endl;
     if (mode == "add") {
         query = "insert into \"Lupa_A\".programs (day_start, day_stop, program_name) values('"+ start + "','" + stop + "','" + name + "');";
         db->executeQuery(query, "operator", this, 1);
@@ -76,6 +77,7 @@ void Dialog_programs::on_buttonBox_accepted()
         query = "select update_program('" + old_data[2] + "','" + name + "','" + start + "','" + stop + "');";
         db->executeQuery(query, "operator", this, 0);
     };
+    emit programsChanged();
 
     renew_programs(db, table);
 }

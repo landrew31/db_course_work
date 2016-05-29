@@ -15,6 +15,14 @@ Dialog_good_actions_info::Dialog_good_actions_info(DB_setup* db,
     this->table_actions = table_actions;
     this->good_data = good_data;
     this->old_action_data = new QString[4];
+    qDebug() << good_data[0] << endl;
+    renew_good_actions(db, this->good_data[0], ui->tableView_actions_good);
+    renew_actions_comboBox();
+
+    this->setWindowTitle("Редагування товару '" + good_data[0] + "'");
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText("ОК");
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("Відмінити");
 }
 
 Dialog_good_actions_info::~Dialog_good_actions_info()
@@ -24,7 +32,7 @@ Dialog_good_actions_info::~Dialog_good_actions_info()
 
 void Dialog_good_actions_info::renew_good_actions(DB_setup* db, QString good, QTableView* table )
 {
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_action_in_program('" + good + "');");
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_actions_in_good('" + good + "');");
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Назва акції"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Відсоток по акції"));
@@ -38,11 +46,11 @@ void Dialog_good_actions_info::renew_good_actions(DB_setup* db, QString good, QT
     DB_setup::table_column_entire_width(table);
 }
 
-void Dialog_good_actions_info::renew_actions_comboBox(DB_setup* db, QComboBox* box)
+void Dialog_good_actions_info::renew_actions_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
-    box->setModel(model);
-    box->setCurrentIndex(-1);
+    ui->existing_actions_box->setModel(model);
+    ui->existing_actions_box->setCurrentIndex(-1);
 }
 
 void Dialog_good_actions_info::on_tableView_actions_good_pressed(const QModelIndex &index)
@@ -73,6 +81,7 @@ void Dialog_good_actions_info::on_add_new_action_clicked()
     Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, good_data);
     dialog_actions->setModal(true);
     dialog_actions->show();
+    connect(dialog_actions, SIGNAL(actionsChanged()), this, SLOT(renew_actions_comboBox()));
 }
 
 void Dialog_good_actions_info::on_add_action_to_good_clicked()
@@ -80,7 +89,7 @@ void Dialog_good_actions_info::on_add_action_to_good_clicked()
     QString action = ui->existing_actions_box->currentText();
 
     db->executeQuery(
-            "select insert_new_action_in_program('" + good_data[0] + "','" + action + "');",
+            "select insert_new_action_in_good('" + good_data[0] + "','" + action + "');",
             "operator",
             this,
             0

@@ -33,10 +33,12 @@ public:
                               QWidget *parent = 0);
 
     static void renew_contr_programs(DB_setup* db, QString contr, QTableView* table);
-    static void renew_program_on_card_comboBox(DB_setup* db, QComboBox* box);
+
     ~Dialog_card_info();
 
 private slots:
+    void renew_programs_comboBox();
+
     void on_update_contr_clicked();
 
 

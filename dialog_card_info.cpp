@@ -19,7 +19,7 @@ Dialog_card_info::Dialog_card_info(DB_setup* db,
     this->old_program_data = new QString[3];
 
     renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
-    renew_program_on_card_comboBox(db, ui->existing_programs_box);
+    renew_programs_comboBox();
 
     this->setWindowTitle("Редагування картки контрагента '" + contr_data[2] + "'");
 
@@ -37,6 +37,8 @@ void Dialog_card_info::renew_contr_programs(DB_setup* db, QString contr, QTableV
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_program_in_card('" + contr + "');");
 
+    qDebug() << "one" << endl;
+
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Назва програми"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Початок програми"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("Кінець програми"));
@@ -51,18 +53,19 @@ void Dialog_card_info::renew_contr_programs(DB_setup* db, QString contr, QTableV
     DB_setup::table_column_entire_width(table);
 }
 
-void Dialog_card_info::renew_program_on_card_comboBox(DB_setup* db, QComboBox* box)
+void Dialog_card_info::renew_programs_comboBox()
 {
     QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".programs ORDER BY program_name;");
-    box->setModel(model);
-    box->setCurrentIndex(-1);
+    qDebug() << "done" << endl;
+    ui->existing_programs_box->setModel(model);
+    ui->existing_programs_box->setCurrentIndex(-1);
 }
 
 
 void Dialog_card_info::on_update_contr_clicked()
 {
     Dialog_contractors* dialog_contractors = new Dialog_contractors(db, "update",
-                                                                    ui->tableView_contr_programs,
+                                                                    table_contr,
                                                                     contr_data);
     dialog_contractors->setModal(true);
     dialog_contractors->show();
@@ -70,9 +73,10 @@ void Dialog_card_info::on_update_contr_clicked()
 
 void Dialog_card_info::on_add_new_program_clicked()
 {
-    Dialog_programs* dialog_programs = new Dialog_programs(db, "add", ui->tableView_contr_programs, old_program_data);
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "add", table_programs, old_program_data);
     dialog_programs->setModal(true);
     dialog_programs->show();
+    connect(dialog_programs, SIGNAL(programsChanged()), this, SLOT(renew_programs_comboBox()));
 }
 
 void Dialog_card_info::on_tableView_contr_programs_pressed(const QModelIndex &index)

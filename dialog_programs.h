@@ -34,6 +34,9 @@ private slots:
 
     void on_clear_program_form_clicked();
 
+signals:
+    void programsChanged();
+
 private:
     Ui::Dialog_programs *ui;
     DB_setup *db;
