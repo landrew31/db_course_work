@@ -22,10 +22,10 @@ HR_department::~HR_department()
 
 
 
+
 //-----------
 // STAFF TAB
 //-----------
-
 
 void HR_department::showStaffTable()
 {
@@ -104,6 +104,7 @@ void HR_department::on_updateStaffTable_clicked()
 
 
 
+
 //-----------
 // VACANCIES TAB
 //-----------
@@ -168,6 +169,8 @@ void HR_department::on_updateVacanciesTable_clicked()
 }
 
 
+
+
 //---------------
 // POSITIONS TAB
 //---------------
@@ -197,7 +200,7 @@ void HR_department::showPositTable()
 void HR_department::on_table_positions_pressed(const QModelIndex &index)
 {
     int row = index.row();
-    //    ui->button_showPositInfo->setEnabled(true);
+    ui->button_showPositInfo->setEnabled(true);
     ui->button_editPosition->setEnabled(true);
     int selectedPositStaffCount = index.sibling(row, 1).data().toInt();
     if (selectedPositStaffCount == 0) {
@@ -238,4 +241,10 @@ void HR_department::on_button_deletePosition_clicked()
     QString queryText = QString("select \"Myronenko_O\".delete_position(%1);").arg(selectedPositId);
     db->executeQuery(queryText, "admin", this, 3);
     showPositTable();
+}
+
+void HR_department::on_button_showPositInfo_clicked()
+{
+    Dialog_showPositInfo* dialog_showPositInfo = new Dialog_showPositInfo(db, selectedPositId, this);
+    dialog_showPositInfo->show();
 }

@@ -11,12 +11,16 @@
 #include <QDebug>
 
 #include "db_setup.h"
+#include "functions.h"
 #include "ui_hr_department.h"
+
 #include "dialog_editpersinfo.h"
-#include "dialog_editposition.h"
+
 #include "dialog_removevacancy.h"
 #include "dialog_openvacancy.h"
-#include "functions.h"
+
+#include "dialog_editposition.h"
+#include "dialog_showpositinfo.h"
 
 #define DEBUGMODE true
 
@@ -65,6 +69,7 @@ private slots:
     void on_updateStaffTable_clicked();
     void on_button_openVacancy_clicked();
     void on_button_deletePosition_clicked();
+    void on_button_showPositInfo_clicked();
 };
 
 #endif // HR_DEPARTMENT_H
