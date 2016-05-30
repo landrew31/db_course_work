@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     dialog_doc_types.cpp \
     dialog_good_types.cpp \
     dialog_editposition.cpp \
-    dialog_good_actions_info.cpp
+    dialog_good_actions_info.cpp \
+    dialog_removevacancy.cpp
 
 
 HEADERS  += \
@@ -52,7 +53,8 @@ HEADERS  += \
     dialog_doc_types.h \
     dialog_good_types.h \
     dialog_editposition.h \
-    dialog_good_actions_info.h
+    dialog_good_actions_info.h \
+    dialog_removevacancy.h
 
 
 FORMS    += \
@@ -69,4 +71,5 @@ FORMS    += \
     dialog_doc_types.ui \
     dialog_good_types.ui \
     dialog_editposition.ui \
-    dialog_good_actions_info.ui
+    dialog_good_actions_info.ui \
+    dialog_removevacancy.ui

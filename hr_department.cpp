@@ -96,6 +96,11 @@ void HR_department::on_date_historyView_dateChanged()
     showStaffTable();
 }
 
+void HR_department::on_updateStaffTable_clicked()
+{
+    showStaffTable();
+}
+
 
 
 //-----------
@@ -133,8 +138,22 @@ void HR_department::on_table_vacancies_pressed(const QModelIndex &index)
 {
     int row = index.row();
     selectedVacId = index.sibling(row, 2).data().toInt();
+    selectedVacName = index.sibling(row, 0).data().toString();
     ui->button_closeVacancy->setEnabled(true);
 }
+
+void HR_department::on_button_closeVacancy_clicked()
+{
+    Dialog_removeVacancy* dialog_removeVacancy = new Dialog_removeVacancy(db, selectedVacId, selectedVacName, this);
+    dialog_removeVacancy->show();
+    connect(dialog_removeVacancy, SIGNAL(accepted()), this, SLOT(showVacTable()));
+}
+
+void HR_department::on_updateVacanciesTable_clicked()
+{
+    showVacTable();
+}
+
 
 //---------------
 // POSITIONS TAB
@@ -190,4 +209,9 @@ void HR_department::on_button_addPosition_clicked()
 void HR_department::on_button_closeWindow_2_clicked()
 {
     this->close();
+}
+
+void HR_department::on_updatePositTable_clicked()
+{
+    showPositTable();
 }

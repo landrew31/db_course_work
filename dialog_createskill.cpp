@@ -16,6 +16,7 @@ Dialog_createSkill::~Dialog_createSkill()
 
 void Dialog_createSkill::accept()
 {
+    ui->buttonBox->setDisabled(true);
     QString name = ui->lineEdit_name->text();
     if (name.length() == 0) {
         this->close();
@@ -30,4 +31,5 @@ void Dialog_createSkill::accept()
     db->executeQuery(queryText, "admin", this, 1);
     this->accepted();
     this->close();
+    ui->buttonBox->setEnabled(true);
 }

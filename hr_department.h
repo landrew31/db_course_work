@@ -14,6 +14,7 @@
 #include "ui_hr_department.h"
 #include "dialog_editpersinfo.h"
 #include "dialog_editposition.h"
+#include "dialog_removevacancy.h"
 #include "functions.h"
 
 #define DEBUGMODE true
@@ -36,6 +37,7 @@ private:
     DB_setup *db;
 
     int selectedStaffId, selectedPositId, selectedVacId;
+    QString selectedVacName;
 
 private slots:
     void showStaffTable();
@@ -56,6 +58,10 @@ private slots:
     void on_button_addPosition_clicked();
     void on_button_closeWindow_2_clicked();
     void on_table_vacancies_pressed(const QModelIndex &index);
+    void on_button_closeVacancy_clicked();
+    void on_updateVacanciesTable_clicked();
+    void on_updatePositTable_clicked();
+    void on_updateStaffTable_clicked();
 };
 
 #endif // HR_DEPARTMENT_H
