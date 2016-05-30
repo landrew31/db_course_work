@@ -14,6 +14,7 @@
 #include "functions.h"
 #include "ui_hr_department.h"
 
+#include "dialog_showstaffprofile.h"
 #include "dialog_editpersinfo.h"
 
 #include "dialog_removevacancy.h"
@@ -41,7 +42,7 @@ private:
     Ui::HR_department *ui;
     DB_setup *db;
 
-    int selectedStaffId, selectedPositId, selectedVacId;
+    int selectedPersId, selectedStaffId, selectedPositId, selectedVacId;
     QString selectedVacName;
 
 private slots:
@@ -70,6 +71,7 @@ private slots:
     void on_button_openVacancy_clicked();
     void on_button_deletePosition_clicked();
     void on_button_showPositInfo_clicked();
+    void on_button_showPersInfo_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

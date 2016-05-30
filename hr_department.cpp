@@ -10,6 +10,7 @@ HR_department::HR_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
 
+    ui->date_historyView->setDate( QDate::currentDate());
     showStaffTable();
     showPositTable();
     showVacTable();
@@ -30,11 +31,10 @@ HR_department::~HR_department()
 void HR_department::showStaffTable()
 {
     QString viewDate = ui->date_historyView->date().toString("yyyy-MM-dd");
-    QString queryText =
+    QString queryText = QString(
             "select * from \"Myronenko_O\".show_staff "
-            "where date_in <= '" + viewDate + "' "
-                "and (date_out is null or date_out >= '" + viewDate + "'"
-            ");";
+            "where date_in <= '%1' "
+                "and (date_out is null or date_out >= '%2');").arg(viewDate).arg(viewDate);
     QSqlQueryModel *model = db->getQueryModel(queryText);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
@@ -53,35 +53,17 @@ void HR_department::showStaffTable()
     ui->table_staff->setColumnHidden(7, true);
     ui->table_staff->setColumnHidden(8, true);
     ui->table_staff->setColumnHidden(9, true);
-
     for (int c = 0; c < ui->table_staff->horizontalHeader()->count(); ++c)
     {
         ui->table_staff->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
     }
-     ui->date_historyView->setDate( QDate::currentDate());
 }
 
-void HR_department::on_button_closeWindow_clicked()
-{
-    this->close();
-}
-
-void HR_department::on_button_editPersInfo_clicked()
-{
-    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedStaffId, this);
-    dialog_editPersInfo->show();
-    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showStaffTable()));
-}
-
-void HR_department::on_button_addStuff_clicked()
-{
-
-}
 
 void HR_department::on_table_staff_pressed(const QModelIndex &index)
 {
-//    ui->button_showPersInfo->setEnabled(true);
+    ui->button_showPersInfo->setEnabled(true);
     ui->button_editPersInfo->setEnabled(true);
 //    ui->button_changePersPosition->setEnabled(true);
 //    ui->button_addPersAbsence->setEnabled(true);
@@ -89,7 +71,27 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
 //    ui->button_firePers->setEnabled(true);
 
     int row = index.row();
-    selectedStaffId = index.sibling(row, 4).data().toInt();
+    selectedStaffId = index.sibling(row, 3).data().toInt();
+    selectedPersId = index.sibling(row, 4).data().toInt();
+}
+
+void HR_department::on_button_showPersInfo_clicked()
+{
+    Dialog_showStaffProfile* dialog_showStaffProfile = new Dialog_showStaffProfile(db, selectedPersId, this);
+    dialog_showStaffProfile->show();
+    connect(dialog_showStaffProfile, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+}
+
+void HR_department::on_button_editPersInfo_clicked()
+{
+    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedPersId, this);
+    dialog_editPersInfo->show();
+    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+}
+
+void HR_department::on_button_addStuff_clicked()
+{
+
 }
 
 void HR_department::on_date_historyView_dateChanged()
@@ -101,6 +103,12 @@ void HR_department::on_updateStaffTable_clicked()
 {
     showStaffTable();
 }
+
+void HR_department::on_button_closeWindow_clicked()
+{
+    this->close();
+}
+
 
 
 

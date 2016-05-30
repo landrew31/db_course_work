@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     dialog_good_actions_info.cpp \
     dialog_removevacancy.cpp \
     dialog_openvacancy.cpp \
-    dialog_showpositinfo.cpp
+    dialog_showpositinfo.cpp \
+    dialog_showstaffprofile.cpp
 
 
 HEADERS  += \
@@ -58,7 +59,8 @@ HEADERS  += \
     dialog_good_actions_info.h \
     dialog_removevacancy.h \
     dialog_openvacancy.h \
-    dialog_showpositinfo.h
+    dialog_showpositinfo.h \
+    dialog_showstaffprofile.h
 
 
 FORMS    += \
@@ -78,4 +80,5 @@ FORMS    += \
     dialog_good_actions_info.ui \
     dialog_removevacancy.ui \
     dialog_openvacancy.ui \
-    dialog_showpositinfo.ui
+    dialog_showpositinfo.ui \
+    dialog_showstaffprofile.ui
