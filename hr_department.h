@@ -15,6 +15,7 @@
 #include "dialog_editpersinfo.h"
 #include "dialog_editposition.h"
 #include "dialog_removevacancy.h"
+#include "dialog_openvacancy.h"
 #include "functions.h"
 
 #define DEBUGMODE true
@@ -62,6 +63,7 @@ private slots:
     void on_updateVacanciesTable_clicked();
     void on_updatePositTable_clicked();
     void on_updateStaffTable_clicked();
+    void on_button_openVacancy_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

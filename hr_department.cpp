@@ -59,6 +59,7 @@ void HR_department::showStaffTable()
         ui->table_staff->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
     }
+     ui->date_historyView->setDate( QDate::currentDate());
 }
 
 void HR_department::on_button_closeWindow_clicked()
@@ -147,6 +148,13 @@ void HR_department::on_button_closeVacancy_clicked()
     Dialog_removeVacancy* dialog_removeVacancy = new Dialog_removeVacancy(db, selectedVacId, selectedVacName, this);
     dialog_removeVacancy->show();
     connect(dialog_removeVacancy, SIGNAL(accepted()), this, SLOT(showVacTable()));
+}
+
+void HR_department::on_button_openVacancy_clicked()
+{
+    Dialog_openVacancy* dialog_openVacancy = new Dialog_openVacancy(db, this);
+    dialog_openVacancy->show();
+    connect(dialog_openVacancy, SIGNAL(accepted()), this, SLOT(showVacTable()));
 }
 
 void HR_department::on_updateVacanciesTable_clicked()

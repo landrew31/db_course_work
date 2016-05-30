@@ -10,6 +10,7 @@ Dialog_removeVacancy::Dialog_removeVacancy(DB_setup* db, int selectedPositId, QS
     positId = selectedPositId;
     this->positName = positName;
     ui->label_positName->setText(positName);
+    ui->procDate->setDate(QDate::currentDate());
 }
 
 Dialog_removeVacancy::~Dialog_removeVacancy()
@@ -26,7 +27,7 @@ void Dialog_removeVacancy::accept()
     for (int i=0; i < vacCount; i++)
     {
         queryText =  QString("select \"Myronenko_O\".delete_last_vacancy(%1, '%2');").arg(positId).arg(proc_date);
-        db->executeQuery(queryText, "admin", this, i == vacCount-1 ? 3 : -1);
+        db->executeQuery(queryText, "admin", this, i == vacCount-1 ? 2 : -1);
     }
     this->accepted();
     this->close();
