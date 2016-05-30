@@ -27,7 +27,8 @@ void Dialog_openVacancy::showInpValues()
 
     queryText =
             "select \"Id_position\", posit_name "
-            "from \"Myronenko_O\".positions;";
+            "from \"Myronenko_O\".positions "
+            "where exists = true;";
     modelAllPositions = db->getQueryModel(queryText);
     int allPositCount = modelAllPositions->rowCount();
     if (DEBUGMODE) qDebug() << "Dialog_openVacancy got modelAllPositions:" << allPositCount;

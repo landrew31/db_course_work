@@ -16,7 +16,8 @@ FROM
       staff.date_in < current_date AND
       (staff.date_out > CURRENT_DATE OR staff.date_out IS NULL)
     GROUP BY vacancies."Id_position")
-    AS stuffCount on positions."Id_position" = stuffCount."Id_position";
+    AS stuffCount on positions."Id_position" = stuffCount."Id_position"
+    WHERE positions.exists = TRUE;
 
 
 GRANT SELECT ON TABLE "Myronenko_O".show_positions TO admin;

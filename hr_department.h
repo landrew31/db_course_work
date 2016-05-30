@@ -64,6 +64,7 @@ private slots:
     void on_updatePositTable_clicked();
     void on_updateStaffTable_clicked();
     void on_button_openVacancy_clicked();
+    void on_button_deletePosition_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

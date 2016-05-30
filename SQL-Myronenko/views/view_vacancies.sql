@@ -7,6 +7,7 @@ FROM
     "Myronenko_O".vacancies vacancies
     join "Myronenko_O".positions positions
         on vacancies."Id_position" = positions."Id_position"
+WHERE positions.exists = TRUE
 GROUP BY
 	vacancies."Id_position",
 	positions.posit_name;

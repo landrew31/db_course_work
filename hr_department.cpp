@@ -115,7 +115,7 @@ void HR_department::showVacTable()
     QSqlQueryModel *model = db->getQueryModel(queryText);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Кількість місць"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Кількість вакантних місць"));
 
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
@@ -140,7 +140,12 @@ void HR_department::on_table_vacancies_pressed(const QModelIndex &index)
     int row = index.row();
     selectedVacId = index.sibling(row, 2).data().toInt();
     selectedVacName = index.sibling(row, 0).data().toString();
-    ui->button_closeVacancy->setEnabled(true);
+    int selectedVacCount = index.sibling(row, 1).data().toInt();
+    if (selectedVacCount == 0) {
+        ui->button_closeVacancy->setDisabled(true);
+    } else {
+        ui->button_closeVacancy->setEnabled(true);
+    }
 }
 
 void HR_department::on_button_closeVacancy_clicked()
@@ -195,9 +200,12 @@ void HR_department::on_table_positions_pressed(const QModelIndex &index)
     //    ui->button_showPositInfo->setEnabled(true);
     ui->button_editPosition->setEnabled(true);
     int selectedPositStaffCount = index.sibling(row, 1).data().toInt();
-    if (selectedPositStaffCount == 0) ui->button_deletePosition->setEnabled(true);
-
-    selectedPositId = index.sibling(row, 1).data().toInt();
+    if (selectedPositStaffCount == 0) {
+        ui->button_deletePosition->setEnabled(true);
+    } else {
+        ui->button_deletePosition->setDisabled(true);
+    }
+    selectedPositId = index.sibling(row, 2).data().toInt();
 }
 
 void HR_department::on_button_editPosition_clicked()
@@ -221,5 +229,13 @@ void HR_department::on_button_closeWindow_2_clicked()
 
 void HR_department::on_updatePositTable_clicked()
 {
+    showPositTable();
+}
+
+void HR_department::on_button_deletePosition_clicked()
+{
+    qDebug() << "selectedPositId:" << selectedPositId << endl;
+    QString queryText = QString("select \"Myronenko_O\".delete_position(%1);").arg(selectedPositId);
+    db->executeQuery(queryText, "admin", this, 3);
     showPositTable();
 }
