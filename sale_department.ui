@@ -475,7 +475,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab_actions">
      <property name="enabled">
@@ -1223,6 +1223,21 @@
         <string>Інформація про акції</string>
        </property>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Рух товарів</string>
+     </attribute>
+     <widget class="QTableView" name="tableView_moves">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>991</width>
+        <height>511</height>
+       </rect>
+      </property>
      </widget>
     </widget>
    </widget>
