@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DialogUi_editPersInfo</class>
- <widget class="QDialog" name="DialogUi_editPersInfo">
-  <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
-  </property>
+ <class>Dialog_editPosition</class>
+ <widget class="QDialog" name="Dialog_editPosition">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,28 +10,16 @@
     <height>640</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="acceptDrops">
-   <bool>true</bool>
-  </property>
   <property name="windowTitle">
-   <string>Особисті данні робітника</string>
-  </property>
-  <property name="locale">
-   <locale language="Ukrainian" country="Ukraine"/>
-  </property>
-  <property name="sizeGripEnabled">
-   <bool>false</bool>
+   <string>Редагувати посаду</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -43,20 +28,11 @@
      <height>32</height>
     </rect>
    </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="acceptDrops">
-    <bool>true</bool>
-   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
-   </property>
-   <property name="centerButtons">
-    <bool>false</bool>
    </property>
   </widget>
   <widget class="QFrame" name="frame_editFrame">
@@ -83,70 +59,40 @@
       <height>191</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
+    <layout class="QGridLayout" name="layout_positInfo">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Освіта</string>
+        <string>Назва</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Прізвище</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="persName"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="persEdu"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Ім'я</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="persSurname"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QDateEdit" name="persBirthDate">
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
+        <string>Описання</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Дата народження</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
       <widget class="Line" name="line">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="2" column="1">
       <widget class="Line" name="line_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="positName"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QTextEdit" name="positDescr"/>
      </item>
     </layout>
    </widget>
@@ -159,7 +105,7 @@
       <height>261</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="layout_persSkills">
+    <layout class="QGridLayout" name="layout_positSkills">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
@@ -174,7 +120,7 @@
       <height>81</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
+    <layout class="QGridLayout" name="layout_editSkills">
      <item row="0" column="1">
       <widget class="QComboBox" name="comboBox_selectSkill">
        <property name="cursor">
@@ -232,7 +178,7 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>9</x>
+      <x>10</x>
       <y>199</y>
       <width>441</width>
       <height>31</height>
@@ -240,9 +186,9 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Навички працівника:</string>
+        <string>Необхідні навички:</string>
        </property>
       </widget>
      </item>
@@ -255,7 +201,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>DialogUi_editPersInfo</receiver>
+   <receiver>Dialog_editPosition</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -271,7 +217,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>DialogUi_editPersInfo</receiver>
+   <receiver>Dialog_editPosition</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

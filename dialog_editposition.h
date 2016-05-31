@@ -1,24 +1,24 @@
-#ifndef DIALOG_EDITPERSINFO_H
-#define DIALOG_EDITPERSINFO_H
+#ifndef DIALOG_EDITPOSITION_H
+#define DIALOG_EDITPOSITION_H
 
 #include <QDialog>
 
 #include "hr_department.h"
 #include "dialog_createskill.h"
-#include "ui_dialogui_editpersinfo.h"
+#include "ui_dialog_editposition.h"
 
 
 namespace Ui {
-class DialogUi_editPersInfo;
+class Dialog_editPosition;
 }
 
-class Dialog_editPersInfo: public QDialog
+class Dialog_editPosition : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Dialog_editPersInfo(DB_setup* db = 0, int selectedStaffId = 0, QWidget *parent = 0);
-    ~Dialog_editPersInfo();
+    explicit Dialog_editPosition(DB_setup* db = 0, int selectedPositId = 0, QWidget *parent = 0);
+    ~Dialog_editPosition();
 
 private slots:
     void accept();
@@ -28,13 +28,13 @@ private slots:
     void removeSkill();
 
 private:
-    Ui::DialogUi_editPersInfo *ui;
+    Ui::Dialog_editPosition *ui;
     DB_setup *db;
-    int persId;
+    int positId;
     QSqlQueryModel* modelAllSkills;
     QVector<int> skills;
 
     void inserSkillIntoList(QString, int);
 };
 
-#endif // DIALOG_EDITPERSINFO_H
+#endif // DIALOG_EDITPOSITION_H

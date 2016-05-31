@@ -72,9 +72,7 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
      QSqlQuery query;
      query.prepare(queryText);
      bool executed = query.exec();
-     if (!executed && user == executer) {
-         showMessage("Помилка", "Вибачте, у Вас немає прав для даної операції.");
-     } else if (!executed){
+     if (!executed){
          showMessage("Помилка", "Введіть, будь ласка, коректні дані.");
      } else {
          switch (queryType){
@@ -90,8 +88,6 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
          case 3:
             showMessage("Сповіщення", "Дані видалено.");
             break;
-         default:
-            showMessage("Сповіщення", "Опрерація пройшла успішно.");
          }
      };
      return executed;

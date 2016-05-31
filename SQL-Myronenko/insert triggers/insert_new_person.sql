@@ -9,7 +9,6 @@ IF char_length(NEW.per_name) = 0 OR
 THEN
 RAISE EXCEPTION 'invalid data';
 END IF;
-
 RETURN NEW;
 END;
 $BODY$

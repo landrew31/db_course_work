@@ -28,10 +28,15 @@ SOURCES += main.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
     dialog_card_info.cpp \
+    dialog_createskill.cpp \
     dialog_doc_types.cpp \
     dialog_good_types.cpp \
-    dialog_createskill.cpp \
-    dialog_good_actions_info.cpp
+    dialog_editposition.cpp \
+    dialog_good_actions_info.cpp \
+    dialog_removevacancy.cpp \
+    dialog_openvacancy.cpp \
+    dialog_showpositinfo.cpp \
+    dialog_showstaffprofile.cpp
 
 
 HEADERS  += \
@@ -46,11 +51,17 @@ HEADERS  += \
     dialog_programs.h \
     dialog_program_info.h \
     dialog_card_info.h \
-    dialog_doc_types.h \
-    dialog_good_types.h \
     dialog_createskill.h \
     functions.h \
-    dialog_good_actions_info.h
+    dialog_doc_types.h \
+    dialog_good_types.h \
+    dialog_editposition.h \
+    dialog_good_actions_info.h \
+    dialog_removevacancy.h \
+    dialog_openvacancy.h \
+    dialog_showpositinfo.h \
+    dialog_showstaffprofile.h
+
 
 FORMS    += \
     dialogentry.ui \
@@ -62,7 +73,12 @@ FORMS    += \
     dialog_programs.ui \
     dialog_program_info.ui \
     dialog_card_info.ui \
+    dialog_createskill.ui \
     dialog_doc_types.ui \
     dialog_good_types.ui \
-    dialog_createskill.ui \
-    dialog_good_actions_info.ui
+    dialog_editposition.ui \
+    dialog_good_actions_info.ui \
+    dialog_removevacancy.ui \
+    dialog_openvacancy.ui \
+    dialog_showpositinfo.ui \
+    dialog_showstaffprofile.ui
