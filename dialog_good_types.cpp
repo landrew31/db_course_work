@@ -90,5 +90,6 @@ void Dialog_good_types::on_buttonBox_accepted()
         query = "select update_good_type('"+ old_data[0] + "','" + name + "','" + term + "','" + item + "','" + price + "');";
         db->executeQuery(query, "operator", this, 0);
     };
+    emit goodtypesChanged();
     renew_good_types(db, table);
 }

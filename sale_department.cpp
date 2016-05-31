@@ -1,8 +1,6 @@
 #include "sale_department.h"
 #include "dialogentry.h"
 #include <QDebug>
-#include "renew_sale_table_view_functions.cpp"
-#include "renew_sale_combobox_functions.cpp"
 
 Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     QMainWindow(parent),
@@ -144,7 +142,6 @@ void Sale_department::on_card_info_clicked()
     card_info->show();
 }
 
-
 void Sale_department::on_delete_contr_clicked()
 {
     QString name = old_contr_data[0];
@@ -191,7 +188,6 @@ void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
     old_program_data[2] = name;
     ui->program_buffer->setText(name);
 }
-
 
 void Sale_department::on_clear_program_buffer_clicked()
 {
@@ -361,3 +357,8 @@ void Sale_department::on_action_on_good_info_clicked()
     good_actions_info->setModal(true);
     good_actions_info->show();
 }
+
+/* END GOOD TYPES SLOTS BLOCK */
+
+/* START MOVES SLOTS BLOCK */
+

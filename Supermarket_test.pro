@@ -22,8 +22,6 @@ SOURCES += main.cpp \
     dialog_editpersinfo.cpp \
     sale_department.cpp \
     dialog_actions.cpp \
-    renew_sale_combobox_functions.cpp \
-    renew_sale_table_view_functions.cpp \
     dialog_contractors.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
@@ -36,7 +34,8 @@ SOURCES += main.cpp \
     dialog_removevacancy.cpp \
     dialog_openvacancy.cpp \
     dialog_showpositinfo.cpp \
-    dialog_showstaffprofile.cpp
+    dialog_showstaffprofile.cpp \
+    dialog_buy_goods.cpp
 
 
 HEADERS  += \
@@ -60,7 +59,8 @@ HEADERS  += \
     dialog_removevacancy.h \
     dialog_openvacancy.h \
     dialog_showpositinfo.h \
-    dialog_showstaffprofile.h
+    dialog_showstaffprofile.h \
+    dialog_buy_goods.h
 
 
 FORMS    += \
@@ -81,4 +81,5 @@ FORMS    += \
     dialog_removevacancy.ui \
     dialog_openvacancy.ui \
     dialog_showpositinfo.ui \
-    dialog_showstaffprofile.ui
+    dialog_showstaffprofile.ui \
+    dialog_buy_goods.ui

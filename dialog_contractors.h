@@ -29,6 +29,9 @@ public:
     static void renew_contractors(DB_setup* db, QTableView* table);
     ~Dialog_contractors();
 
+signals:
+    void contractorsChanged();
+
 private slots:
     void on_is_individual_clicked(bool checked);
 

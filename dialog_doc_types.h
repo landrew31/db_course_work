@@ -30,6 +30,9 @@ public:
     static void renew_doc_types(DB_setup* db, QTableView* table);
     ~Dialog_doc_types();
 
+signals:
+    void doctypesChanged();
+
 private slots:
     void on_clear_doc_type_form_clicked();
 
