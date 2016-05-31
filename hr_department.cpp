@@ -10,7 +10,7 @@ HR_department::HR_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
 
-    ui->date_historyView->setDate( QDate::currentDate());
+    ui->date_historyView->setDate(QDate::currentDate());
     showStaffTable();
     showPositTable();
     showVacTable();

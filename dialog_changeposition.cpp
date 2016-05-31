@@ -68,6 +68,11 @@ void Dialog_changePosition::accept()
 {
     ui->buttonBox->setDisabled(true);
 
+    QString selectedVacancy = ui->selectNewPosition->currentText();
+    int selectedVacId = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
+
+    if (DEBUGMODE) qDebug() << "change position" << selectedVacId << "to" << selectedVacId;
+
     this->accepted();
     this->close();
     ui->buttonBox->setEnabled(true);

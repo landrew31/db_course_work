@@ -19,10 +19,22 @@ public:
 private slots:
     void showInpValues();
     void updatePersSelect();
+    void updateOpenedVacancies();
+    void accept();
+
+    void on_createPerson_clicked();
+
+    void on_openVacancy_clicked();
 
 private:
     Ui::Dialog_addStaff *ui;
     DB_setup* db;
+    QSqlQueryModel* modelAllOpenedVacs;
+    QSqlQueryModel* modelAllPersons;
+    int searchIdBynameSurnameInModel(
+            QString,
+            QSqlQueryModel*,
+            int, int, int);
 };
 
 #endif // DIALOG_ADDSTAFF_H

@@ -169,7 +169,6 @@ void Dialog_editPersInfo::accept()
         db->executeQuery(queryText, "admin", this, -1);
     };
 
-
     this->accepted();
     this->close();
     ui->buttonBox->setEnabled(true);
