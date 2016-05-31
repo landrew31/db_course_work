@@ -36,7 +36,9 @@ SOURCES += main.cpp \
     dialog_removevacancy.cpp \
     dialog_openvacancy.cpp \
     dialog_showpositinfo.cpp \
-    dialog_showstaffprofile.cpp
+    dialog_showstaffprofile.cpp \
+    dialog_changeposition.cpp \
+    dialog_addstaff.cpp
 
 
 HEADERS  += \
@@ -60,7 +62,9 @@ HEADERS  += \
     dialog_removevacancy.h \
     dialog_openvacancy.h \
     dialog_showpositinfo.h \
-    dialog_showstaffprofile.h
+    dialog_showstaffprofile.h \
+    dialog_changeposition.h \
+    dialog_addstaff.h
 
 
 FORMS    += \
@@ -81,4 +85,6 @@ FORMS    += \
     dialog_removevacancy.ui \
     dialog_openvacancy.ui \
     dialog_showpositinfo.ui \
-    dialog_showstaffprofile.ui
+    dialog_showstaffprofile.ui \
+    dialog_changeposition.ui \
+    dialog_addstaff.ui

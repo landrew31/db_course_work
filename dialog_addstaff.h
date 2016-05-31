@@ -1,0 +1,28 @@
+#ifndef DIALOG_ADDSTAFF_H
+#define DIALOG_ADDSTAFF_H
+
+#include <QDialog>
+#include "hr_department.h"
+
+namespace Ui {
+class Dialog_addStaff;
+}
+
+class Dialog_addStaff : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit Dialog_addStaff(DB_setup* db = 0, QWidget *parent = 0);
+    ~Dialog_addStaff();
+
+private slots:
+    void showInpValues();
+    void updatePersSelect();
+
+private:
+    Ui::Dialog_addStaff *ui;
+    DB_setup* db;
+};
+
+#endif // DIALOG_ADDSTAFF_H

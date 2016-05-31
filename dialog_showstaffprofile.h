@@ -13,7 +13,7 @@ class Dialog_showStaffProfile : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog_showStaffProfile(DB_setup* db = 0, int selectedStaffId = 0, QWidget *parent = 0);
+    explicit Dialog_showStaffProfile(DB_setup* db = 0, int selectedPersId = 0, QWidget *parent = 0);
     ~Dialog_showStaffProfile();
 
 private slots:

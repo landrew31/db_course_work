@@ -65,7 +65,7 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
 {
     ui->button_showPersInfo->setEnabled(true);
     ui->button_editPersInfo->setEnabled(true);
-//    ui->button_changePersPosition->setEnabled(true);
+    ui->button_changePersPosition->setEnabled(true);
 //    ui->button_addPersAbsence->setEnabled(true);
 //    ui->button_changePersSchedule->setEnabled(true);
 //    ui->button_firePers->setEnabled(true);
@@ -89,9 +89,18 @@ void HR_department::on_button_editPersInfo_clicked()
     connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showStaffTable()));
 }
 
+void HR_department::on_button_changePersPosition_clicked()
+{
+    Dialog_changePosition* dialog_changePosition = new Dialog_changePosition(db, selectedStaffId, this);
+    dialog_changePosition->show();
+    connect(dialog_changePosition, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+}
+
 void HR_department::on_button_addStuff_clicked()
 {
-
+    Dialog_addStaff* dialog_addStaff = new Dialog_addStaff(db, this);
+    dialog_addStaff->show();
+    connect(dialog_addStaff, SIGNAL(accepted()), this, SLOT(showStaffTable()));
 }
 
 void HR_department::on_date_historyView_dateChanged()
