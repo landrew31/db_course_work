@@ -77,24 +77,6 @@ void Dialog_addStaff::on_openVacancy_clicked()
     connect(dialog_openVacancy, SIGNAL(accepted()), this, SLOT(updateOpenedVacancies()));
 }
 
-void Dialog_addStaff::accept()
-{
-    ui->buttonBox->setDisabled(true);
-
-    QString selectedPerson = ui->selectPerson->currentText();
-    QString selectedVacancy = ui->selectVacancy->currentText();
-
-    int id_person = searchIdBynameSurnameInModel(selectedPerson, modelAllPersons, 2, 0, 1);
-    int id_vacancy = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
-
-    if (DEBUGMODE) qDebug() << "new staff: positId -" << id_vacancy << ", personId - " << id_person;
-
-    this->accepted();
-    this->close();
-    ui->buttonBox->setEnabled(true);
-}
-
-
 int Dialog_addStaff::searchIdBynameSurnameInModel(QString key, QSqlQueryModel* model, int idPosit, int keyPosit1, int keyPosit2)
 {
     int id = -1;
@@ -114,4 +96,26 @@ int Dialog_addStaff::searchIdBynameSurnameInModel(QString key, QSqlQueryModel* m
         }
     }
     return id;
+}
+
+void Dialog_addStaff::accept()
+{
+    ui->buttonBox->setDisabled(true);
+
+    QString selectedPerson = ui->selectPerson->currentText();
+    QString selectedVacancy = ui->selectVacancy->currentText();
+
+    int id_person = searchIdBynameSurnameInModel(selectedPerson, modelAllPersons, 2, 0, 1);
+    int id_position = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
+    QString date = ui->startDate->date().toString("yyyy-MM-dd");
+
+    if (DEBUGMODE) qDebug() << "new staff: positId -" << id_position << ", personId - " << id_person << ", date -" << date;
+    QString queryText = QString(
+        "select * from \"Myronenko_O\".addPersonOnPosition(%1, %2, %3);"
+    ).arg(id_person).arg(id_position).arg(date);
+    db->executeQuery(queryText, "admin", this, 1);
+
+    this->accepted();
+    this->close();
+    ui->buttonBox->setEnabled(true);
 }

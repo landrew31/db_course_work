@@ -17,14 +17,16 @@ bool DB_setup::connect_to_db(QWidget* qwidget)
     base.setUserName(user);
     base.setPassword(password);
 
-    //qDebug() << "username: " << user << ", pass: " << password << endl;
     bool connectioncheck = base.open();
     connected = connectioncheck;
     if (connectioncheck == true){
         qDebug() << "Connection to database established." << endl;
     } else {
         qDebug() << "Error for database " << base.databaseName() << " :" << base.lastError().text() << endl;
-        QMessageBox::about(qwidget, "Помилка", "Не вдалося увійти. Перевірте, будь ласка, ім'я та пароль.");
+        QMessageBox::about(
+            qwidget,
+            "Помилка", "Не вдалося увійти. Перевірте, будь ласка, ім'я, пароль, підключення до мережі."
+        );
     }
     return connectioncheck;
 }
@@ -58,12 +60,8 @@ QSqlQueryModel* DB_setup::getQueryModel(QString queryText)
 {
     QSqlQueryModel *model = new QSqlQueryModel();
     QSqlQuery query = base.exec(queryText);
-    //qDebug() << query.lastError();
     query.first();
-    //QString result = query.record().value(0).toString();
-    //query->exec();
     model->setQuery(query);
-    //qDebug() << result;
     return model;
 }
 
@@ -102,7 +100,7 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
      msgBox.setStandardButtons(QMessageBox::Ok);
      msgBox.setButtonText(QMessageBox::Ok, "OK (До закриття: 10 с)");
      msgBox.setAutoClose(true);
-     msgBox.setTimeout(10); //Closes after ten seconds
+     msgBox.setTimeout(10);
      msgBox.exec();
  }
 
