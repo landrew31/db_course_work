@@ -150,7 +150,7 @@ void Dialog_editPersInfo::accept()
             "select \"Id_person\" "
                 "from \"Myronenko_O\".person "
                 "where per_name = '%1' "
-                "and per_surname = %2;").arg(name).arg(surname);
+                "and per_surname = '%2';").arg(name).arg(surname);
         QSqlQueryModel *modelNewPosition = db->getQueryModel(queryText);
         QModelIndex index = modelNewPosition->index(0, 0);
         persId = index.data(Qt::DisplayRole).toInt();

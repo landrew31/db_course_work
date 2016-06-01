@@ -31,18 +31,14 @@ void Dialog_editPosition::showInpValues()
             "from \"Myronenko_O\".skills;";
     modelAllSkills = db->getQueryModel(queryText);
     int allSkillsCount = modelAllSkills->rowCount();
-    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelAllSkills:";
     ui->comboBox_selectSkill->clear();
     for (int i=0; i < allSkillsCount; i++)
     {
         index = modelAllSkills->index(i, 1);
-        if (DEBUGMODE) qDebug() << index.data(Qt::DisplayRole).toString();
         ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
     }
-    if (DEBUGMODE) qDebug() << endl;
 
     if (positId == -1) return;
-
 
     //-------------
     // POSITINFO BLOCK
@@ -51,16 +47,6 @@ void Dialog_editPosition::showInpValues()
     queryText = QString(
         "select * from \"Myronenko_O\".positions where \"Id_position\" = %1;").arg(positId);
     QSqlQueryModel *modelPosition = db->getQueryModel(queryText);
-    if (DEBUGMODE)
-    {
-        qDebug() << "Dialog_editPosition got modelPosition:";
-        for (int i=0; i < modelPosition->columnCount(); i++)
-        {
-            index = modelPosition->index(0, i);
-            qDebug() << index.data(Qt::DisplayRole).toString();
-        }
-    }
-    if (DEBUGMODE) qDebug() << endl;
 
     index = modelPosition->index(0, 1);
     QString name = index.data(Qt::DisplayRole).toString();
@@ -82,8 +68,7 @@ void Dialog_editPosition::showInpValues()
                     "on nec_skills.\"Id_skill\" = skills.\"Id_skill\" "
                 "where nec_skills.\"Id_position\" = %1;").arg(positId);
     QSqlQueryModel *modelPositionSkills = db->getQueryModel(queryText);
-    int skillsCount = modelPositionSkills->rowCount();
-    if (DEBUGMODE) qDebug() << "Dialog_editPosition got modelPositionSkills:";   
+    int skillsCount = modelPositionSkills->rowCount();  
 
     for (int i=0; i < skillsCount; i++)
     {
@@ -91,11 +76,8 @@ void Dialog_editPosition::showInpValues()
         QString skillName = index.data(Qt::DisplayRole).toString();
         index = modelPositionSkills->index(i, 3);
         int skillId = index.data(Qt::DisplayRole).toInt();
-
-        if (DEBUGMODE) qDebug() << "-" << skillName;
         inserSkillIntoList(skillName, skillId);
     }
-    if (DEBUGMODE) qDebug() << endl;
 }
 
 void Dialog_editPosition::on_button_addSkill_clicked()
@@ -120,7 +102,7 @@ void Dialog_editPosition::accept()
     QString name = ui->positName->text();
     QString description = ui->positDescr->toPlainText();
     if (DEBUGMODE) qDebug() << "data to insert/update:" << name << description;
-    QString queryText = "";
+    QString queryText;
 
 
     // INFO INSERT / UPDATE
@@ -168,7 +150,7 @@ void Dialog_editPosition::accept()
 
 void Dialog_editPosition::removeSkill(){
     int skillId = 0;
-    if (DEBUGMODE) qDebug() << "Remove" << skillId << "skill" << endl;
+    if (DEBUGMODE) qDebug() << "Remove" << skillId << "skill from" << positId << "position" << endl;
 }
 
 void Dialog_editPosition::inserSkillIntoList(QString skillName, int skillId)

@@ -109,9 +109,9 @@ void Dialog_addStaff::accept()
     int id_position = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
     QString date = ui->startDate->date().toString("yyyy-MM-dd");
 
-    if (DEBUGMODE) qDebug() << "new staff: positId -" << id_position << ", personId - " << id_person << ", date -" << date;
+    if (DEBUGMODE) qDebug() << "new staff: personId" << id_person << ", positId" << id_position << ", date" << date;
     QString queryText = QString(
-        "select * from \"Myronenko_O\".addPersonOnPosition(%1, %2, %3);"
+        "select \"Myronenko_O\".add_person_on_position(%1, %2, %3);"
     ).arg(id_person).arg(id_position).arg(date);
     db->executeQuery(queryText, "admin", this, 1);
 
