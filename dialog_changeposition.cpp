@@ -1,13 +1,14 @@
 #include "dialog_changeposition.h"
 #include "ui_dialog_changeposition.h"
 
-Dialog_changePosition::Dialog_changePosition(DB_setup* db, int selectedStaffId, QWidget *parent) :
+Dialog_changePosition::Dialog_changePosition(DB_setup* db, int selectedStaffId, int selectedPersId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_changePosition)
 {
     ui->setupUi(this);
     this->db = db;
     staffId = selectedStaffId;
+    persId = selectedPersId;
     showInpValues();
 }
 
@@ -69,9 +70,12 @@ void Dialog_changePosition::accept()
     ui->buttonBox->setDisabled(true);
 
     QString selectedVacancy = ui->selectNewPosition->currentText();
-    int selectedVacId = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
+    int selectedPositId = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
 
-    if (DEBUGMODE) qDebug() << "change position" << selectedVacId << "to" << selectedVacId;
+    if (DEBUGMODE) qDebug() << "change position of" << persId << "person to" << selectedPositId << "position";
+    QString queryText;
+    queryText = QString("select \"Myronenko_O\".change_staff_position(%1, %2);").arg(persId).arg(selectedPositId);
+    db->executeQuery(queryText, "admin", this, 2);
 
     this->accepted();
     this->close();

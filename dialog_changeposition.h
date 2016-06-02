@@ -13,7 +13,7 @@ class Dialog_changePosition : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog_changePosition(DB_setup* db = 0, int selectedStaffId = 0, QWidget *parent = 0);
+    explicit Dialog_changePosition(DB_setup* db = 0, int selectedStaffId = 0, int selectedPersId = 0, QWidget *parent = 0);
     ~Dialog_changePosition();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
 private:
     Ui::Dialog_changePosition *ui;
     DB_setup* db;
-    int staffId;
+    int staffId, persId;
     QSqlQueryModel* modelAllOpenedVacs;
 };
 

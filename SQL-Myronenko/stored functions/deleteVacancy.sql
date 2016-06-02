@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION "Myronenko_O".delete_last_vacancy
     (IN id_position integer, IN proc_date VARCHAR)
-RETURNS integer AS
+RETURNS void AS
 $BODY$
 DECLARE
     opened_vac_count_by_position integer;
@@ -26,7 +26,6 @@ BEGIN
     INSERT INTO "Myronenko_O".vacancies (type, date, "Id_position")
         VALUES (-1, to_date(proc_date, 'YYYY-MM-DD'), id_position);
 
-RETURN opened_vac_count_by_position;
 END;
 $BODY$
 LANGUAGE plpgsql;

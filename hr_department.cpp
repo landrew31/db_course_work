@@ -91,7 +91,7 @@ void HR_department::on_button_editPersInfo_clicked()
 
 void HR_department::on_button_changePersPosition_clicked()
 {
-    Dialog_changePosition* dialog_changePosition = new Dialog_changePosition(db, selectedStaffId, this);
+    Dialog_changePosition* dialog_changePosition = new Dialog_changePosition(db, selectedStaffId, selectedPersId, this);
     dialog_changePosition->show();
     connect(dialog_changePosition, SIGNAL(accepted()), this, SLOT(showStaffTable()));
 }

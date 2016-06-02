@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION "Myronenko_O".delete_position
     (IN id_position integer)
-RETURNS integer AS
+RETURNS void AS
 $BODY$
 DECLARE
     staff_count_by_position integer;
@@ -33,7 +33,6 @@ BEGIN
         SET exists = FALSE
         WHERE "Id_position" = id_position;
 
-RETURN staff_count_by_position;
 END;
 $BODY$
 LANGUAGE plpgsql;
