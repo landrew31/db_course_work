@@ -13,22 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>660</y>
-     <width>601</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
@@ -105,7 +89,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>560</y>
+     <y>550</y>
      <width>601</width>
      <height>81</height>
     </rect>
@@ -204,6 +188,9 @@
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="delete_move">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Видалити з документу</string>
        </property>
@@ -211,6 +198,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="edit_move">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Редагувати позицію</string>
        </property>
@@ -218,6 +208,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="move_buffer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -233,7 +226,7 @@
    <property name="geometry">
     <rect>
      <x>420</x>
-     <y>470</y>
+     <y>490</y>
      <width>181</width>
      <height>51</height>
     </rect>
@@ -252,6 +245,51 @@
      <height>301</height>
     </rect>
    </property>
+  </widget>
+  <widget class="QPushButton" name="clear_move_buffer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>450</y>
+     <width>181</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Очистити буффер</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>640</y>
+     <width>601</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="buy_finally">
+      <property name="text">
+       <string>Закупити товар</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

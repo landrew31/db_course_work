@@ -20,6 +20,7 @@
 #include "dialog_doc_types.h"
 #include "dialog_good_types.h"
 #include "dialog_good_actions_info.h"
+#include "dialog_buy_goods.h"
 
 namespace Ui {
 class Sale_department;
@@ -80,13 +81,23 @@ private slots:
     /* addition info slots */
     void on_action_on_program_info_clicked();
     void on_card_info_clicked();
-
-
-
-
-
-
     void on_action_on_good_info_clicked();
+
+
+
+    void on_buy_goods_clicked();
+    void renew_documents();
+    void renew_left_goods();
+
+    void on_see_goods_left_clicked();
+
+    void on_see_docs_clicked();
+
+    void on_clear_doc_buffer_clicked();
+
+    void on_tableView_moves_pressed(const QModelIndex &index);
+
+    void on_sale_goods_clicked();
 
 private:
     Ui::Sale_department *ui;
@@ -96,6 +107,7 @@ private:
     QString old_program_data[3];
     QString old_doc_type_data;
     QString old_good_data[4];
+    QString old_doc;
 };
 
 #endif // SALE_DEPARTMENT_H

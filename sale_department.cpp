@@ -9,11 +9,15 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     this->db = db;
+    ui->tableView_goods_left->hide();
+
     Dialog_actions::renew_actions(db, ui->tableView_actions);
     Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     Dialog_programs::renew_programs(db, ui->tableView_programs);
     Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
     Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
+    renew_documents();
+    renew_left_goods();
 }
 
 Sale_department::~Sale_department()
@@ -362,3 +366,90 @@ void Sale_department::on_action_on_good_info_clicked()
 
 /* START MOVES SLOTS BLOCK */
 
+void Sale_department::renew_documents()
+{
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".documents;");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Працівник"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Дата"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Тип документа"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Сума"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Контрагент"));
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel();
+    proxyModel->setSourceModel(model);
+    ui->tableView_moves->setModel(proxyModel);
+    ui->tableView_moves->setSortingEnabled(true);
+    DB_setup::table_column_entire_width(ui->tableView_moves);
+}
+
+void Sale_department::renew_left_goods()
+{
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".left_goods;");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Залишок на складі"));
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel();
+    proxyModel->setSourceModel(model);
+    ui->tableView_goods_left->setModel(proxyModel);
+    ui->tableView_goods_left->setSortingEnabled(true);
+    DB_setup::table_column_entire_width(ui->tableView_goods_left);
+}
+
+void Sale_department::on_buy_goods_clicked()
+{
+    Dialog_buy_goods *buy_goods = new Dialog_buy_goods(db,
+                                                       "buy",
+                                                       ui->tableView_contractors,
+                                                       ui->tableView_good_types,
+                                                       ui->tableView_doc_types);
+    buy_goods->setModal(true);
+    buy_goods->show();
+    connect(buy_goods, SIGNAL(added()), this, SLOT(renew_documents()));
+}
+
+void Sale_department::on_see_goods_left_clicked()
+{
+    ui->see_docs->setEnabled(true);
+    ui->see_goods_left->setEnabled(false);
+    ui->tableView_moves->hide();
+    ui->tableView_goods_left->show();
+}
+
+void Sale_department::on_see_docs_clicked()
+{
+    ui->see_docs->setEnabled(false);
+    ui->see_goods_left->setEnabled(true);
+    ui->tableView_goods_left->hide();
+    ui->tableView_moves->show();
+}
+
+void Sale_department::on_clear_doc_buffer_clicked()
+{
+    ui->print->setEnabled(false);
+    ui->clear_doc_buffer->setEnabled(false);
+    ui->doc_buffer->clear();
+}
+
+void Sale_department::on_tableView_moves_pressed(const QModelIndex &index)
+{
+    ui->print->setEnabled(true);
+    ui->clear_doc_buffer->setEnabled(true);
+    int row = index.row();
+    old_doc = index.sibling(row, 1).data().toString(); // name
+    ui->doc_buffer->setText(old_doc);
+}
+
+void Sale_department::on_sale_goods_clicked()
+{
+    Dialog_buy_goods *sale_goods = new Dialog_buy_goods(db,
+                                                       "sale",
+                                                       ui->tableView_contractors,
+                                                       ui->tableView_good_types,
+                                                       ui->tableView_doc_types);
+    sale_goods->setModal(true);
+    sale_goods->show();
+    connect(sale_goods, SIGNAL(added()), this, SLOT(renew_documents()));
+    connect(sale_goods, SIGNAL(added()), this, SLOT(renew_left_goods()));
+}
