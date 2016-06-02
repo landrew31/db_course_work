@@ -28,7 +28,7 @@ void Dialog_addStaff::updatePersSelect()
     QModelIndex index;
 
     queryText = "select per_name, per_surname, \"Id_person\" "
-            "from \"Myronenko_O\".person;";
+            "from \"Myronenko_O\".show_free_persons;";
     modelAllPersons = db->getQueryModel(queryText);
     int modelRowsCount = modelAllPersons->rowCount();
     ui->selectPerson->clear();
@@ -111,7 +111,7 @@ void Dialog_addStaff::accept()
 
     if (DEBUGMODE) qDebug() << "new staff: personId" << id_person << ", positId" << id_position << ", date" << date;
     QString queryText = QString(
-        "select \"Myronenko_O\".add_person_on_position(%1, %2, %3);"
+        "select \"Myronenko_O\".add_person_on_position(%1, %2, '%3');"
     ).arg(id_person).arg(id_position).arg(date);
     db->executeQuery(queryText, "admin", this, 1);
 

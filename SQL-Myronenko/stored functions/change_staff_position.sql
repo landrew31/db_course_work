@@ -11,7 +11,7 @@ BEGIN
     EXECUTE "Myronenko_O".add_person_on_position(
         id_person,
         id_new_position,
-        to_char(current_date+1, 'YYYY-MM-DD'));
+        to_char(current_date, 'YYYY-MM-DD'));
 
 END;
 $BODY$

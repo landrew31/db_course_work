@@ -34,7 +34,7 @@ void HR_department::showStaffTable()
     QString queryText = QString(
             "select * from \"Myronenko_O\".show_staff "
             "where date_in <= '%1' "
-                "and (date_out is null or date_out >= '%2');").arg(viewDate).arg(viewDate);
+                "and (date_out is null or date_out > '%2');").arg(viewDate).arg(viewDate);
     QSqlQueryModel *model = db->getQueryModel(queryText);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
