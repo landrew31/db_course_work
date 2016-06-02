@@ -73,8 +73,7 @@ void Dialog_changePosition::accept()
     int selectedPositId = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
 
     if (DEBUGMODE) qDebug() << "change position of" << persId << "person to" << selectedPositId << "position";
-    QString queryText;
-    queryText = QString("select \"Myronenko_O\".change_staff_position(%1, %2);").arg(persId).arg(selectedPositId);
+    QString queryText = QString("select \"Myronenko_O\".change_staff_position(%1, %2, %3);").arg(persId).arg(staffId).arg(selectedPositId);
     db->executeQuery(queryText, "admin", this, 2);
 
     this->accepted();

@@ -6,6 +6,7 @@ DECLARE
     opened_vac_count_by_position integer;
     last_date date;
 BEGIN
+
     SELECT SUM(type) INTO opened_vac_count_by_position
         FROM "Myronenko_O".vacancies
         WHERE "Id_position" = id_position;

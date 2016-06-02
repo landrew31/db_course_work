@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     dialog_showpositinfo.cpp \
     dialog_showstaffprofile.cpp \
     dialog_changeposition.cpp \
-    dialog_addstaff.cpp
+    dialog_addstaff.cpp \
+    dialog_firestaff.cpp
 
 
 HEADERS  += \
@@ -64,7 +65,8 @@ HEADERS  += \
     dialog_showpositinfo.h \
     dialog_showstaffprofile.h \
     dialog_changeposition.h \
-    dialog_addstaff.h
+    dialog_addstaff.h \
+    dialog_firestaff.h
 
 
 FORMS    += \
@@ -87,4 +89,5 @@ FORMS    += \
     dialog_showpositinfo.ui \
     dialog_showstaffprofile.ui \
     dialog_changeposition.ui \
-    dialog_addstaff.ui
+    dialog_addstaff.ui \
+    dialog_firestaff.ui

@@ -68,7 +68,7 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
     ui->button_changePersPosition->setEnabled(true);
 //    ui->button_addPersAbsence->setEnabled(true);
 //    ui->button_changePersSchedule->setEnabled(true);
-//    ui->button_firePers->setEnabled(true);
+    ui->button_firePers->setEnabled(true);
 
     int row = index.row();
     selectedStaffId = index.sibling(row, 3).data().toInt();
@@ -118,7 +118,12 @@ void HR_department::on_button_closeWindow_clicked()
     this->close();
 }
 
-
+void HR_department::on_button_firePers_clicked()
+{
+    Dialog_fireStaff* dialog_fireStaff = new Dialog_fireStaff(db, selectedStaffId, this);
+    dialog_fireStaff->show();
+    connect(dialog_fireStaff, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+}
 
 
 
@@ -265,3 +270,4 @@ void HR_department::on_button_showPositInfo_clicked()
     Dialog_showPositInfo* dialog_showPositInfo = new Dialog_showPositInfo(db, selectedPositId, this);
     dialog_showPositInfo->show();
 }
+
