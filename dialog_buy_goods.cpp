@@ -235,7 +235,7 @@ void Dialog_buy_goods::on_buy_finally_clicked()
         } else if (mode == "sale") {
             query = "select \"Lupa_A\".buy_goods('" + contr_name + "','" + stuff_name + "','" + doc_type + "','" + str_ids + "','" + str_qua + "');";
         }
-        bool executed = db->executeQuery(query, "operator", this, 0);
+        bool executed = db->executeQuery(query, "admin", this, 1);
         if (executed) {
             emit added();
             this->close();

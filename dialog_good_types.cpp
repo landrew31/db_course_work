@@ -83,10 +83,10 @@ void Dialog_good_types::on_buttonBox_accepted()
     QString query = "";
     if (mode == "add") {
         query = "insert into \"Lupa_A\".goods (good_name,term,item,price_per_one) values('"+ name + "','" + term + "','" + item + "','" + price + "');";
-        db->executeQuery(query, "operator", this, 1);
+        db->executeQuery(query, db->getUser(), this, 1);
     } else if (mode == "update") {
         query = "select update_good_type('"+ old_data[0] + "','" + name + "','" + term + "','" + item + "','" + price + "');";
-        db->executeQuery(query, "operator", this, 0);
+        db->executeQuery(query, db->getUser(), this, 2);
     };
     emit goodtypesChanged();
     QSortFilterProxyModel* proxy = renew_good_types(db, table);

@@ -79,9 +79,9 @@ void Dialog_program_info::on_add_action_to_program_clicked()
 
     db->executeQuery(
             "select insert_new_action_in_program('" + program_data[2] + "','" + action + "');",
-            "operator",
+            db->getUser(),
             this,
-            0
+            1
     );
     renew_program_actions(db, program_data[2], ui->tableView_program_actions);
 }

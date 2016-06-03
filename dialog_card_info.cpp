@@ -106,9 +106,9 @@ void Dialog_card_info::on_add_program_on_card_clicked()
 
     db->executeQuery(
             "select insert_new_program_in_card('" + contr_data[0] + "','" + program + "');",
-            "operator",
+            db->getUser(),
             this,
-            0
+            1
     );
     renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
 

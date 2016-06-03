@@ -82,9 +82,9 @@ void Sale_department::on_stop_action_clicked()
 
         db->executeQuery(
                 "UPDATE \"Lupa_A\".actions SET (day_stop) = (date_trunc('day',now())) WHERE action_name = '" + name + "';",
-                "operator",
+                db->getUser(),
                 this,
-                3
+                2
         );
         proxy_actions = Dialog_actions::renew_actions(db, ui->tableView_actions,  ui->date_hist_actions);
     };
@@ -230,9 +230,9 @@ void Sale_department::on_stop_program_button_clicked()
 
         db->executeQuery(
                 "UPDATE \"Lupa_A\".programs SET (day_stop) = (date_trunc('day',now())) WHERE program_name = '" + name + "';",
-                "operator",
+                db->getUser(),
                 this,
-                3
+                2
         );
         proxy_programs = Dialog_programs::renew_programs(db, ui->tableView_programs, ui->date_hist_programs);
     };

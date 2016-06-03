@@ -71,6 +71,10 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
  {
      QSqlQuery query;
      query.prepare(queryText);
+     if (executer == "operator") {
+         showMessage("Сповіщення", "Вибачте, у вас недостатньо прав!");
+         return false;
+     };
      bool executed = query.exec();
      if (!executed){
          showMessage("Помилка", "Введіть, будь ласка, коректні дані.");

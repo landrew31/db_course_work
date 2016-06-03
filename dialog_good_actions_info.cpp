@@ -92,9 +92,9 @@ void Dialog_good_actions_info::on_add_action_to_good_clicked()
 
     db->executeQuery(
             "select insert_new_action_in_good('" + good_data[0] + "','" + action + "');",
-            "operator",
+            db->getUser(),
             this,
-            0
+            1
     );
     renew_good_actions(db, good_data[0], ui->tableView_actions_good);
 }
