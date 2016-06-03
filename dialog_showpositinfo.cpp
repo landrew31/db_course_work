@@ -63,7 +63,8 @@ void Dialog_showPositInfo::showInpValues()
             "from \"Myronenko_O\".neccessary_skills nec_skills "
                 "join \"Myronenko_O\".skills skills "
                     "on nec_skills.\"Id_skill\" = skills.\"Id_skill\" "
-            "where nec_skills.\"Id_position\" = %1;").arg(positId);
+            "where nec_skills.\"Id_position\" = %1 "
+            "order by skill_name;").arg(positId);
     QSqlQueryModel *model = db->getQueryModel(queryText);
     model->setHeaderData(0, Qt::Horizontal, tr("Навичка"));
     model->setHeaderData(1, Qt::Horizontal, tr("Описання"));

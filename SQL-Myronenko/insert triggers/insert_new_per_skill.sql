@@ -8,7 +8,7 @@ IF EXISTS(
         FROM "Myronenko_O".personal_skills
         WHERE
             "Id_person" = NEW."Id_person" AND
-            "Id_skill" = NEW."Id_skill";
+            "Id_skill" = NEW."Id_skill"
         )
 THEN RAISE EXCEPTION 'invalid data. pers skill already exists';
 END IF;
