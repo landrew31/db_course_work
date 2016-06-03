@@ -14,7 +14,7 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER insert_staff
+CREATE TRIGGER check_new_staff
 BEFORE UPDATE
 ON "Myronenko_O".staff
 FOR EACH ROW

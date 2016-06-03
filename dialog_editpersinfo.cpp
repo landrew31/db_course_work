@@ -153,7 +153,6 @@ void Dialog_editPersInfo::accept()
             "insert into \"Myronenko_O\".person "
                 "(per_name, per_surname, birthday, education) "
                 "values('%1', '%2', '%3', '%4');").arg(name).arg(surname).arg(birthday).arg(education);
-        if (DEBUGMODE) qDebug() << "insert new person query:" << queryText;
         execPipeResultStatus = execPipeResultStatus && db->executeQuery(queryText, "admin", this, -1);
         queryText = QString(
             "select \"Id_person\" "

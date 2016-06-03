@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION "Myronenko_O".check_new_staff()
+CREATE OR REPLACE FUNCTION "Myronenko_O".check_new_position()
 RETURNS trigger AS
 $BODY$
 BEGIN
