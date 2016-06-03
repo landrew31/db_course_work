@@ -6,7 +6,18 @@ DECLARE
     opened_vac_by_position integer;
     position_exists boolean;
     new_vac_id integer;
+    last_fired date;
 BEGIN
+    IF EXISTS (
+        SELECT "Id_staff"
+        FROM "Myronenko_O".staff
+        WHERE
+            "Id_person" = id_person AND
+            date_out IS NULL OR
+            date_out > to_date(startDate, 'YYYY-MM-DD')
+    ) THEN RAISE EXCEPTION 'person is already working';
+    END IF;
+
     IF NOT EXISTS
         (SELECT *
             FROM "Myronenko_O".positions

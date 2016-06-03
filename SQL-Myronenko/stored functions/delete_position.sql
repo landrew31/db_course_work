@@ -7,6 +7,7 @@ DECLARE
     opened_vac_count_bu_posit integer;
     iterator integer;
 BEGIN
+
     SELECT count(*) into staff_count_by_position
     FROM
         "Myronenko_O".staff staff

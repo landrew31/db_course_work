@@ -24,22 +24,6 @@ void Dialog_editPersInfo::showInpValues()
     QString queryText;
     QModelIndex index;
 
-    //-------------
-    // EDIT SKILLS BLOCK
-    //-------------
-
-    queryText =
-        "select \"Id_skill\", skill_name "
-        "from \"Myronenko_O\".skills;";
-    modelAllSkills = db->getQueryModel(queryText);
-    int allSkillsCount = modelAllSkills->rowCount();
-    ui->comboBox_selectSkill->clear();
-    for (int i=0; i < allSkillsCount; i++)
-    {
-        index = modelAllSkills->index(i, 1);
-        ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
-    }
-
 
     if (persId == -1) return;
 
@@ -76,7 +60,8 @@ void Dialog_editPersInfo::showInpValues()
             "from \"Myronenko_O\".personal_skills per_skills "
                 "join \"Myronenko_O\".skills "
                 "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
-            "where per_skills.\"Id_person\" = %1;").arg(persId);
+            "where per_skills.\"Id_person\" = %1 "
+            "order by skill_name;").arg(persId);
     QSqlQueryModel *modelPersonSkills = db->getQueryModel(queryText);
     int skillsCount = modelPersonSkills->rowCount();
     for (int i=0; i < skillsCount; i++)
@@ -86,6 +71,29 @@ void Dialog_editPersInfo::showInpValues()
         index = modelPersonSkills->index(i, 3);
         int skillId = index.data(Qt::DisplayRole).toInt();
         inserSkillIntoList(skillName, skillId);
+    }
+
+
+
+    //-------------
+    // EDIT SKILLS BLOCK
+    //-------------
+
+    queryText =
+        "select \"Id_skill\", skill_name "
+            "from \"Myronenko_O\".skills "
+            "order by skill_name;";
+    modelAllSkills = db->getQueryModel(queryText);
+    int allSkillsCount = modelAllSkills->rowCount();
+    ui->comboBox_selectSkill->clear();
+    for (int i=0; i < allSkillsCount; i++)
+    {
+        index = modelAllSkills->index(i, 0);
+        if (skills.indexOf(index.data(Qt::DisplayRole).toInt()) == -1)
+        {
+            index = modelAllSkills->index(i, 1);
+            ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
+        }
     }
 }
 
@@ -135,6 +143,7 @@ void Dialog_editPersInfo::accept()
     QString education = ui->persEdu->text();
     if (DEBUGMODE) qDebug() << "data to create/update:" << name << surname << birthday << education;
     QString queryText;
+    bool execPipeResultStatus = true;
 
 
     // INFO UPDATE
@@ -145,7 +154,7 @@ void Dialog_editPersInfo::accept()
                 "(per_name, per_surname, birthday, education) "
                 "values('%1', '%2', '%3', '%4');").arg(name).arg(surname).arg(birthday).arg(education);
         if (DEBUGMODE) qDebug() << "insert new person query:" << queryText;
-        db->executeQuery(queryText, "admin", this, 1);
+        execPipeResultStatus = execPipeResultStatus && db->executeQuery(queryText, "admin", this, -1);
         queryText = QString(
             "select \"Id_person\" "
                 "from \"Myronenko_O\".person "
@@ -158,7 +167,7 @@ void Dialog_editPersInfo::accept()
         queryText = QString(
             "delete from \"Myronenko_O\".personal_skills "
             "where \"Id_person\" = %1;").arg(persId);
-        db->executeQuery(queryText, "admin", this, -1);
+        execPipeResultStatus = execPipeResultStatus && db->executeQuery(queryText, "admin", this, -1);
 
         queryText = QString(
             "update \"Myronenko_O\".person set "
@@ -168,7 +177,7 @@ void Dialog_editPersInfo::accept()
                 "education = '%4' "
              "where \"Id_person\" = %5;").arg(name).arg(surname).arg(birthday).arg(education).arg(persId);
         if (DEBUGMODE) qDebug() << "update person" << persId << "query:" << queryText;
-        db->executeQuery(queryText, "admin", this, 2);
+        execPipeResultStatus = execPipeResultStatus && db->executeQuery(queryText, "admin", this, -1);
     }
 
 
@@ -179,7 +188,18 @@ void Dialog_editPersInfo::accept()
             "insert into \"Myronenko_O\".personal_skills (\"Id_person\", \"Id_skill\") "
                 "values (%1, %2);").arg(persId).arg(skills[i]);
         qDebug() << queryText;
-        db->executeQuery(queryText, "admin", this, -1);
+        execPipeResultStatus = execPipeResultStatus && db->executeQuery(queryText, "admin", this, -1);
+    };
+
+    if (execPipeResultStatus)
+    {
+        if (persId == -1)
+        {
+            db->showExecutionResultStatus(1);
+        } else
+        {
+            db->showExecutionResultStatus(2);
+        }
     };
 
     this->accepted();

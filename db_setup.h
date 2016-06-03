@@ -26,6 +26,7 @@ public:
     void setUser(QString);
     void setPassword(QString);
     void showMessage(QString, QString);
+    void showExecutionResultStatus(int);
     QSqlQueryModel* getQueryModel(QString);
     bool executeQuery(QString, QString, QWidget*, int);
     static void table_column_entire_width(QTableView *table);

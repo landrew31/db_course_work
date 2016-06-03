@@ -462,9 +462,11 @@ void Sale_department::on_print_clicked()
     QTextStream out(&strStream);
 
     QSqlQueryModel *model_for_id = db->getQueryModel("select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';");
+    qDebug() << "select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';" << endl;
     QString doc_id = model_for_id->data(model_for_id->index(0,0)).toString();
 
     QSqlQueryModel *model_doc_data = db->getQueryModel("SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));");
+    qDebug() << "SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));" << endl;
     QString staff_name = model_doc_data->data(model_doc_data->index(0,0)).toString();
     QString date = model_doc_data->data(model_doc_data->index(0,1)).toString();
     QString doc_type = model_doc_data->data(model_doc_data->index(0,2)).toString();
@@ -472,6 +474,7 @@ void Sale_department::on_print_clicked()
     QString contr_name = model_doc_data->data(model_doc_data->index(0,4)).toString();
 
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");");
+    qDebug() << "select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");" << endl;
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));

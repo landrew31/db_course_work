@@ -46,7 +46,7 @@ void Dialog_showStaffProfile::showInpValues()
 
     index = modelPerson->index(0, 3);
     QDate birthday = index.data(Qt::DisplayRole).toDate();
-    ui->staffAge->setText(birthday.toString());
+    ui->staffAge->setText(birthday.toString("yyyy-MM-dd"));
 
     index = modelPerson->index(0, 4);
     QString education = index.data(Qt::DisplayRole).toString();
@@ -63,7 +63,8 @@ void Dialog_showStaffProfile::showInpValues()
             "from \"Myronenko_O\".personal_skills per_skills "
                 "join \"Myronenko_O\".skills "
                 "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
-            "where per_skills.\"Id_person\" = %1;").arg(persId);
+            "where per_skills.\"Id_person\" = %1 "
+            "order by skill_name;").arg(persId);
     QSqlQueryModel* modelPersonSkills = db->getQueryModel(queryText);
     modelPersonSkills->setHeaderData(0, Qt::Horizontal, tr("Навичка"));
     modelPersonSkills->setHeaderData(1, Qt::Horizontal, tr("Описання"));
@@ -91,7 +92,8 @@ void Dialog_showStaffProfile::showInpValues()
                         "on vacancies.\"Id_position\" = positions.\"Id_position\") "
                     "as linkposition "
                     "on staff.\"Id_vacancy\" = linkposition.\"Id_vacancy\" "
-                "where \"Id_person\" = %1;").arg(persId);
+                "where \"Id_person\" = %1 "
+                "order by staff.date_in desc;").arg(persId);
     QSqlQueryModel* modelWorkHistory = db->getQueryModel(queryText);
     modelWorkHistory->setHeaderData(0, Qt::Horizontal, tr("Посада"));
     modelWorkHistory->setHeaderData(1, Qt::Horizontal, tr("Початок"));

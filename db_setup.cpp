@@ -73,23 +73,28 @@ bool DB_setup::executeQuery(QString queryText, QString executer, QWidget* qwidge
      if (!executed){
          showMessage("Помилка", "Введіть, будь ласка, коректні дані.");
      } else {
-         switch (queryType){
-         case 0:
-            showMessage("Сповіщення", "Дані отримано.");
-            break;
-         case 1:
-            showMessage("Сповіщення", "Дані додано.");
-            break;
-         case 2:
-            showMessage("Сповіщення", "Дані оновлено.");
-            break;
-         case 3:
-            showMessage("Сповіщення", "Дані видалено.");
-            break;
-         }
+         showExecutionResultStatus (queryType);
      };
      return executed;
  }
+
+void DB_setup::showExecutionResultStatus(int queryType)
+{
+    switch (queryType){
+    case 0:
+       showMessage("Сповіщення", "Дані отримано.");
+       break;
+    case 1:
+       showMessage("Сповіщення", "Дані додано.");
+       break;
+    case 2:
+       showMessage("Сповіщення", "Дані оновлено.");
+       break;
+    case 3:
+       showMessage("Сповіщення", "Дані видалено.");
+       break;
+    }
+}
 
  void DB_setup::showMessage(QString title, QString text)
  {

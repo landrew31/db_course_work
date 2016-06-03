@@ -23,7 +23,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Особисті данні робітника</string>
+   <string>Профіль працівника</string>
   </property>
   <property name="locale">
    <locale language="Ukrainian" country="Ukraine"/>
