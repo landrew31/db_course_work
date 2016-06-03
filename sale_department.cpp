@@ -1,6 +1,8 @@
 #include "sale_department.h"
 #include "dialogentry.h"
 #include <QDebug>
+#include "QtPrintSupport/QPrinter"
+#include <QtPrintSupport/QPrintDialog>
 
 Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     QMainWindow(parent),
@@ -452,4 +454,53 @@ void Sale_department::on_sale_goods_clicked()
     sale_goods->show();
     connect(sale_goods, SIGNAL(added()), this, SLOT(renew_documents()));
     connect(sale_goods, SIGNAL(added()), this, SLOT(renew_left_goods()));
+}
+
+void Sale_department::on_print_clicked()
+{
+    QString strStream;
+    QTextStream out(&strStream);/*
+    QSqlQueryModel *model = db->executeQuery("select * from \"Lupa_A\".moves_on_doc('" +  "');");*/
+
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".left_goods;");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Залишок на складі"));
+    int rowCount = model->rowCount();
+    int columnCount = model->columnCount();
+
+    out << "<html>\n" << "<head>\n" << "<meta Content=\"Text/html; charset=utf-8\">\n" <<
+           QString("<title>%1</title>\n").arg("Report") <<
+           "</head>\n"
+           "<body bgcolor = #ffffff link=#5000A0>\n"
+           "<table border = 1 cellspacing=0 cellpadding=2>\n";
+
+    out<<"<thead><tr bgcolo=#f0f0f0>";
+    for( int column = 0; column < columnCount; column++)
+        out << QString("<th>%1</th>").arg(model->headerData(column,Qt::Horizontal).toString());
+    out << "</tr></thead>\n";
+
+    for (int row = 0; row < rowCount; row++ ) {
+        out << "<tr>";
+        for ( int column = 0; column < columnCount; column++){
+            QString data = model->data(model->index(row,column)).toString().simplified();
+            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+        }
+        out << "</tr>\n";
+    }
+    out << "</table>\n""</body>\n""</html>\n";
+
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(strStream);
+    qDebug() << strStream << endl;
+    QPrinter printer;
+
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    QPrintDialog *dialog = new QPrintDialog(&printer,0);
+    if (dialog->exec() == QDialog::Accepted) {
+        document->print(&printer);
+    }
+    delete document;
 }

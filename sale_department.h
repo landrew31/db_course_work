@@ -99,6 +99,8 @@ private slots:
 
     void on_sale_goods_clicked();
 
+    void on_print_clicked();
+
 private:
     Ui::Sale_department *ui;
     DB_setup *db;

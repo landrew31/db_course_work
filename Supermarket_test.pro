@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += core sql
+QT       += printsupport
 CONFIG   -= console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -83,3 +84,4 @@ FORMS    += \
     dialog_showpositinfo.ui \
     dialog_showstaffprofile.ui \
     dialog_buy_goods.ui
+
