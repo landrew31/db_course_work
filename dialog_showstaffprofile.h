@@ -23,7 +23,6 @@ private:
     Ui::Dialog_showStaffProfile *ui;
     DB_setup* db;
     int persId;
-
 };
 
 #endif // DIALOG_SHOWSTAFFPROFILE_H

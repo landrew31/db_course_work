@@ -7,7 +7,6 @@ AS SELECT
     staff."Id_person",
     staff."Id_vacancy",
     vacancies."Id_position",
-    staff."Id_absence",
     staff.date_in,
     staff.date_out
 FROM

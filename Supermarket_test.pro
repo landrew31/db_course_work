@@ -39,7 +39,10 @@ SOURCES += main.cpp \
     dialog_changeposition.cpp \
     dialog_addstaff.cpp \
     dialog_firestaff.cpp \
-    dialog_buy_goods.cpp
+    dialog_buy_goods.cpp \
+    dialog_staffabsence.cpp \
+    dialog_addstaffabsence.cpp \
+    dialog_createabstype.cpp
 
 
 HEADERS  += \
@@ -67,7 +70,10 @@ HEADERS  += \
     dialog_changeposition.h \
     dialog_addstaff.h \
     dialog_firestaff.h \
-    dialog_buy_goods.h
+    dialog_buy_goods.h \
+    dialog_staffabsence.h \
+    dialog_addstaffabsence.h \
+    dialog_createabstype.h
 
 
 FORMS    += \
@@ -92,4 +98,7 @@ FORMS    += \
     dialog_changeposition.ui \
     dialog_addstaff.ui \
     dialog_firestaff.ui \
-    dialog_buy_goods.ui
+    dialog_buy_goods.ui \
+    dialog_staffabsence.ui \
+    dialog_addstaffabsence.ui \
+    dialog_createabstype.ui

@@ -19,6 +19,7 @@
 #include "dialog_changeposition.h"
 #include "dialog_addstaff.h"
 #include "dialog_firestaff.h"
+#include "dialog_staffabsence.h"
 
 #include "dialog_removevacancy.h"
 #include "dialog_openvacancy.h"
@@ -78,6 +79,7 @@ private slots:
     void on_button_showPersInfo_clicked();
     void on_button_changePersPosition_clicked();
     void on_button_firePers_clicked();
+    void on_button_addPersAbsence_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

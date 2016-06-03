@@ -40,7 +40,7 @@ void HR_department::showStaffTable()
             "select * from \"Myronenko_O\".show_staff "
             "where date_in <= '%1' "
                 "and (date_out is null or date_out > '%2');").arg(viewDate).arg(viewDate);
-    QSqlQueryModel *model = db->getQueryModel(queryText);
+    QSqlQueryModel* model = db->getQueryModel(queryText);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Посада"));
     model->setHeaderData(1, Qt::Horizontal, tr("Ім'я"));
@@ -71,7 +71,7 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
     ui->button_showPersInfo->setEnabled(true);
     ui->button_editPersInfo->setEnabled(true);
     ui->button_changePersPosition->setEnabled(true);
-//    ui->button_addPersAbsence->setEnabled(true);
+    ui->button_addPersAbsence->setEnabled(true);
 //    ui->button_changePersSchedule->setEnabled(true);
     ui->button_firePers->setEnabled(true);
 
@@ -130,6 +130,11 @@ void HR_department::on_button_firePers_clicked()
     connect(dialog_fireStaff, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
+void HR_department::on_button_addPersAbsence_clicked()
+{
+    Dialog_staffabsence* dialog_staffabsence = new Dialog_staffabsence(db, selectedStaffId, this);
+    dialog_staffabsence->show();
+}
 
 
 //-----------
@@ -276,4 +281,6 @@ void HR_department::on_button_showPositInfo_clicked()
     Dialog_showPositInfo* dialog_showPositInfo = new Dialog_showPositInfo(db, selectedPositId, this);
     dialog_showPositInfo->show();
 }
+
+
 

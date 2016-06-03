@@ -566,7 +566,7 @@
            <string/>
           </property>
           <property name="text">
-           <string>Відмітити відсутність</string>
+           <string>Відсутність</string>
           </property>
          </widget>
         </item>

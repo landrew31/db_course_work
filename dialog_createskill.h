@@ -4,7 +4,6 @@
 #include <QDialog>
 #include "hr_department.h"
 
-
 namespace Ui {
 class Dialog_createSkill;
 }
