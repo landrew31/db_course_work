@@ -52,6 +52,7 @@ private slots:
     void showStaffTable();
     void showPositTable();
     void showVacTable();
+    void showAllTables();
 
 private slots:
     void on_table_staff_pressed(const QModelIndex &index);

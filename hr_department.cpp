@@ -11,14 +11,19 @@ HR_department::HR_department(DB_setup *db, QWidget *parent) :
     this->db = db;
 
     ui->date_historyView->setDate(QDate::currentDate());
-    showStaffTable();
-    showPositTable();
-    showVacTable();
+    showAllTables();
 }
 
 HR_department::~HR_department()
 {
     delete ui;
+}
+
+void HR_department::showAllTables()
+{
+    showPositTable();
+    showStaffTable();
+    showVacTable();
 }
 
 
@@ -79,28 +84,28 @@ void HR_department::on_button_showPersInfo_clicked()
 {
     Dialog_showStaffProfile* dialog_showStaffProfile = new Dialog_showStaffProfile(db, selectedPersId, this);
     dialog_showStaffProfile->show();
-    connect(dialog_showStaffProfile, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+    connect(dialog_showStaffProfile, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_editPersInfo_clicked()
 {
     Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, selectedPersId, this);
     dialog_editPersInfo->show();
-    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_changePersPosition_clicked()
 {
     Dialog_changePosition* dialog_changePosition = new Dialog_changePosition(db, selectedStaffId, selectedPersId, this);
     dialog_changePosition->show();
-    connect(dialog_changePosition, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+    connect(dialog_changePosition, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_addStuff_clicked()
 {
     Dialog_addStaff* dialog_addStaff = new Dialog_addStaff(db, this);
     dialog_addStaff->show();
-    connect(dialog_addStaff, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+    connect(dialog_addStaff, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_date_historyView_dateChanged()
@@ -122,7 +127,7 @@ void HR_department::on_button_firePers_clicked()
 {
     Dialog_fireStaff* dialog_fireStaff = new Dialog_fireStaff(db, selectedStaffId, this);
     dialog_fireStaff->show();
-    connect(dialog_fireStaff, SIGNAL(accepted()), this, SLOT(showStaffTable()));
+    connect(dialog_fireStaff, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 
@@ -175,20 +180,21 @@ void HR_department::on_button_closeVacancy_clicked()
 {
     Dialog_removeVacancy* dialog_removeVacancy = new Dialog_removeVacancy(db, selectedVacId, selectedVacName, this);
     dialog_removeVacancy->show();
-    connect(dialog_removeVacancy, SIGNAL(accepted()), this, SLOT(showVacTable()));
+    connect(dialog_removeVacancy, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_openVacancy_clicked()
 {
     Dialog_openVacancy* dialog_openVacancy = new Dialog_openVacancy(db, this);
     dialog_openVacancy->show();
-    connect(dialog_openVacancy, SIGNAL(accepted()), this, SLOT(showVacTable()));
+    connect(dialog_openVacancy, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_updateVacanciesTable_clicked()
 {
     showVacTable();
 }
+
 
 
 
@@ -237,14 +243,14 @@ void HR_department::on_button_editPosition_clicked()
 {
     Dialog_editPosition* dialog_editPosition = new Dialog_editPosition(db, selectedPositId, this);
     dialog_editPosition->show();
-    connect(dialog_editPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
+    connect(dialog_editPosition, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_addPosition_clicked()
 {
     Dialog_editPosition* dialog_addPosition = new Dialog_editPosition(db, -1, this);
     dialog_addPosition->show();
-    connect(dialog_addPosition, SIGNAL(accepted()), this, SLOT(showPositTable()));
+    connect(dialog_addPosition, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
 
 void HR_department::on_button_closeWindow_2_clicked()
