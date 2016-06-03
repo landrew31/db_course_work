@@ -12,12 +12,16 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
     ui->tableView_goods_left->hide();
+    ui->tab_doc_types->hide();
+    ui->good_price_search->setValidator( new QDoubleValidator(0, 100, 2, this) );
 
-    Dialog_actions::renew_actions(db, ui->tableView_actions);
-    Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
-    Dialog_programs::renew_programs(db, ui->tableView_programs);
+    ui->date_hist_actions->setDate( QDate::currentDate());
+    ui->date_hist_programs->setDate(QDate::currentDate());
+    proxy_actions = Dialog_actions::renew_actions(db, ui->tableView_actions, ui->date_hist_actions);
+    proxy_contr = Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
+    proxy_programs = Dialog_programs::renew_programs(db, ui->tableView_programs, ui->date_hist_programs);
     Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
-    Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
+    proxy_goods = Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
     renew_documents();
     renew_left_goods();
 }
@@ -31,7 +35,7 @@ Sale_department::~Sale_department()
 
 void Sale_department::on_add_action_button_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", ui->tableView_actions, old_action_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", ui->tableView_actions, old_action_data, ui->date_hist_actions);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }
@@ -39,7 +43,7 @@ void Sale_department::on_add_action_button_clicked()
 void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
 {
     ui->update_action->setEnabled(true);
-    ui->delete_action->setEnabled(true);
+    ui->stop_action->setEnabled(true);
     ui->clear_action_buffer->setEnabled(true);
     int row = index.row();
     old_action_data[3] = index.sibling(row, 0).data().toString();
@@ -55,34 +59,36 @@ void Sale_department::on_tableView_actions_pressed(const QModelIndex &index)
 void Sale_department::on_clear_action_buffer_clicked()
 {
     ui->update_action->setEnabled(false);
-    ui->delete_action->setEnabled(false);
+    ui->stop_action->setEnabled(false);
     ui->clear_action_buffer->setEnabled(false);
     ui->action_buffer->clear();
 }
 
 void Sale_department::on_update_action_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", ui->tableView_actions, old_action_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", ui->tableView_actions, old_action_data, ui->date_hist_actions);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }
 
-void Sale_department::on_delete_action_clicked()
+void Sale_department::on_stop_action_clicked()
 {
 
     QString name = old_action_data[3];
     int button = QMessageBox::question(this,
-                 "Підтвердження видалення",
-                 "Ви впевнені що хочете видалити акцію '" + name + "'?",
+                 "Підтвердження закриття",
+                 "Ви впевнені що хочете закрити акцію '" + name + "'?",
                  QMessageBox::Yes | QMessageBox::No);
     if (button == QMessageBox::Yes) {
+        qDebug() << "UPDATE \"Lupa_A\".actions SET (day_stop) = (date_trunc('day',now())) WHERE action_name = '" + name + "';" << endl;
+
         db->executeQuery(
-                "delete from \"Lupa_A\".actions where action_name = '" + name +"';",
+                "UPDATE \"Lupa_A\".actions SET (day_stop) = (date_trunc('day',now())) WHERE action_name = '" + name + "';",
                 "operator",
                 this,
                 3
         );
-        Dialog_actions::renew_actions(db, ui->tableView_actions);
+        proxy_actions = Dialog_actions::renew_actions(db, ui->tableView_actions,  ui->date_hist_actions);
     };
 }
 /* END ACTIONS TAB SLOTS BLOCK */
@@ -162,7 +168,7 @@ void Sale_department::on_delete_contr_clicked()
                 this,
                 3
         );
-        Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
+        proxy_contr = Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     };
 }
 
@@ -172,7 +178,7 @@ void Sale_department::on_delete_contr_clicked()
 
 void Sale_department::on_add_program_button_clicked()
 {
-    Dialog_programs* dialog_actions = new Dialog_programs(db, "add", ui->tableView_programs, old_program_data);
+    Dialog_programs* dialog_actions = new Dialog_programs(db, "add", ui->tableView_programs, old_program_data, ui->date_hist_programs);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }
@@ -180,7 +186,7 @@ void Sale_department::on_add_program_button_clicked()
 void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
 {
     ui->update_program_button->setEnabled(true);
-    ui->delete_program_button->setEnabled(true);
+    ui->stop_program_button->setEnabled(true);
     ui->action_on_program_info->setEnabled(true);
     ui->clear_program_buffer->setEnabled(true);
     int row = index.row();
@@ -198,7 +204,7 @@ void Sale_department::on_tableView_programs_pressed(const QModelIndex &index)
 void Sale_department::on_clear_program_buffer_clicked()
 {
     ui->update_program_button->setEnabled(false);
-    ui->delete_program_button->setEnabled(false);
+    ui->stop_program_button->setEnabled(false);
     ui->clear_program_buffer->setEnabled(false);
     ui->action_on_program_info->setEnabled(false);
     ui->program_buffer->clear();
@@ -206,27 +212,29 @@ void Sale_department::on_clear_program_buffer_clicked()
 
 void Sale_department::on_update_program_button_clicked()
 {
-    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", ui->tableView_programs, old_program_data);
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", ui->tableView_programs, old_program_data, ui->date_hist_programs);
     dialog_programs->setModal(true);
     dialog_programs->show();
 
 }
 
-void Sale_department::on_delete_program_button_clicked()
+void Sale_department::on_stop_program_button_clicked()
 {
     QString name = old_program_data[2];
     int button = QMessageBox::question(this,
-                 "Підтвердження видалення",
-                 "Ви впевнені що хочете видалити програму '" + name + "'?",
+                 "Підтвердження закриття",
+                 "Ви впевнені що хочете закрити програму '" + name + "'?",
                  QMessageBox::Yes | QMessageBox::No);
     if (button == QMessageBox::Yes) {
+        qDebug() << "UPDATE \"Lupa_A\".programs SET (day_stop) = (date_trunc('day',now())) WHERE program_name = '" + name + "';" << endl;
+
         db->executeQuery(
-                "delete from \"Lupa_A\".programs where program_name = '" + name + "';",
+                "UPDATE \"Lupa_A\".programs SET (day_stop) = (date_trunc('day',now())) WHERE program_name = '" + name + "';",
                 "operator",
                 this,
                 3
         );
-        Dialog_programs::renew_programs(db, ui->tableView_programs);
+        proxy_programs = Dialog_programs::renew_programs(db, ui->tableView_programs, ui->date_hist_programs);
     };
 }
 
@@ -350,7 +358,7 @@ void Sale_department::on_delete_good_type_clicked()
                 this,
                 3
         );
-        Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
+        proxy_goods = Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
     };
 }
 
@@ -517,11 +525,63 @@ void Sale_department::on_print_clicked()
     document->setHtml(strStream);
     qDebug() << strStream << endl;
     QPrinter printer;
-
+    QString file_name = QDir::currentPath();
+    if (doc_type == "Накладна") {
+        file_name = file_name + "/buy_documents/" + date + ".pdf";
+    } else if (doc_type == "Чек") {
+        file_name = file_name + "/sale_documents/" + date + ".pdf";
+    };
     printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(file_name);
     QPrintDialog *dialog = new QPrintDialog(&printer,0);
     if (dialog->exec() == QDialog::Accepted) {
         document->print(&printer);
     }
     delete document;
+}
+
+void Sale_department::on_date_hist_actions_dateChanged(const QDate &date)
+{
+    proxy_actions = Dialog_actions::renew_actions(db,ui->tableView_actions,ui->date_hist_actions);
+}
+
+void Sale_department::on_action_search_textChanged(const QString &arg1)
+{
+    proxy_actions->setFilterFixedString(arg1);
+
+}
+
+
+void Sale_department::on_contr_name_search_textChanged(const QString &arg1)
+{
+    proxy_contr->setFilterKeyColumn(0);
+    proxy_contr->setFilterFixedString(arg1);
+}
+
+void Sale_department::on_contr_address_search_textChanged(const QString &arg1)
+{
+    proxy_contr->setFilterKeyColumn(2);
+    proxy_contr->setFilterFixedString(arg1);
+}
+
+void Sale_department::on_date_hist_programs_dateChanged(const QDate &date)
+{
+    proxy_programs = Dialog_programs::renew_programs(db, ui->tableView_programs, ui->date_hist_programs);
+}
+
+void Sale_department::on_program_search_textChanged(const QString &arg1)
+{
+    proxy_programs->setFilterFixedString(arg1);
+}
+
+void Sale_department::on_good_name_search_textChanged(const QString &arg1)
+{
+    proxy_goods->setFilterKeyColumn(0);
+    proxy_goods->setFilterFixedString(arg1);
+}
+
+void Sale_department::on_good_price_search_textChanged(const QString &arg1)
+{
+    proxy_goods->setFilterKeyColumn(1);
+    proxy_goods->setFilterFixedString(arg1);
 }

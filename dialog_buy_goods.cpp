@@ -58,7 +58,7 @@ void Dialog_buy_goods::renew_contr_comboBox()
 
 void Dialog_buy_goods::renew_worker_comboBox()
 {
-    QSqlQueryModel *model = db->getQueryModel("SELECT per.per_surname || ' ' || per.per_name FROM (\"Myronenko_O\".person per JOIN \"Myronenko_O\".staff sta ON (sta.\"Id_person\" = per.\"Id_person\") ) ORDER BY per_surname;");
+    QSqlQueryModel *model = db->getQueryModel("SELECT per.per_surname || ' ' || per.per_name FROM (\"Myronenko_O\".person per JOIN \"Myronenko_O\".staff sta ON (sta.\"Id_person\" = per.\"Id_person\" AND sta.date_out is NULL) ) ORDER BY per_surname;");
     qDebug() << "done" << endl;
     ui->worker_box->setModel(model);
     ui->worker_box->setCurrentIndex(-1);

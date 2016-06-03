@@ -26,7 +26,7 @@ public:
                                 QTableView *table = 0,
                                 QString* old_data=0,
                                 QWidget *parent = 0);
-    static void renew_contractors(DB_setup* db, QTableView* table);
+    static QSortFilterProxyModel* renew_contractors(DB_setup* db, QTableView* table);
     ~Dialog_contractors();
 
 signals:

@@ -56,7 +56,7 @@ Dialog_contractors::~Dialog_contractors()
     delete ui;
 }
 
-void Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
+QSortFilterProxyModel* Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_contractors;");
 
@@ -67,15 +67,13 @@ void Dialog_contractors::renew_contractors(DB_setup* db, QTableView* table)
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("Номер в реєстрі (юр.особа)"));
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel();
     proxyModel->setSourceModel(model);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxyModel->setFilterKeyColumn(0);
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
-    table->resizeColumnToContents(0);
-    table->resizeColumnToContents(1);
-    table->resizeColumnToContents(2);
-    table->resizeColumnToContents(3);
-    table->resizeColumnToContents(4);
 
     DB_setup::table_column_entire_width(table);
+    return proxyModel;
 }
 
 void Dialog_contractors::on_is_individual_clicked(bool checked)
@@ -151,5 +149,5 @@ void Dialog_contractors::on_buttonBox_accepted()
         db->executeQuery(query, "operator", this, 2);
     };
     emit contractorsChanged();
-    renew_contractors(db, table);
+    QSortFilterProxyModel *proxy = renew_contractors(db, table);
 }

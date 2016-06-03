@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>397</height>
+    <width>440</width>
+    <height>269</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,32 +16,13 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>350</y>
-     <width>291</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-   <property name="centerButtons">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>301</width>
-     <height>291</height>
+     <width>421</width>
+     <height>191</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -50,78 +31,31 @@
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
    </property>
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>281</width>
-      <height>271</height>
+      <width>401</width>
+      <height>171</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Назва акції</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Відсотки по акції</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLineEdit" name="action_percent_field">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QDateEdit" name="stop_action_date">
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="displayFormat">
-        <string>dd.MM.yyyy</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-       <property name="date">
-        <date>
-         <year>2016</year>
-         <month>1</month>
-         <day>2</day>
-        </date>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Кінець акції</string>
+        <string>Кінець акції:</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="0" column="1">
       <widget class="QDateEdit" name="start_action_date">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
@@ -150,17 +84,70 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Початок акції</string>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="stop_action_date">
+       <property name="enabled">
+        <bool>true</bool>
        </property>
        <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="displayFormat">
+        <string>dd.MM.yyyy</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+       <property name="date">
+        <date>
+         <year>2016</year>
+         <month>1</month>
+         <day>2</day>
+        </date>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="action_percent_field">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Відсотки по акції:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Початок акції:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Назва акції:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
       <widget class="QLineEdit" name="action_name_field">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -170,18 +157,37 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QPushButton" name="clear_action_form">
+  <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>320</y>
-     <width>151</width>
-     <height>27</height>
+     <x>10</x>
+     <y>220</y>
+     <width>421</width>
+     <height>41</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Очистити форму</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="clear_action_form">
+      <property name="text">
+       <string>Очистити форму</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

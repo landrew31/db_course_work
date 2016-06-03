@@ -43,7 +43,7 @@ Dialog_good_types::~Dialog_good_types()
 }
 
 
-void Dialog_good_types::renew_good_types(DB_setup* db, QTableView* table )
+QSortFilterProxyModel* Dialog_good_types::renew_good_types(DB_setup* db, QTableView* table )
 {
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".show_good_types;");
 
@@ -53,14 +53,12 @@ void Dialog_good_types::renew_good_types(DB_setup* db, QTableView* table )
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("Агрегатний стан"));
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel();
     proxyModel->setSourceModel(model);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
-    table->resizeColumnToContents(0);
-    table->resizeColumnToContents(1);
-    table->resizeColumnToContents(2);
-    table->resizeColumnToContents(3);
 
     DB_setup::table_column_entire_width(table);
+    return proxyModel;
 }
 void Dialog_good_types::on_clear_good_type_form_clicked()
 {
@@ -91,5 +89,5 @@ void Dialog_good_types::on_buttonBox_accepted()
         db->executeQuery(query, "operator", this, 0);
     };
     emit goodtypesChanged();
-    renew_good_types(db, table);
+    QSortFilterProxyModel* proxy = renew_good_types(db, table);
 }

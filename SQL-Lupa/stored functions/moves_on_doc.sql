@@ -9,14 +9,17 @@ RETURNS TABLE (
 ) AS
 $BODY$
 DECLARE
-  id integer;
+  id_contr integer;
 BEGIN
+ SELECT contr."Id_contr" INTO id_contr FROM
+   ("Lupa_A".contractors contr JOIN "Lupa_A".documentation doc
+   ON (doc."Id_doc" = doc_id AND doc."Id_contr" = contr."Id_contr"));
  RETURN QUERY SELECT
    goo.good_name,
    goo.price_per_one,
    goo.item,
    mov.quantity,
-   mov.quantity * goo.price_per_one
+   "Lupa_A".count_money_transaction(mov."Id_move",id_contr)
  FROM
    ("Lupa_A".goods_moves mov
  JOIN "Lupa_A".goods goo ON (goo."Id_goods" = mov."Id_goods" AND
