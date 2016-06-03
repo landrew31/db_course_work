@@ -1,9 +1,9 @@
 ﻿CREATE OR REPLACE VIEW documents AS SELECT
-  per.per_surname || ' ' || per.per_name,
-  doc.doc_date,
-  dot.doc_type_name,
-  "Lupa_A".count_money_for_doc(doc."Id_doc"),
-  contr.contr_name
+  (per.per_surname || ' ' || per.per_name) as staff_name,
+  doc.doc_date as doc_date,
+  dot.doc_type_name as doc_type,
+  "Lupa_A".count_money_for_doc(doc."Id_doc") as money_on_doc,
+  contr.contr_name as contr_name
 FROM 
   ( ( ( ("Lupa_A".documentation doc 
 JOIN "Lupa_A".doc_types dot 

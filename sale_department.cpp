@@ -459,22 +459,43 @@ void Sale_department::on_sale_goods_clicked()
 void Sale_department::on_print_clicked()
 {
     QString strStream;
-    QTextStream out(&strStream);/*
-    QSqlQueryModel *model = db->executeQuery("select * from \"Lupa_A\".moves_on_doc('" +  "');");*/
+    QTextStream out(&strStream);
 
-    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".left_goods;");
+    QSqlQueryModel *model_for_id = db->getQueryModel("select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';");
+    QString doc_id = model_for_id->data(model_for_id->index(0,0)).toString();
+
+    QSqlQueryModel *model_doc_data = db->getQueryModel("SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));");
+    QString staff_name = model_doc_data->data(model_doc_data->index(0,0)).toString();
+    QString date = model_doc_data->data(model_doc_data->index(0,1)).toString();
+    QString doc_type = model_doc_data->data(model_doc_data->index(0,2)).toString();
+    QString total_money = model_doc_data->data(model_doc_data->index(0,3)).toString();
+    QString contr_name = model_doc_data->data(model_doc_data->index(0,4)).toString();
+
+    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");");
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Залишок на складі"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Форма"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Кількість"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Загальна сума"));
     int rowCount = model->rowCount();
     int columnCount = model->columnCount();
 
     out << "<html>\n" << "<head>\n" << "<meta Content=\"Text/html; charset=utf-8\">\n" <<
            QString("<title>%1</title>\n").arg("Report") <<
            "</head>\n"
-           "<body bgcolor = #ffffff link=#5000A0>\n"
+           "<body bgcolor = #ffffff link=#5000A0>\n" <<
+           QString("<h3 align=center>%1</h3>\n").arg(doc_type) <<
+           "<br />\n"
+           "<br />\n"
+           "<br />\n" <<
+           QString("<p>Контрагент: <b>%1</b></p>\n").arg(contr_name) <<
+           QString("<p>Працівник: <b>%1</b></p>\n").arg(staff_name) <<
+           QString("<p>Дата: <b>%1</b></p>\n").arg(date) <<
+           QString("<h6>Загальна сума: <b>%1</b></h6>\n").arg(total_money) <<
+           "<br />\n"
+           "<br />\n"
            "<table border = 1 cellspacing=0 cellpadding=2>\n";
 
     out<<"<thead><tr bgcolo=#f0f0f0>";
