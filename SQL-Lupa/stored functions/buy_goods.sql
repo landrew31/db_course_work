@@ -9,7 +9,7 @@ DECLARE
   id_staff integer;
   id_doctype integer;
   id_doc integer;
-  id_good integer;
+  len integer;
   date_time timestamp with time zone;
 BEGIN
   SELECT "Id_contr" into id_contr FROM "Lupa_A".contractors
@@ -20,21 +20,21 @@ BEGIN
     JOIN "Myronenko_O".person per 
     ON ( sta."Id_person" = per."Id_person" 
       AND per.per_surname || ' ' || per.per_name = got_staff_name ));
-  IF id_contr < 1 OR id_doc_type < 1 OR id_staff < 1 THEN
+  IF id_contr < 2 OR id_doctype < 2 OR id_staff < 2 THEN
     RAISE EXCEPTION 'wrog documentation data';
+  END IF;
   SELECT CURRENT_TIMESTAMP AT TIME ZONE 'EEST' INTO date_time;
   INSERT INTO "Lupa_A".documentation (doc_date,"Id_doctype","Id_contr","Id_stuff")
-    VALUES (date_time,id_doctype,id_contr,id_staff) RETURNING id_doc;
-
-  FOR i IN 1 .. ARRAY_UPPER(good_names, 1)
+    VALUES (date_time,id_doctype,id_contr,id_staff) RETURNING "Id_doc" into id_doc;
+  SELECT array_length(good_names, 1) into len;
+  
+  FOR i IN 1 .. len
   LOOP
+    INSERT INTO "Lupa_A".goods_moves ("Id_goods","Id_doc",quantity) 
+      VALUES (cast(good_names[i] AS integer),id_doc,cast(quantities[i] AS double precision));
+  END LOOP;
     
-    INSERT INTO "Lupa_A".goods_moves ("Id_good","Id_doc",quantity) 
-      VALUES (
-  INSERT INTO "Lupa_A".action_good (id_action, id_good) 
-    VALUES (id_action, id_good);
-    
-RETURN id_action;
+RETURN id_doc;
 END;
 $BODY$
 LANGUAGE plpgsql;

@@ -30,6 +30,9 @@ public:
     static void renew_good_types(DB_setup* db, QTableView* table );
     ~Dialog_good_types();
 
+signals:
+    void goodtypesChanged();
+
 private slots:
     void on_clear_good_type_form_clicked();
 

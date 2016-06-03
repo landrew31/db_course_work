@@ -64,5 +64,6 @@ void Dialog_doc_types::on_buttonBox_accepted()
         query = "select update_doc_type('" + old_type + "','" + name + "');";
         db->executeQuery(query, "operator", this, 0);
     };
+    emit doctypesChanged();
     renew_doc_types(db, table);
 }

@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += core sql
+QT       += printsupport
 CONFIG   -= console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,8 +23,6 @@ SOURCES += main.cpp \
     dialog_editpersinfo.cpp \
     sale_department.cpp \
     dialog_actions.cpp \
-    renew_sale_combobox_functions.cpp \
-    renew_sale_table_view_functions.cpp \
     dialog_contractors.cpp \
     dialog_programs.cpp \
     dialog_program_info.cpp \
@@ -39,7 +38,8 @@ SOURCES += main.cpp \
     dialog_showstaffprofile.cpp \
     dialog_changeposition.cpp \
     dialog_addstaff.cpp \
-    dialog_firestaff.cpp
+    dialog_firestaff.cpp \
+    dialog_buy_goods.cpp
 
 
 HEADERS  += \
@@ -66,7 +66,8 @@ HEADERS  += \
     dialog_showstaffprofile.h \
     dialog_changeposition.h \
     dialog_addstaff.h \
-    dialog_firestaff.h
+    dialog_firestaff.h \
+    dialog_buy_goods.h
 
 
 FORMS    += \
@@ -90,4 +91,5 @@ FORMS    += \
     dialog_showstaffprofile.ui \
     dialog_changeposition.ui \
     dialog_addstaff.ui \
-    dialog_firestaff.ui
+    dialog_firestaff.ui \
+    dialog_buy_goods.ui
