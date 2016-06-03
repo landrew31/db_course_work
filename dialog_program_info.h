@@ -28,6 +28,8 @@ public:
                                  QTableView *table_programs=0,
                                  QTableView *table_actions=0,
                                  QString* program_data = 0,
+                                 QDateEdit* date_hist_program = 0,
+                                 QDateEdit* date_hist_action = 0,
                                  QWidget *parent = 0);
     static void renew_program_actions(DB_setup* db, QString program, QTableView* table);
     ~Dialog_program_info();
@@ -57,6 +59,8 @@ private:
     QTableView *table_programs;
     QTableView *table_actions;
     QString *program_data;
+    QDateEdit *date_hist_program;
+    QDateEdit *date_hist_action;
     QString *old_action_data; //= new QString[4];
 };
 

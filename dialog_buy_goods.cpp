@@ -5,7 +5,6 @@ Dialog_buy_goods::Dialog_buy_goods(DB_setup *db,
                                    QString mode,
                                    QTableView *table_contr,
                                    QTableView *table_good_types,
-                                   QTableView *table_doc_types,
                                    QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_buy_goods)
@@ -14,7 +13,6 @@ Dialog_buy_goods::Dialog_buy_goods(DB_setup *db,
     this->db = db;
     this->mode = mode;
     this->table_contr = table_contr;
-    this->table_doc_types = table_doc_types;
     this->table_good_types = table_good_types;
 
     this->old_move = new QString[2];
@@ -38,7 +36,6 @@ Dialog_buy_goods::Dialog_buy_goods(DB_setup *db,
     };
     ui->quantity_dimension->clear();
 
-    ui->add_new_doctype->setEnabled(false);
     ui->doctype_box->setEnabled(false);
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("Відмінити");
 }
@@ -112,13 +109,6 @@ void Dialog_buy_goods::on_add_new_contr_clicked()
     connect(dialog_contractors, SIGNAL(contractorsChanged()), this, SLOT(renew_contr_comboBox()));
 }
 
-void Dialog_buy_goods::on_add_new_doctype_clicked()
-{
-    Dialog_doc_types* dialog_doc_type = new Dialog_doc_types(db, "add", table_doc_types, 0);
-    dialog_doc_type->setModal(true);
-    dialog_doc_type->show();
-    connect(dialog_doc_type, SIGNAL(doctypesChanged()), this, SLOT(renew_doctype_comboBox()));
-}
 
 void Dialog_buy_goods::on_add_new_good_type_clicked()
 {
@@ -224,15 +214,20 @@ void Dialog_buy_goods::on_buy_finally_clicked()
     if (button == QMessageBox::Yes) {
         QString str_ids = "{";
         QString str_qua = "{";
-        for (int i=0; i < good_ids.length(); i++) {
-            if (i < good_ids.length() - 1) {
-                str_ids += good_ids[i] + ",";
-                str_qua += quantities[i] + ",";
-            } else if (i = good_ids.length() - 1) {
-                str_ids += good_ids[i] + "}";
-                str_qua += quantities[i] + "}";
+        if (good_ids.length() == 1) {
+            str_ids += good_ids[0] + "}";
+            str_qua += quantities[0] + "}";
+        } else if (good_ids.length() > 1) {
+            for (int i=0; i < good_ids.length(); i++) {
+                if (i < good_ids.length() - 1) {
+                    str_ids += good_ids[i] + ",";
+                    str_qua += quantities[i] + ",";
+                } else if (i = good_ids.length() - 1) {
+                    str_ids += good_ids[i] + "}";
+                    str_qua += quantities[i] + "}";
+                };
             };
-        };
+         };
         qDebug() << "select \"Lupa_A\".buy_goods('" + contr_name + "','" + stuff_name + "','" + doc_type + "','" + str_ids + "','" + str_qua + "');" << endl;
         QString query = "";
         if (mode == "buy") {

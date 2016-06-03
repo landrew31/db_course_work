@@ -5,27 +5,31 @@ DECLARE
   id_doctype integer;
   percent numeric;
   id_ind integer;
+  id_doc integer;
   sum double precision;
   one_sum double precision;
   moves "Lupa_A".goods_moves%ROWTYPE;
   programs "Lupa_A".programs%ROWTYPE;
   actions "Lupa_A".actions%ROWTYPE;
 BEGIN
-  SELECT "Id_doctype" INTO id_doctype 
+  SELECT doc."Id_doc" INTO id_doc
+    FROM ("Lupa_A".documentation doc
+    JOIN "Lupa_A".goods_moves mov ON (doc."Id_doc" = mov."Id_doc" AND mov."Id_move" = id_move));
+  SELECT dot."Id_doctype" INTO id_doctype 
     FROM ("Lupa_A".doc_types dot 
     JOIN "Lupa_A".documentation doc ON (doc."Id_doc" = id_doc AND doc."Id_doctype" = dot."Id_doctype"));
   /* 285 Чек, 288 Накладна */
-  SELECT "Id_individ" INTO id_ind FROM "Lupa_A".individ_contr WHERE "Id_contr" = id_contr;
+  SELECT "Id_ind" INTO id_ind FROM "Lupa_A".individ_contr WHERE "Id_contr" = id_contr;
   SELECT * INTO moves FROM "Lupa_A".goods_moves WHERE "Id_move" = id_move;
   sum := 0;
   percent := 0;
-  IF id_doctype = 285 THEN
+  IF id_doctype = 288 THEN
     one_sum := moves.quantity * (SELECT price_per_one 
       FROM "Lupa_A".goods WHERE "Id_goods" = moves."Id_goods");
     sum := sum + one_sum;
   END IF;
 
-  IF id_doctype = 288 THEN
+  IF id_doctype = 285 THEN
     
       one_sum := moves.quantity * (SELECT price_per_one 
         FROM "Lupa_A".goods WHERE "Id_goods" = moves."Id_goods");

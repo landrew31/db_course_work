@@ -6,6 +6,8 @@ Dialog_card_info::Dialog_card_info(DB_setup* db,
                                    QTableView *table_programs,
                                    QTableView *table_actions,
                                    QString* contr_data,
+                                   QDateEdit* date_hist_program,
+                                   QDateEdit* date_hist_action,
                                    QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_card_info)
@@ -16,6 +18,8 @@ Dialog_card_info::Dialog_card_info(DB_setup* db,
     this->table_programs = table_programs;
     this->table_actions = table_actions;
     this->contr_data = contr_data;
+    this->date_hist_program = date_hist_program;
+    this->date_hist_action = date_hist_action;
     this->old_program_data = new QString[3];
 
     renew_contr_programs(db, this->contr_data[0], ui->tableView_contr_programs);
@@ -46,16 +50,13 @@ void Dialog_card_info::renew_contr_programs(DB_setup* db, QString contr, QTableV
     proxyModel->setSourceModel(model);
     table->setModel(proxyModel);
     table->setSortingEnabled(true);
-    table->resizeColumnToContents(0);
-    table->resizeColumnToContents(1);
-    table->resizeColumnToContents(2);
 
     DB_setup::table_column_entire_width(table);
 }
 
 void Dialog_card_info::renew_programs_comboBox()
 {
-    QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".programs ORDER BY program_name;");
+    QSqlQueryModel *model = db->getQueryModel("SELECT program_name FROM \"Lupa_A\".programs WHERE day_stop >= date_trunc('day',now()) ORDER BY program_name;");
     qDebug() << "done" << endl;
     ui->existing_programs_box->setModel(model);
     ui->existing_programs_box->setCurrentIndex(-1);
@@ -73,7 +74,7 @@ void Dialog_card_info::on_update_contr_clicked()
 
 void Dialog_card_info::on_add_new_program_clicked()
 {
-    Dialog_programs* dialog_programs = new Dialog_programs(db, "add", table_programs, old_program_data);
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "add", table_programs, old_program_data, date_hist_program);
     dialog_programs->setModal(true);
     dialog_programs->show();
     connect(dialog_programs, SIGNAL(programsChanged()), this, SLOT(renew_programs_comboBox()));
@@ -124,7 +125,7 @@ void Dialog_card_info::on_clear_program_buffer_clicked()
 
 void Dialog_card_info::on_update_program_button_clicked()
 {
-    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", ui->tableView_contr_programs, old_program_data);
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", ui->tableView_contr_programs, old_program_data, date_hist_program);
     dialog_programs->setModal(true);
     dialog_programs->show();
 }
@@ -134,7 +135,9 @@ void Dialog_card_info::on_action_on_program_info_clicked()
     Dialog_program_info* program_info = new Dialog_program_info(db,
                                                                 table_programs,
                                                                 table_actions,
-                                                                old_program_data);
+                                                                old_program_data,
+                                                                date_hist_program,
+                                                                date_hist_action);
     program_info->setModal(true);
     program_info->show();
 }

@@ -12,7 +12,6 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     setWindowState(Qt::WindowMaximized);
     this->db = db;
     ui->tableView_goods_left->hide();
-    ui->tab_doc_types->hide();
     ui->good_price_search->setValidator( new QDoubleValidator(0, 100, 2, this) );
 
     ui->date_hist_actions->setDate( QDate::currentDate());
@@ -20,8 +19,7 @@ Sale_department::Sale_department(DB_setup *db, QWidget *parent) :
     proxy_actions = Dialog_actions::renew_actions(db, ui->tableView_actions, ui->date_hist_actions);
     proxy_contr = Dialog_contractors::renew_contractors(db, ui->tableView_contractors);
     proxy_programs = Dialog_programs::renew_programs(db, ui->tableView_programs, ui->date_hist_programs);
-    Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
-    proxy_goods = Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
+   proxy_goods = Dialog_good_types::renew_good_types(db, ui->tableView_good_types);
     renew_documents();
     renew_left_goods();
 }
@@ -107,7 +105,7 @@ void Sale_department::on_add_contractor_button_clicked()
 void Sale_department::on_tableView_contractors_pressed(const QModelIndex &index)
 {
     ui->update_contractor->setEnabled(true);
-    ui->delete_contr->setEnabled(true);
+//    ui->delete_contr->setEnabled(true);
     ui->clear_contractor_buffer->setEnabled(true);
     int row = index.row();
     old_contr_data[0] = index.sibling(row, 0).data().toString();
@@ -148,7 +146,9 @@ void Sale_department::on_card_info_clicked()
                                                         ui->tableView_contractors,
                                                         ui->tableView_programs,
                                                         ui->tableView_actions,
-                                                        old_contr_data
+                                                        old_contr_data,
+                                                        ui->date_hist_programs,
+                                                        ui->date_hist_actions
                                                       );
     card_info->setModal(true);
     card_info->show();
@@ -243,67 +243,14 @@ void Sale_department::on_action_on_program_info_clicked()
     Dialog_program_info* program_info = new Dialog_program_info(db,
                                                                 ui->tableView_programs,
                                                                 ui->tableView_actions,
-                                                                old_program_data);
+                                                                old_program_data,
+                                                                ui->date_hist_programs,
+                                                                ui->date_hist_actions);
     program_info->setModal(true);
     program_info->show();
 }
 
 /* END PROGRAMS TAB SLOTS BLOCK */
-
-
-/* START DOCUMENT TYPES TAB SLOTS BLOCK */
-void Sale_department::on_add_new_doc_type_clicked()
-{
-    Dialog_doc_types* dialog_doc_type = new Dialog_doc_types(db, "add", ui->tableView_doc_types, old_doc_type_data);
-    dialog_doc_type->setModal(true);
-    dialog_doc_type->show();
-}
-
-void Sale_department::on_tableView_doc_types_pressed(const QModelIndex &index)
-{
-    ui->update_doc_type->setEnabled(true);
-    ui->delete_doc_type->setEnabled(true);
-    ui->clear_doc_type_buffer->setEnabled(true);
-    int row = index.row();
-    QString name = index.sibling(row, 0).data().toString();
-    old_doc_type_data = name;
-    ui->doc_type_buffer->setText(name);
-}
-
-void Sale_department::on_clear_doc_type_buffer_clicked()
-{
-    ui->update_doc_type->setEnabled(false);
-    ui->delete_doc_type->setEnabled(false);
-    ui->clear_doc_type_buffer->setEnabled(false);
-    ui->doc_type_buffer->clear();
-}
-
-void Sale_department::on_update_doc_type_clicked()
-{
-    Dialog_doc_types* dialog_doc_type = new Dialog_doc_types(db, "update", ui->tableView_doc_types, old_doc_type_data);
-    dialog_doc_type->setModal(true);
-    dialog_doc_type->show();
-}
-
-void Sale_department::on_delete_doc_type_clicked()
-{
-    QString name = old_doc_type_data;
-    int button = QMessageBox::question(this,
-                 "Підтвердження видалення",
-                 "Ви впевнені що хочете видалити тип документа '" + name + "'?",
-                 QMessageBox::Yes | QMessageBox::No);
-    if (button == QMessageBox::Yes) {
-        db->executeQuery(
-                "delete from \"Lupa_A\".doc_types where doc_type_name = '" + name +"';",
-                "operator",
-                this,
-                3
-        );
-        Dialog_doc_types::renew_doc_types(db, ui->tableView_doc_types);
-    };
-}
-
-/* END DOCUMENT TYPES SLOTS BLOCK */
 
 /* START GOOD TYPES SLOTS BLOCK */
 
@@ -317,7 +264,7 @@ void Sale_department::on_add_new_good_type_clicked()
 void Sale_department::on_tableView_good_types_pressed(const QModelIndex &index)
 {
     ui->update_good_type->setEnabled(true);
-    ui->delete_good_type->setEnabled(true);
+//    ui->delete_good_type->setEnabled(true);
     ui->clear_good_type_buffer->setEnabled(true);
     ui->action_on_good_info->setEnabled(true);
     int row = index.row();
@@ -367,7 +314,8 @@ void Sale_department::on_action_on_good_info_clicked()
     Dialog_good_actions_info* good_actions_info = new Dialog_good_actions_info(db,
                                                                 ui->tableView_good_types,
                                                                 ui->tableView_actions,
-                                                                old_good_data);
+                                                                old_good_data,
+                                                                ui->date_hist_actions);
     good_actions_info->setModal(true);
     good_actions_info->show();
 }
@@ -394,6 +342,7 @@ void Sale_department::renew_documents()
 
 void Sale_department::renew_left_goods()
 {
+    qDebug() << "select * from \"Lupa_A\".left_goods;" << endl;
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".left_goods;");
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
@@ -412,11 +361,11 @@ void Sale_department::on_buy_goods_clicked()
     Dialog_buy_goods *buy_goods = new Dialog_buy_goods(db,
                                                        "buy",
                                                        ui->tableView_contractors,
-                                                       ui->tableView_good_types,
-                                                       ui->tableView_doc_types);
+                                                       ui->tableView_good_types);
     buy_goods->setModal(true);
     buy_goods->show();
     connect(buy_goods, SIGNAL(added()), this, SLOT(renew_documents()));
+    connect(buy_goods, SIGNAL(added()), this, SLOT(renew_left_goods()));
 }
 
 void Sale_department::on_see_goods_left_clicked()
@@ -456,8 +405,7 @@ void Sale_department::on_sale_goods_clicked()
     Dialog_buy_goods *sale_goods = new Dialog_buy_goods(db,
                                                        "sale",
                                                        ui->tableView_contractors,
-                                                       ui->tableView_good_types,
-                                                       ui->tableView_doc_types);
+                                                       ui->tableView_good_types);
     sale_goods->setModal(true);
     sale_goods->show();
     connect(sale_goods, SIGNAL(added()), this, SLOT(renew_documents()));
@@ -479,6 +427,7 @@ void Sale_department::on_print_clicked()
     QString total_money = model_doc_data->data(model_doc_data->index(0,3)).toString();
     QString contr_name = model_doc_data->data(model_doc_data->index(0,4)).toString();
 
+    qDebug() << doc_id << endl;
     QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");");
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));

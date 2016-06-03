@@ -27,6 +27,7 @@ public:
                                       QTableView *table_goods=0,
                                       QTableView *table_actions=0,
                                       QString* good_data=0,
+                                      QDateEdit* date_hist_action = 0,
                                       QWidget *parent = 0);
     void renew_good_actions(DB_setup* db, QString good, QTableView* table );
 
@@ -55,6 +56,7 @@ private:
     QTableView *table_goods;
     QTableView *table_actions;
     QString *good_data;
+    QDateEdit* date_hist_action;
     QString *old_action_data;
 };
 

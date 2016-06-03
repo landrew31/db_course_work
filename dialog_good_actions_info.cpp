@@ -5,6 +5,7 @@ Dialog_good_actions_info::Dialog_good_actions_info(DB_setup* db,
                                                    QTableView *table_goods,
                                                    QTableView *table_actions,
                                                    QString* good_data,
+                                                   QDateEdit* date_hist_action,
                                                    QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_good_actions_info)
@@ -14,6 +15,7 @@ Dialog_good_actions_info::Dialog_good_actions_info(DB_setup* db,
     this->table_goods = table_goods;
     this->table_actions = table_actions;
     this->good_data = good_data;
+    this->date_hist_action = date_hist_action;
     this->old_action_data = new QString[4];
     qDebug() << good_data[0] << endl;
     renew_good_actions(db, this->good_data[0], ui->tableView_actions_good);
@@ -48,7 +50,7 @@ void Dialog_good_actions_info::renew_good_actions(DB_setup* db, QString good, QT
 
 void Dialog_good_actions_info::renew_actions_comboBox()
 {
-    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
+    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions WHERE day_stop >= date_trunc('day',now())  ORDER BY action_name;");
     ui->existing_actions_box->setModel(model);
     ui->existing_actions_box->setCurrentIndex(-1);
 }
@@ -78,7 +80,7 @@ void Dialog_good_actions_info::on_update_good_type_clicked()
 
 void Dialog_good_actions_info::on_add_new_action_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, good_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, good_data, date_hist_action);
     dialog_actions->setModal(true);
     dialog_actions->show();
     connect(dialog_actions, SIGNAL(actionsChanged()), this, SLOT(renew_actions_comboBox()));
@@ -107,7 +109,7 @@ void Dialog_good_actions_info::on_clear_action_buffer_clicked()
 
 void Dialog_good_actions_info::on_update_action_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", table_actions, old_action_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", table_actions, old_action_data, date_hist_action);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }

@@ -17,7 +17,6 @@
 #include "dialog_programs.h"
 #include "dialog_program_info.h"
 #include "dialog_card_info.h"
-#include "dialog_doc_types.h"
 #include "dialog_good_types.h"
 #include "dialog_good_actions_info.h"
 #include "dialog_buy_goods.h"
@@ -39,8 +38,7 @@ private slots:
 
     void on_add_action_button_clicked();
     void on_add_contractor_button_clicked();
-    void on_add_program_button_clicked();    
-    void on_add_new_doc_type_clicked();
+    void on_add_program_button_clicked();
     void on_add_new_good_type_clicked();
 
     /* pressed tableView slots */
@@ -48,7 +46,6 @@ private slots:
     void on_tableView_contractors_pressed(const QModelIndex &index);    
     void on_tableView_actions_pressed(const QModelIndex &index);
     void on_tableView_programs_pressed(const QModelIndex &index);
-    void on_tableView_doc_types_pressed(const QModelIndex &index);
     void on_tableView_good_types_pressed(const QModelIndex &index);
 
     /* update slots */
@@ -56,7 +53,6 @@ private slots:
     void on_update_action_clicked();
     void on_update_contractor_clicked();
     void on_update_program_button_clicked();
-    void on_update_doc_type_clicked();
     void on_update_good_type_clicked();
 
 
@@ -65,7 +61,6 @@ private slots:
     void on_delete_contr_clicked();
     void on_stop_action_clicked();
     void on_stop_program_button_clicked();
-    void on_delete_doc_type_clicked();
     void on_delete_good_type_clicked();
 
 
@@ -74,7 +69,6 @@ private slots:
     void on_clear_action_buffer_clicked();
     void on_clear_contractor_buffer_clicked();
     void on_clear_program_buffer_clicked();
-    void on_clear_doc_type_buffer_clicked();
     void on_clear_good_type_buffer_clicked();
 
 

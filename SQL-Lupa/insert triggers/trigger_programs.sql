@@ -2,7 +2,7 @@
 RETURNS trigger AS
 $BODY$
 BEGIN
-IF NEW.day_start > NEW.day_stop OR NEW.day_stop < now() OR NEW.day_start < now() THEN
+IF NEW.day_start > NEW.day_stop OR NEW.day_stop < date_trunc('day',now()) OR NEW.day_start < date_trunc('day',now()) THEN
 RAISE EXCEPTION 'invalid data';
 END IF;
 RETURN NEW;
