@@ -25,6 +25,28 @@ void Dialog_editPersInfo::showInpValues()
     QModelIndex index;
 
 
+    //-------------
+    // EDIT SKILLS BLOCK
+    //-------------
+
+    queryText =
+        "select \"Id_skill\", skill_name "
+            "from \"Myronenko_O\".skills "
+            "order by skill_name;";
+    modelAllSkills = db->getQueryModel(queryText);
+    int allSkillsCount = modelAllSkills->rowCount();
+    ui->comboBox_selectSkill->clear();
+    for (int i=0; i < allSkillsCount; i++)
+    {
+        index = modelAllSkills->index(i, 0);
+        if (persId == -1 || skills.indexOf(index.data(Qt::DisplayRole).toInt()) == -1)
+        {
+            index = modelAllSkills->index(i, 1);
+            ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
+        }
+    }
+
+
     if (persId == -1) return;
 
     //-------------
@@ -72,29 +94,6 @@ void Dialog_editPersInfo::showInpValues()
         int skillId = index.data(Qt::DisplayRole).toInt();
         inserSkillIntoList(skillName, skillId);
     }
-
-
-
-    //-------------
-    // EDIT SKILLS BLOCK
-    //-------------
-
-    queryText =
-        "select \"Id_skill\", skill_name "
-            "from \"Myronenko_O\".skills "
-            "order by skill_name;";
-    modelAllSkills = db->getQueryModel(queryText);
-    int allSkillsCount = modelAllSkills->rowCount();
-    ui->comboBox_selectSkill->clear();
-    for (int i=0; i < allSkillsCount; i++)
-    {
-        index = modelAllSkills->index(i, 0);
-        if (skills.indexOf(index.data(Qt::DisplayRole).toInt()) == -1)
-        {
-            index = modelAllSkills->index(i, 1);
-            ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
-        }
-    }
 }
 
 void Dialog_editPersInfo::on_button_addSkill_clicked()
@@ -114,7 +113,7 @@ void Dialog_editPersInfo::inserSkillIntoList(QString skillName, int skillId)
 
     int rowNumber = ui->layout_persSkills->rowCount();
     ui->layout_persSkills->addWidget(skillVal, rowNumber, 0);
-    ui->layout_persSkills->addWidget(delButton, rowNumber, 1);
+    //ui->layout_persSkills->addWidget(delButton, rowNumber, 1);
 
     skills.append(skillId);
     connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
