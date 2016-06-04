@@ -109,7 +109,7 @@ void Dialog_editPosition::inserSkillIntoList(QString skillName, int skillId)
 
     int rowNumber = ui->layout_positSkills->rowCount();
     ui->layout_positSkills->addWidget(skillVal, rowNumber, 0);
-    ui->layout_positSkills->addWidget(delButton, rowNumber, 1);
+    //ui->layout_positSkills->addWidget(delButton, rowNumber, 1);
 
     skills.append(skillId);
     connect(delButton, SIGNAL(clicked()), this, SLOT( removeSkill() ));
