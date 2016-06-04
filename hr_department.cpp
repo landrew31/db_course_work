@@ -142,71 +142,132 @@ void HR_department::on_button_printReport_clicked()
     QString strStream;
     QTextStream out(&strStream);
 
-//    QSqlQueryModel *model_for_id = db->getQueryModel("select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';");
-//    qDebug() << "select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';" << endl;
-//    QString doc_id = model_for_id->data(model_for_id->index(0,0)).toString();
+    QString queryText;
+    QModelIndex index;
+    int persId = selectedPersId;
 
-//    QSqlQueryModel *model_doc_data = db->getQueryModel("SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));");
-//    qDebug() << "SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));" << endl;
-//    QString staff_name = model_doc_data->data(model_doc_data->index(0,0)).toString();
-//    QString date = model_doc_data->data(model_doc_data->index(0,1)).toString();
-//    QString doc_type = model_doc_data->data(model_doc_data->index(0,2)).toString();
-//    QString total_money = model_doc_data->data(model_doc_data->index(0,3)).toString();
-//    QString contr_name = model_doc_data->data(model_doc_data->index(0,4)).toString();
+    out << "<html>"
+            << "<head>"
+            << "<meta Content=\"Text/html; charset=utf-8\">"
+            << QString("<title>%1</title>").arg("Report")
+       << "</head>"
+       << "<body bgcolor = #ffffff link=#5000A0>"
+       << QString("<h2 align=center>%1</h2>").arg("Звіт працівника компанії")
+       << "<br/>";
 
-//    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");");
-//    qDebug() << "select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");" << endl;
 
-//    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
-//    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));
-//    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Форма"));
-//    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
-//    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Кількість"));
-//    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Загальна сума"));
-//    int rowCount = model->rowCount();
-//    int columnCount = model->columnCount();
 
-//    out << "<html>\n"
-//            << "<head>\n"
-//            << "<meta Content=\"Text/html; charset=utf-8\">\n"
-//            << QString("<title>%1</title>\n").arg("Report")
-//       << "</head>\n"
-//       << "<body bgcolor = #ffffff link=#5000A0>\n"
-//       << QString("<h3 align=center>%1</h3>\n").arg(doc_type)
-//       << "<br />\n <br />\n <br />\n"
-//       << QString("<p>Контрагент: <b>%1</b></p>\n").arg(contr_name)
-//       << QString("<p>Працівник: <b>%1</b></p>\n").arg(staff_name)
-//       << QString("<p>Дата: <b>%1</b></p>\n").arg(date)
-//       << QString("<h6>Загальна сума: <b>%1</b></h6>\n").arg(total_money)
-//       << "<br />\n <br />\n";
+    //-------------
+    // PERSINFO BLOCK
+    //-------------
 
-//    out << "<table border = 1 cellspacing=0 cellpadding=2>\n";
-//    out << "<thead><tr bgcolo=#f0f0f0>";
-//    for( int column = 0; column < columnCount; column++)
-//        out << QString("<th>%1</th>").arg(model->headerData(column,Qt::Horizontal).toString());
-//    out << "</tr></thead>\n";
+    queryText = QString("select * from \"Myronenko_O\".person where \"Id_person\" = %1;").arg(persId);
+    QSqlQueryModel *modelPerson = db->getQueryModel(queryText);
+    index = modelPerson->index(0, 1);
+    QString name = index.data(Qt::DisplayRole).toString();
+    index = modelPerson->index(0, 2);
+    QString surname = index.data(Qt::DisplayRole).toString();
+    index = modelPerson->index(0, 3);
+    QString birthday = index.data(Qt::DisplayRole).toDate().toString("yyyy-MM-dd");
+    index = modelPerson->index(0, 4);
+    QString education = index.data(Qt::DisplayRole).toString();
 
-//    for (int row = 0; row < rowCount; row++ ) {
-//        out << "<tr>";
-//        for ( int column = 0; column < columnCount; column++){
-//            QString data = model->data(model->index(row,column)).toString().simplified();
-//            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
-//        }
-//        out << "</tr>\n";
-//    }
-//    out << "</table>\n""</body>\n""</html>\n";
+    out << QString("<p>Ім'я: <b>%1</b></p>").arg(name)
+       << QString("<p>Прізвище: <b>%1</b></p>").arg(surname)
+       << QString("<p>Дата народження: <b>%1</b></p>").arg(birthday)
+       << QString("<p>Освіта: <b>%1</b></p>").arg(education)
+       << "<br/>";
 
-//    QTextDocument *document = new QTextDocument();
-//    document->setHtml(strStream);
-//    qDebug() << strStream << endl;
-//    QPrinter printer;
 
-//    printer.setOutputFormat(QPrinter::PdfFormat);
-//    QPrintDialog *dialog = new QPrintDialog(&printer,0);
-//    if (dialog->exec() == QDialog::Accepted) {
-//        document->print(&printer);
-//    }
-//    delete document;
+
+    //-------------
+    // LIST SKILLS BLOCK
+    //-------------
+
+    queryText = QString(
+            "select skill_name, skill_description "
+            "from \"Myronenko_O\".personal_skills per_skills "
+                "join \"Myronenko_O\".skills "
+                "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
+            "where per_skills.\"Id_person\" = %1 "
+            "order by skill_name;").arg(persId);
+    QSqlQueryModel* modelPersonSkills = db->getQueryModel(queryText);
+    modelPersonSkills->setHeaderData(0, Qt::Horizontal, tr("Навичка"));
+    modelPersonSkills->setHeaderData(1, Qt::Horizontal, tr("Описання"));
+    int rowCount = modelPersonSkills->rowCount();
+    int columnCount = modelPersonSkills->columnCount();
+
+    out << QString("<h4>%1</h4>").arg("Навички працівника:")
+        << "<table border = 1 cellspacing=0 cellpadding=2 width=\"100%\">"
+        << "<thead><tr bgcolo=#f0f0f0>";
+    for( int column = 0; column < columnCount; column++)
+        out << QString("<th>%1</th>").arg(modelPersonSkills->headerData(column,Qt::Horizontal).toString());
+    out << "</tr></thead>";
+
+    for (int row = 0; row < rowCount; row++ ) {
+        out << "<tr>";
+        for ( int column = 0; column < columnCount; column++){
+            QString data = modelPersonSkills->data(modelPersonSkills->index(row,column)).toString().simplified();
+            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+        }
+        out << "</tr>";
+    }
+    out << "</table><br/>";
+
+
+
+    //-------------
+    // WORK HISTORY BLOCK
+    //-------------
+
+    queryText = QString(
+            "select linkposition.posit_name, staff.date_in, staff.date_out "
+                "from \"Myronenko_O\".staff staff "
+                    "join "
+                    "(\"Myronenko_O\".vacancies vacancies "
+                        "join \"Myronenko_O\".positions positions "
+                        "on vacancies.\"Id_position\" = positions.\"Id_position\") "
+                    "as linkposition "
+                    "on staff.\"Id_vacancy\" = linkposition.\"Id_vacancy\" "
+                "where \"Id_person\" = %1 "
+                "order by staff.date_in desc;").arg(persId);
+    QSqlQueryModel* modelWorkHistory = db->getQueryModel(queryText);
+    modelWorkHistory->setHeaderData(0, Qt::Horizontal, tr("Посада"));
+    modelWorkHistory->setHeaderData(1, Qt::Horizontal, tr("Початок"));
+    modelWorkHistory->setHeaderData(2, Qt::Horizontal, tr("Кінець"));
+    rowCount = modelWorkHistory->rowCount();
+    columnCount = modelWorkHistory->columnCount();
+    out << QString("<h4>%1</h4>").arg("Історія працевлаштування:")
+        << "<table border = 1 cellspacing=0 cellpadding=2 width=\"100%\">"
+        << "<thead><tr bgcolo=#f0f0f0>";
+    for( int column = 0; column < columnCount; column++)
+        out << QString("<th>%1</th>").arg(modelWorkHistory->headerData(column,Qt::Horizontal).toString());
+    out << "</tr></thead>";
+
+    for (int row = 0; row < rowCount; row++ ) {
+        out << "<tr>";
+        for ( int column = 0; column < columnCount; column++){
+            QString data = modelWorkHistory->data(modelWorkHistory->index(row,column)).toString().simplified();
+            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+        }
+        out << "</tr>";
+    }
+    out << "</table><br/>";
+
+
+
+    out << "</body>\n </html>\n";
+    QTextDocument *document = new QTextDocument();
+    document->setHtml(strStream);
+    if (DEBUGMODE) qDebug() << strStream << endl;
+    QPrinter printer;
+
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    QPrintDialog *dialog = new QPrintDialog(&printer,0);
+    if (dialog->exec() == QDialog::Accepted) {
+        document->print(&printer);
+    }
+    delete document;
 }
 
 

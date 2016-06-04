@@ -9,6 +9,8 @@
 #include <QDateEdit>
 #include <QModelIndex>
 #include <QDebug>
+#include "QtPrintSupport/QPrinter"
+#include <QtPrintSupport/QPrintDialog>
 
 #include "db_setup.h"
 #include "functions.h"
