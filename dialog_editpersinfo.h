@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "hr_department.h"
+//#include "hr_department.h"
 #include "dialog_createskill.h"
 #include "ui_dialogui_editpersinfo.h"
 
@@ -19,6 +19,7 @@ class Dialog_editPersInfo: public QDialog
 public:
     explicit Dialog_editPersInfo(DB_setup* db = 0, int selectedPersId = 0, QWidget *parent = 0);
     ~Dialog_editPersInfo();
+    int getLastPersId();
 
 private slots:
     void accept();
@@ -31,9 +32,9 @@ private:
     Ui::DialogUi_editPersInfo *ui;
     DB_setup *db;
     int persId;
+    int lastCreatedPersId;
     QSqlQueryModel* modelAllSkills;
     QVector<int> skills;
-
     void inserSkillIntoList(QString, int);
 };
 

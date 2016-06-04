@@ -10,6 +10,7 @@ Dialog_changePosition::Dialog_changePosition(DB_setup* db, int selectedStaffId, 
     staffId = selectedStaffId;
     persId = selectedPersId;
     showInpValues();
+    ui->changeDate->setDate(QDate::currentDate());
 }
 
 Dialog_changePosition::~Dialog_changePosition()
@@ -71,9 +72,10 @@ void Dialog_changePosition::accept()
 
     QString selectedVacancy = ui->selectNewPosition->currentText();
     int selectedPositId = searchIdByNameInModel(selectedVacancy, modelAllOpenedVacs, 2, 0);
+    QString changeDate = ui->changeDate->date().toString("yyyy-MM-dd");
 
     if (DEBUGMODE) qDebug() << "change position of" << persId << "person to" << selectedPositId << "position";
-    QString queryText = QString("select \"Myronenko_O\".change_staff_position(%1, %2, %3);").arg(persId).arg(staffId).arg(selectedPositId);
+    QString queryText = QString("select \"Myronenko_O\".change_staff_position(%1, %2, %3, '%4');").arg(persId).arg(staffId).arg(selectedPositId).arg(changeDate);
     db->executeQuery(queryText, "admin", this, 2);
 
     this->accepted();

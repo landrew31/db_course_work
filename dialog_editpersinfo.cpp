@@ -14,6 +14,11 @@ Dialog_editPersInfo::Dialog_editPersInfo(DB_setup *db, int selectedPersId, QWidg
     ui->persBirthDate->setDate(QDate(1996,6,18));
 }
 
+int Dialog_editPersInfo::getLastPersId()
+{
+    return lastCreatedPersId;
+}
+
 Dialog_editPersInfo::~Dialog_editPersInfo()
 {
     delete ui;
@@ -204,6 +209,7 @@ void Dialog_editPersInfo::accept()
             db->showExecutionResultStatus(2);
         }
     };
+    lastCreatedPersId = persId;
 
     this->accepted();
     this->close();

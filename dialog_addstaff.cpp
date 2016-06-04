@@ -65,9 +65,32 @@ void Dialog_addStaff::updateOpenedVacancies()
 
 void Dialog_addStaff::on_createPerson_clicked()
 {
-    Dialog_editPersInfo* dialog_editPersInfo = new Dialog_editPersInfo(db, -1, this);
+    dialog_editPersInfo = new Dialog_editPersInfo(db, -1, this);
     dialog_editPersInfo->show();
-    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(updatePersSelect()));
+    connect(dialog_editPersInfo, SIGNAL(accepted()), this, SLOT(selectNewCreatedPerson()));
+}
+
+void Dialog_addStaff::selectNewCreatedPerson()
+{
+    QString queryText;
+    QModelIndex index;
+
+    lastCreatedPersId = dialog_editPersInfo->getLastPersId();
+
+    queryText = QString("select per_name, per_surname, \"Id_person\" "
+            "from \"Myronenko_O\".show_free_persons "
+            "where \"Id_person\" = %1 ").arg(lastCreatedPersId);
+    modelAllPersons = db->getQueryModel(queryText);
+    int modelRowsCount = modelAllPersons->rowCount();
+    ui->selectPerson->clear();
+    for (int i=0; i < modelRowsCount; i++)
+    {
+        index = modelAllPersons->index(0, 0);
+        QString personName = index.data(Qt::DisplayRole).toString();
+        index = modelAllPersons->index(1, 1);
+        QString personSurname = index.data(Qt::DisplayRole).toString();
+        ui->selectPerson->addItem(personName + " " + personSurname);
+    }
 }
 
 void Dialog_addStaff::on_openVacancy_clicked()

@@ -13,8 +13,8 @@
 #include "functions.h"
 
 
-#define UNSECURE false
-#define UNSECURE_DEP 2
+//#define UNSECURE false
+//#define UNSECURE_DEP 2
 
 
 namespace Ui {

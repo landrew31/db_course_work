@@ -2,7 +2,13 @@
 #define DIALOG_CREATESKILL_H
 
 #include <QDialog>
-#include "hr_department.h"
+#include "db_setup.h"
+#include "functions.h"
+
+#define DEBUGMODE true
+#define UNSECURE false
+#define UNSECURE_DEP 2
+//#include "hr_department.h"
 
 namespace Ui {
 class Dialog_createSkill;

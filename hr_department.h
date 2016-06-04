@@ -17,9 +17,9 @@
 #include "ui_hr_department.h"
 
 #include "dialog_showstaffprofile.h"
-#include "dialog_editpersinfo.h"
-#include "dialog_changeposition.h"
 #include "dialog_addstaff.h"
+#include "dialog_changeposition.h"
+
 #include "dialog_firestaff.h"
 #include "dialog_staffabsence.h"
 
@@ -29,7 +29,7 @@
 #include "dialog_editposition.h"
 #include "dialog_showpositinfo.h"
 
-#define DEBUGMODE true
+//#define DEBUGMODE true
 
 
 namespace Ui {
