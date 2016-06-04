@@ -27,7 +27,7 @@ public:
                                QString* old_data=0,
                                QWidget *parent = 0);
 
-    static void renew_good_types(DB_setup* db, QTableView* table );
+    static QSortFilterProxyModel* renew_good_types(DB_setup* db, QTableView* table );
     ~Dialog_good_types();
 
 signals:

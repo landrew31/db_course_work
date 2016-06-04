@@ -13,7 +13,6 @@
 #include "ui_dialog_buy_goods.h"
 
 #include "dialog_contractors.h"
-#include "dialog_doc_types.h"
 #include "dialog_good_types.h"
 
 namespace Ui {
@@ -29,7 +28,6 @@ public:
                               QString mode="",
                               QTableView* table_contr=0,
                               QTableView* table_good_types=0,
-                              QTableView* table_doc_types=0,
                               QWidget *parent = 0);
     ~Dialog_buy_goods();
 
@@ -41,7 +39,6 @@ private slots:
     void renew_goodtype_comboBox();
     void renew_moves();
 
-    void on_add_new_doctype_clicked();
 
     void on_add_new_good_type_clicked();
 
@@ -63,12 +60,12 @@ private slots:
 signals:
     void added();
 
+
 private:
     Ui::Dialog_buy_goods *ui;
     DB_setup *db;
     QString mode;
     QTableView *table_contr;
-    QTableView *table_doc_types;
     QTableView *table_good_types;
     QStringList good_names;
     QStringList quantities;

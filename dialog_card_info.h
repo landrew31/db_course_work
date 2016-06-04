@@ -30,6 +30,8 @@ public:
                               QTableView *table_programs=0,
                               QTableView *table_actions=0,
                               QString* contr_data = 0,
+                              QDateEdit* date_hist_program = 0,
+                              QDateEdit* date_hist_action = 0,
                               QWidget *parent = 0);
 
     static void renew_contr_programs(DB_setup* db, QString contr, QTableView* table);
@@ -63,6 +65,8 @@ private:
     QTableView *table_programs;
     QTableView *table_actions;
     QString *contr_data;
+    QDateEdit* date_hist_program;
+    QDateEdit* date_hist_action;
     QString *old_program_data; // = new QString[3];
 };
 

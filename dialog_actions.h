@@ -26,8 +26,9 @@ public:
     explicit Dialog_actions(DB_setup* db=0, QString mode="",
                             QTableView *table=0,
                             QString* old_data = 0,
+                            QDateEdit* date_edit = 0,
                             QWidget *parent = 0);
-    static void renew_actions(DB_setup* db, QTableView* table);
+    static QSortFilterProxyModel* renew_actions(DB_setup* db, QTableView* table, QDateEdit* date_field);
     ~Dialog_actions();
 
 signals:
@@ -44,6 +45,7 @@ private:
     QString mode;
     QTableView *table;
     QString *old_data;
+    QDateEdit *date_edit;
 };
 
 #endif // DIALOG_ACTIONS_H

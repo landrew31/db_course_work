@@ -5,6 +5,8 @@ Dialog_program_info::Dialog_program_info(DB_setup* db,
                                          QTableView *table_programs,
                                          QTableView *table_actions,
                                          QString* program_data,
+                                         QDateEdit* date_hist_program,
+                                         QDateEdit* date_hist_action,
                                          QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_program_info)
@@ -14,6 +16,8 @@ Dialog_program_info::Dialog_program_info(DB_setup* db,
     this->table_programs = table_programs;
     this->table_actions = table_actions;
     this->program_data = program_data;
+    this->date_hist_program = date_hist_program;
+    this->date_hist_action = date_hist_action;
     this->old_action_data = new QString[4];
 //    qDebug() << program_data[2] <<endl;
     renew_program_actions(db, this->program_data[2], ui->tableView_program_actions);
@@ -49,21 +53,21 @@ void Dialog_program_info::renew_program_actions(DB_setup* db, QString program, Q
 
 void Dialog_program_info::renew_actions_comboBox()
 {
-    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions ORDER BY action_name;");
+    QSqlQueryModel *model = db->getQueryModel("SELECT action_name FROM \"Lupa_A\".actions WHERE day_stop >= date_trunc('day',now()) ORDER BY action_name;");
     ui->existing_actions_box->setModel(model);
     ui->existing_actions_box->setCurrentIndex(-1);
 }
 
 void Dialog_program_info::on_update_program_clicked()
 {
-    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", table_programs, program_data);
+    Dialog_programs* dialog_programs = new Dialog_programs(db, "update", table_programs, program_data, date_hist_program);
     dialog_programs->setModal(true);
     dialog_programs->show();
 }
 
 void Dialog_program_info::on_add_new_action_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, program_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "add", table_actions, program_data, date_hist_action);
     dialog_actions->setModal(true);
     dialog_actions->show();
     connect(dialog_actions, SIGNAL(actionsChanged()), this, SLOT(renew_actions_comboBox()));
@@ -75,9 +79,9 @@ void Dialog_program_info::on_add_action_to_program_clicked()
 
     db->executeQuery(
             "select insert_new_action_in_program('" + program_data[2] + "','" + action + "');",
-            "operator",
+            db->getUser(),
             this,
-            0
+            1
     );
     renew_program_actions(db, program_data[2], ui->tableView_program_actions);
 }
@@ -112,7 +116,7 @@ void Dialog_program_info::on_clear_action_buffer_clicked()
 
 void Dialog_program_info::on_update_action_clicked()
 {
-    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", table_actions, old_action_data);
+    Dialog_actions* dialog_actions = new Dialog_actions(db, "update", table_actions, old_action_data, date_hist_action);
     dialog_actions->setModal(true);
     dialog_actions->show();
 }
