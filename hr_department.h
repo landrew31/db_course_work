@@ -80,6 +80,7 @@ private slots:
     void on_button_changePersPosition_clicked();
     void on_button_firePers_clicked();
     void on_button_addPersAbsence_clicked();
+    void on_button_printReport_clicked();
 };
 
 #endif // HR_DEPARTMENT_H

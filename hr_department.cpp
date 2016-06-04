@@ -74,6 +74,7 @@ void HR_department::on_table_staff_pressed(const QModelIndex &index)
     ui->button_addPersAbsence->setEnabled(true);
 //    ui->button_changePersSchedule->setEnabled(true);
     ui->button_firePers->setEnabled(true);
+    ui->button_printReport->setEnabled(true);
 
     int row = index.row();
     selectedStaffId = index.sibling(row, 3).data().toInt();
@@ -134,6 +135,78 @@ void HR_department::on_button_addPersAbsence_clicked()
 {
     Dialog_staffabsence* dialog_staffabsence = new Dialog_staffabsence(db, selectedStaffId, this);
     dialog_staffabsence->show();
+}
+
+void HR_department::on_button_printReport_clicked()
+{
+    QString strStream;
+    QTextStream out(&strStream);
+
+//    QSqlQueryModel *model_for_id = db->getQueryModel("select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';");
+//    qDebug() << "select * from \"Lupa_A\".documentation where (SELECT date_trunc('second',doc_date)) = '" + old_doc + "';" << endl;
+//    QString doc_id = model_for_id->data(model_for_id->index(0,0)).toString();
+
+//    QSqlQueryModel *model_doc_data = db->getQueryModel("SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));");
+//    qDebug() << "SELECT doc.* FROM (\"Lupa_A\".documents doc JOIN \"Lupa_A\".documentation docum ON ( doc.doc_date = docum.doc_date and docum.\"Id_doc\" = " + doc_id + "));" << endl;
+//    QString staff_name = model_doc_data->data(model_doc_data->index(0,0)).toString();
+//    QString date = model_doc_data->data(model_doc_data->index(0,1)).toString();
+//    QString doc_type = model_doc_data->data(model_doc_data->index(0,2)).toString();
+//    QString total_money = model_doc_data->data(model_doc_data->index(0,3)).toString();
+//    QString contr_name = model_doc_data->data(model_doc_data->index(0,4)).toString();
+
+//    QSqlQueryModel *model = db->getQueryModel("select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");");
+//    qDebug() << "select * from \"Lupa_A\".moves_on_doc(" + doc_id + ");" << endl;
+
+//    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Товар"));
+//    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Ціна"));
+//    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Форма"));
+//    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Термін придатності (дні)"));
+//    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Кількість"));
+//    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Загальна сума"));
+//    int rowCount = model->rowCount();
+//    int columnCount = model->columnCount();
+
+//    out << "<html>\n"
+//            << "<head>\n"
+//            << "<meta Content=\"Text/html; charset=utf-8\">\n"
+//            << QString("<title>%1</title>\n").arg("Report")
+//       << "</head>\n"
+//       << "<body bgcolor = #ffffff link=#5000A0>\n"
+//       << QString("<h3 align=center>%1</h3>\n").arg(doc_type)
+//       << "<br />\n <br />\n <br />\n"
+//       << QString("<p>Контрагент: <b>%1</b></p>\n").arg(contr_name)
+//       << QString("<p>Працівник: <b>%1</b></p>\n").arg(staff_name)
+//       << QString("<p>Дата: <b>%1</b></p>\n").arg(date)
+//       << QString("<h6>Загальна сума: <b>%1</b></h6>\n").arg(total_money)
+//       << "<br />\n <br />\n";
+
+//    out << "<table border = 1 cellspacing=0 cellpadding=2>\n";
+//    out << "<thead><tr bgcolo=#f0f0f0>";
+//    for( int column = 0; column < columnCount; column++)
+//        out << QString("<th>%1</th>").arg(model->headerData(column,Qt::Horizontal).toString());
+//    out << "</tr></thead>\n";
+
+//    for (int row = 0; row < rowCount; row++ ) {
+//        out << "<tr>";
+//        for ( int column = 0; column < columnCount; column++){
+//            QString data = model->data(model->index(row,column)).toString().simplified();
+//            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+//        }
+//        out << "</tr>\n";
+//    }
+//    out << "</table>\n""</body>\n""</html>\n";
+
+//    QTextDocument *document = new QTextDocument();
+//    document->setHtml(strStream);
+//    qDebug() << strStream << endl;
+//    QPrinter printer;
+
+//    printer.setOutputFormat(QPrinter::PdfFormat);
+//    QPrintDialog *dialog = new QPrintDialog(&printer,0);
+//    if (dialog->exec() == QDialog::Accepted) {
+//        document->print(&printer);
+//    }
+//    delete document;
 }
 
 
@@ -281,6 +354,3 @@ void HR_department::on_button_showPositInfo_clicked()
     Dialog_showPositInfo* dialog_showPositInfo = new Dialog_showPositInfo(db, selectedPositId, this);
     dialog_showPositInfo->show();
 }
-
-
-
