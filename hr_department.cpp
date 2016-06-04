@@ -126,7 +126,7 @@ void HR_department::on_button_closeWindow_clicked()
 
 void HR_department::on_button_firePers_clicked()
 {
-    Dialog_fireStaff* dialog_fireStaff = new Dialog_fireStaff(db, selectedStaffId, this);
+    Dialog_fireStaff* dialog_fireStaff = new Dialog_fireStaff(db, selectedStaffId, selectedPersId, this);
     dialog_fireStaff->show();
     connect(dialog_fireStaff, SIGNAL(accepted()), this, SLOT(showAllTables()));
 }
