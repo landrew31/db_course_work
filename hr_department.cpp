@@ -24,8 +24,18 @@ void HR_department::showAllTables()
     showPositTable();
     showStaffTable();
     showVacTable();
+    if (db->getUser() == "admin")
+    {
+        ui->button_addPosition->setEnabled(true);
+    }
 }
 
+void HR_department::return_to_dialogentry()
+{
+    DialogEntry* entryWindow = new DialogEntry(db);
+    this->close();
+    entryWindow->show();
+}
 
 
 
@@ -121,7 +131,7 @@ void HR_department::on_updateStaffTable_clicked()
 
 void HR_department::on_button_closeWindow_clicked()
 {
-    this->close();
+    return_to_dialogentry();
 }
 
 void HR_department::on_button_firePers_clicked()
@@ -271,6 +281,7 @@ void HR_department::on_button_printReport_clicked()
 }
 
 
+
 //-----------
 // VACANCIES TAB
 //-----------
@@ -299,7 +310,7 @@ void HR_department::showVacTable()
 
 void HR_department::on_button_closeWindow_3_clicked()
 {
-    this->close();
+    return_to_dialogentry();
 }
 
 void HR_department::on_table_vacancies_pressed(const QModelIndex &index)
@@ -367,15 +378,21 @@ void HR_department::showPositTable()
 void HR_department::on_table_positions_pressed(const QModelIndex &index)
 {
     int row = index.row();
+    selectedPositId = index.sibling(row, 2).data().toInt();
     ui->button_showPositInfo->setEnabled(true);
-    ui->button_editPosition->setEnabled(true);
-    int selectedPositStaffCount = index.sibling(row, 1).data().toInt();
-    if (selectedPositStaffCount == 0) {
-        ui->button_deletePosition->setEnabled(true);
+    if (db->getUser() == "admin")
+    {
+        ui->button_editPosition->setEnabled(true);
+        int selectedPositStaffCount = index.sibling(row, 1).data().toInt();
+        if (selectedPositStaffCount == 0) {
+            ui->button_deletePosition->setEnabled(true);
+        } else {
+            ui->button_deletePosition->setDisabled(true);
+        }
     } else {
+        ui->button_editPosition->setDisabled(true);
         ui->button_deletePosition->setDisabled(true);
     }
-    selectedPositId = index.sibling(row, 2).data().toInt();
 }
 
 void HR_department::on_button_editPosition_clicked()
@@ -394,7 +411,7 @@ void HR_department::on_button_addPosition_clicked()
 
 void HR_department::on_button_closeWindow_2_clicked()
 {
-    this->close();
+    return_to_dialogentry();
 }
 
 void HR_department::on_updatePositTable_clicked()

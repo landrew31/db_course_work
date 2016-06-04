@@ -9,6 +9,10 @@ Dialog_openVacancy::Dialog_openVacancy(DB_setup* db, QWidget *parent) :
     this->db = db;
 
     showInpValues();
+    if (db->getUser() == "admin")
+    {
+        ui->button_createPosition->setEnabled(true);
+    }
 }
 
 Dialog_openVacancy::~Dialog_openVacancy()

@@ -478,7 +478,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_stuff">
      <property name="enabled">
@@ -929,6 +929,9 @@
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="5" column="0">
          <widget class="QPushButton" name="button_addPosition">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>

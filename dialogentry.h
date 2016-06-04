@@ -13,7 +13,7 @@
 #include "functions.h"
 
 
-#define UNSECURE true
+#define UNSECURE false
 #define UNSECURE_DEP 2
 
 

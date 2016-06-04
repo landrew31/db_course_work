@@ -95,6 +95,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="button_createPosition">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>

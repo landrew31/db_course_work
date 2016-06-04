@@ -34,7 +34,7 @@ void Dialog_showPositInfo::showInpValues()
     QSqlQueryModel *modelPosition = db->getQueryModel(queryText);
     if (DEBUGMODE)
     {
-        qDebug() << "Dialog_editPosition got modelPosition:";
+        qDebug() << "Dialog_showPositInfo got modelPosition:";
         for (int i=0; i < modelPosition->columnCount(); i++)
         {
             index = modelPosition->index(0, i);

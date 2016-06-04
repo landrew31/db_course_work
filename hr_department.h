@@ -63,9 +63,7 @@ private slots:
     void on_button_addStuff_clicked();
     void on_date_historyView_dateChanged();
     void on_button_closeWindow_clicked();
-
     void on_button_closeWindow_3_clicked();
-
     void on_table_positions_pressed(const QModelIndex &index);
     void on_button_editPosition_clicked();
     void on_button_addPosition_clicked();
@@ -83,6 +81,7 @@ private slots:
     void on_button_firePers_clicked();
     void on_button_addPersAbsence_clicked();
     void on_button_printReport_clicked();
+    void return_to_dialogentry();
 };
 
 #endif // HR_DEPARTMENT_H
