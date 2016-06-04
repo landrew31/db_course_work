@@ -26,6 +26,60 @@ void Dialog_editPersInfo::showInpValues()
 
 
     //-------------
+    // PERSINFO BLOCK
+    //-------------
+
+    if (persId != -1)
+    {
+        queryText = QString("select * from \"Myronenko_O\".person where \"Id_person\" = %1;").arg(persId);
+        QSqlQueryModel *modelPerson = db->getQueryModel(queryText);
+
+        index = modelPerson->index(0, 1);
+        QString name = index.data(Qt::DisplayRole).toString();
+        ui->persName->setText(name);
+
+        index = modelPerson->index(0, 2);
+        QString surname = index.data(Qt::DisplayRole).toString();
+        ui->persSurname->setText(surname);
+
+        index = modelPerson->index(0, 3);
+        QDate birthday =index.data(Qt::DisplayRole).toDate();
+        ui->persBirthDate->setDate(birthday);
+
+        index = modelPerson->index(0, 4);
+        QString education = index.data(Qt::DisplayRole).toString();
+        ui->persEdu->setText(education);
+    }
+
+
+
+    //-------------
+    // LIST SKILLS BLOCK
+    //-------------
+
+    if (persId != -1)
+    {
+        queryText = QString(
+                "select skill_name, skill_description, per_skills.\"Id_person\", per_skills.\"Id_skill\" "
+                "from \"Myronenko_O\".personal_skills per_skills "
+                    "join \"Myronenko_O\".skills "
+                    "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
+                "where per_skills.\"Id_person\" = %1 "
+                "order by skill_name;").arg(persId);
+        QSqlQueryModel *modelPersonSkills = db->getQueryModel(queryText);
+        int skillsCount = modelPersonSkills->rowCount();
+        for (int i=0; i < skillsCount; i++)
+        {
+            index = modelPersonSkills->index(i, 0);
+            QString skillName = index.data(Qt::DisplayRole).toString();
+            index = modelPersonSkills->index(i, 3);
+            int skillId = index.data(Qt::DisplayRole).toInt();
+            inserSkillIntoList(skillName, skillId);
+        }
+    }
+
+
+    //-------------
     // EDIT SKILLS BLOCK
     //-------------
 
@@ -44,55 +98,6 @@ void Dialog_editPersInfo::showInpValues()
             index = modelAllSkills->index(i, 1);
             ui->comboBox_selectSkill->addItem(index.data(Qt::DisplayRole).toString());
         }
-    }
-
-
-    if (persId == -1) return;
-
-    //-------------
-    // PERSINFO BLOCK
-    //-------------
-
-    queryText = QString("select * from \"Myronenko_O\".person where \"Id_person\" = %1;").arg(persId);
-    QSqlQueryModel *modelPerson = db->getQueryModel(queryText);
-
-    index = modelPerson->index(0, 1);
-    QString name = index.data(Qt::DisplayRole).toString();
-    ui->persName->setText(name);
-
-    index = modelPerson->index(0, 2);
-    QString surname = index.data(Qt::DisplayRole).toString();
-    ui->persSurname->setText(surname);
-
-    index = modelPerson->index(0, 3);
-    QDate birthday =index.data(Qt::DisplayRole).toDate();
-    ui->persBirthDate->setDate(birthday);
-
-    index = modelPerson->index(0, 4);
-    QString education = index.data(Qt::DisplayRole).toString();
-    ui->persEdu->setText(education);
-
-
-    //-------------
-    // LIST SKILLS BLOCK
-    //-------------
-
-    queryText = QString(
-            "select skill_name, skill_description, per_skills.\"Id_person\", per_skills.\"Id_skill\" "
-            "from \"Myronenko_O\".personal_skills per_skills "
-                "join \"Myronenko_O\".skills "
-                "on per_skills.\"Id_skill\" = skills.\"Id_skill\" "
-            "where per_skills.\"Id_person\" = %1 "
-            "order by skill_name;").arg(persId);
-    QSqlQueryModel *modelPersonSkills = db->getQueryModel(queryText);
-    int skillsCount = modelPersonSkills->rowCount();
-    for (int i=0; i < skillsCount; i++)
-    {
-        index = modelPersonSkills->index(i, 0);
-        QString skillName = index.data(Qt::DisplayRole).toString();
-        index = modelPersonSkills->index(i, 3);
-        int skillId = index.data(Qt::DisplayRole).toInt();
-        inserSkillIntoList(skillName, skillId);
     }
 }
 
